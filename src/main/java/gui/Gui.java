@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 class buttonDimension{
@@ -25,12 +26,23 @@ class buttonDimension{
 }
 
 public class Gui {
-    public Gui() {
-        InputStream is = getClass().getClassLoader().getResourceAsStream("themeSong.mp3");
+    public Gui() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File musicPath = new File("resources" + File.separator + "gui" + File.separator + "themeSong.wav");
+        AudioInputStream song = AudioSystem.getAudioInputStream(musicPath);
+        Clip clip = AudioSystem.getClip();
+        clip.open(song);
+        clip.start();
+        clip.close();
+        musicPath = new File("resources" + File.separator + "gui" + File.separator + "melodie1.wav");
+        song = AudioSystem.getAudioInputStream(musicPath);
+        clip.open(song);
+        clip.loop(1000);
+        clip.start();
+
+
         JFrame frame;
 
-        JLabel backgroundLabel = createLabel("resources"+ File.separator + "gui" + File.separator +"background.jpg",885,598);
-
+        JLabel backgroundLabel = createLabel("resources"+ File.separator + "gui" + File.separator + "background.jpg",885,598);
 
         int offset = 200;
         int yButtons = 500;
@@ -69,7 +81,7 @@ public class Gui {
 
         return label;
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         new Gui();
     }
 }
