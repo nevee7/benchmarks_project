@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -28,8 +29,7 @@ public class Gui {
         InputStream is = getClass().getClassLoader().getResourceAsStream("themeSong.mp3");
         JFrame frame;
 
-        JLabel backgroundLabel = createLabel("resources\\gui\\background.jpg",885,598);
-
+        JLabel backgroundLabel = createLabel("resources"+ File.separator + "gui" + File.separator +"background.jpg",885,598);
 
 
         int offset = 200;
