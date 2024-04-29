@@ -1,3 +1,5 @@
+package cpuBenchmarks;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;

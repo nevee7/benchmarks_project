@@ -1,3 +1,5 @@
+package gpuBenchmark;
+
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -110,7 +112,7 @@ public class gpu_test {
     }
 
     public static void main(String[] args) {
-        new HelloWorld().run();
+        new gpu_test().run();
     }
 
 }

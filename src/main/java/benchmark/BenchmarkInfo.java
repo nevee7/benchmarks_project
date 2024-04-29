@@ -1,3 +1,5 @@
+package benchmark;
+
 import java.math.*;
 abstract class Benchmark{
     int steps;

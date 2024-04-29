@@ -1,3 +1,5 @@
+package cpuBenchmarks;
+
 public class ArithmeticOperationBenchmark {
 
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package cpuBenchmarks;
+
 public class FibonacciBenchmark {
 
     // Recursive method to calculate Fibonacci number
