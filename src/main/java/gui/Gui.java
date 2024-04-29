@@ -46,7 +46,7 @@ public class Gui {
         gpuButton.setBounds(50+offset*2, yButtons, dimensiuneButon.getX(), dimensiuneButon.getY());
 
         frame = new JFrame("Swing Tester");
-        //frame.add(logoLabel);
+
         frame.add(cpuButton);
         frame.add(resultsButton);
         frame.add(gpuButton);
@@ -58,6 +58,7 @@ public class Gui {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setResizable(false);
     }
     JLabel createLabel(String path,int dimX,int dimY){
         JLabel label;
