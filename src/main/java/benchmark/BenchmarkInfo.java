@@ -1,15 +1,11 @@
 package benchmark;
 
-import java.math.*;
-abstract class Benchmark{
-    int steps;
-    int time;
+public class BenchmarkInfo {
+    double initialScore = 0;
+    double time = Double.POSITIVE_INFINITY;
 
-    public Benchmark(int steps, int time) {
-        this.steps = steps;
+    public BenchmarkInfo(double initialScore, double time) {
+        this.initialScore = initialScore;
         this.time = time;
     }
-
-    abstract double getScore();
-
 }

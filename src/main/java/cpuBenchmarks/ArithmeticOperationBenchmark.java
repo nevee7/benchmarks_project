@@ -1,27 +1,34 @@
 package cpuBenchmarks;
 
 public class ArithmeticOperationBenchmark {
-
-    public static void main(String[] args) {
-        long numOperations = 1000000000; // Number of arithmetic operations to perform (adjust as needed)
+    double score = 0;
+    public void computeScore(long time1, long time2, long operationNumber){
+        this.score = (double) operationNumber / (time1 + time2);
+    }
+    public double getScore(){
+        return score;
+    }
+    public void startBenchmark() {
+        long operationNumber = 1000000000; // Number of arithmetic operations to perform (adjust as needed)
 
         // Benchmark addition
         long startTimeAddition = System.nanoTime();
-        performAddition(numOperations);
+        performAddition(operationNumber);
         long endTimeAddition = System.nanoTime();
         long elapsedTimeAddition = (endTimeAddition - startTimeAddition) / 1_000_000; // Convert nanoseconds to milliseconds
 
         // Benchmark multiplication
         long startTimeMultiplication = System.nanoTime();
-        performMultiplication(numOperations);
+        performMultiplication(operationNumber);
         long endTimeMultiplication = System.nanoTime();
         long elapsedTimeMultiplication = (endTimeMultiplication - startTimeMultiplication) / 1_000_000; // Convert nanoseconds to milliseconds
 
         // Output benchmark results
         System.out.println("Arithmetic Operation Benchmark:");
-        System.out.println("Number of operations: " + numOperations);
+        System.out.println("Number of operations: " + operationNumber);
         System.out.println("Time taken for addition: " + elapsedTimeAddition + " milliseconds");
         System.out.println("Time taken for multiplication: " + elapsedTimeMultiplication + " milliseconds");
+        computeScore(elapsedTimeAddition,elapsedTimeMultiplication,operationNumber);
     }
 
     // Perform addition operations
