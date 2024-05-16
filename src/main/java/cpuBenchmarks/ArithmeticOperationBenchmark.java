@@ -1,14 +1,19 @@
 package cpuBenchmarks;
 
+import benchmark.BenchmarkInfo;
+
 public class ArithmeticOperationBenchmark {
     double score = 0;
+
     public void computeScore(long time1, long time2, long operationNumber){
         this.score = (double) operationNumber / (time1 + time2);
     }
+
     public double getScore(){
         return score;
     }
-    public void startBenchmark() {
+
+    public BenchmarkInfo startBenchmark() {
         long operationNumber = 1000000000; // Number of arithmetic operations to perform (adjust as needed)
 
         // Benchmark addition
@@ -29,6 +34,8 @@ public class ArithmeticOperationBenchmark {
         System.out.println("Time taken for addition: " + elapsedTimeAddition + " milliseconds");
         System.out.println("Time taken for multiplication: " + elapsedTimeMultiplication + " milliseconds");
         computeScore(elapsedTimeAddition,elapsedTimeMultiplication,operationNumber);
+        long time = elapsedTimeAddition + elapsedTimeMultiplication;
+        return new BenchmarkInfo(this.getClass().getSimpleName(),score,time);
     }
 
     // Perform addition operations

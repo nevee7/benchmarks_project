@@ -1,6 +1,8 @@
 package firebase;
 
+import benchmark.BenchmarkInfo;
 import benchmark.ComputerIdentifier;
+import benchmark.SystemSpecs;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
@@ -17,7 +19,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class Firebase {
-    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
+    public static void main(String[] args) throws Exception {
+        writeBenchmarkResult(new BenchmarkInfo("CPU",100,1));
+    }
+    public static void writeBenchmarkResult(BenchmarkInfo benchmarkInfo) throws Exception {
         FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Florin\\IdeaProjects\\DC-PROJECT\\resources\\firebase\\serviceAccountKey.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
@@ -25,22 +30,29 @@ public class Firebase {
                 .build();
         FirebaseApp.initializeApp(options);
 
-        System.out.println("Operating System (env): " + System.getenv("OS"));
-        System.out.println("Free Memory (bytes): " + Runtime.getRuntime().freeMemory());
+        SystemSpecs.isFirstRun();
 
-        writeData(0,null);
+        ComputerIdentifier computerIdentifier = new ComputerIdentifier();
+
+        writeData(benchmarkInfo,computerIdentifier);
     }
 
-    static void writeData(int score, ComputerIdentifier specs) throws ExecutionException, InterruptedException {
+    private static void writeData(BenchmarkInfo benchmarkInfo, ComputerIdentifier computerIdentifier) throws ExecutionException, InterruptedException, IOException {
         Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docRef = db.collection("users").document("alovelace");
-        // Add document data  with id "alovelace" using a hashmap
+        DocumentReference docRef = db.collection("users").document(computerIdentifier.getUUID());
         Map<String, Object> data = new HashMap<>();
-        data.put("first", "Ada");
-        data.put("last", "Lovelace");
-        data.put("born", 1815);
-        //asynchronously write data
+        data.put("OS", computerIdentifier.getOs());
+        data.put("CPU", computerIdentifier.getCpu());
+        data.put("GPU", computerIdentifier.getGpu());
+        data.put("RAM", computerIdentifier.getRam());
         ApiFuture<WriteResult> result = docRef.set(data);
+
+        docRef = db.collection("users").document(computerIdentifier.getUUID()).collection("benchmarks").document(SystemSpecs.generateUUID());
+        data = new HashMap<>();
+        data.put("Benchmark Name", benchmarkInfo.getBenchmarkName());
+        data.put("Score", benchmarkInfo.getScore());
+        data.put("Time", benchmarkInfo.getTime());
+        result = docRef.set(data);
         // ...
         // result.get() blocks on response
         System.out.println("Update time : " + result.get().getUpdateTime());
