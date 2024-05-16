@@ -86,21 +86,76 @@ public class Gui {
 
     private void showCPUFrame(int width, int height) {
         cpuFrame = new JFrame("CPU Details");
-        int widthCPU = 1041;
-        int heightCPU = 704;
-        cpuFrame.setSize(width, height);
         cpuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        cpuFrame.setSize(width, height);
         cpuFrame.setLocationRelativeTo(null);
-        cpuFrame.setVisible(true);
 
-        // Add CPU details components to this frame
+        // Create a JPanel to hold the background image and buttons
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "imageCPU1.png");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Use FlowLayout with vertical alignment
+
+        // Add CPU details components to the panel
         JLabel cpuLabel = new JLabel("CPU Details");
         cpuLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        cpuFrame.add(cpuLabel, BorderLayout.CENTER);
+        cpuLabel.setPreferredSize(new Dimension(width - 40, 30)); // Set preferred size
+        panel.add(cpuLabel);
 
-        // Add background image
-        JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "imageCPU1.png", widthCPU, heightCPU);
-        cpuFrame.add(backgroundLabel);
+        // Add buttons for CPU details with smaller dimensions
+        JButton button1 = createButton("Button 1");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Hide the CPU frame
+                cpuFrame.setVisible(false);
+                // Show the Button 1 frame
+                showButton1Frame();
+            }
+        });
+        button1.setPreferredSize(new Dimension(80, 30)); // Set button size
+        panel.add(button1);
+
+        JButton button2 = createButton("Button 2");
+        button2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Hide the CPU frame
+                cpuFrame.setVisible(false);
+                // Show the Button 2 frame
+                showButton2Frame();
+            }
+        });
+        button2.setPreferredSize(new Dimension(80, 30)); // Set button size
+        panel.add(button2);
+
+        JButton button3 = createButton("Button 3");
+        button3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Hide the CPU frame
+                cpuFrame.setVisible(false);
+                // Show the Button 3 frame
+                showButton3Frame();
+            }
+        });
+        button3.setPreferredSize(new Dimension(80, 30)); // Set button size
+        panel.add(button3);
+
+        JButton button4 = createButton("Button 4");
+        button4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Hide the CPU frame
+                cpuFrame.setVisible(false);
+                // Show the Button 4 frame
+                showButton4Frame();
+            }
+        });
+        button4.setPreferredSize(new Dimension(80, 30)); // Set button size
+        panel.add(button4);
 
         // Example: Adding a button to close the CPU frame and show the main frame again
         JButton closeButton = new JButton("Close");
@@ -110,8 +165,90 @@ public class Gui {
                 frame.setVisible(true);
             }
         });
-        cpuFrame.add(closeButton, BorderLayout.SOUTH);
+        panel.add(closeButton);
+
+        cpuFrame.setContentPane(panel); // Set the panel as the content pane
+        cpuFrame.setVisible(true);
     }
+
+    private void showButton1Frame() {
+        JFrame button1Frame = new JFrame("Button 1 Frame");
+        button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+
+        // Example: Adding a button to close the Button 1 frame and show the CPU frame again
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1Frame.dispose();
+                cpuFrame.setVisible(true); // Show the CPU frame again
+            }
+        });
+        button1Frame.add(closeButton);
+
+        button1Frame.setVisible(true);
+    }
+
+    private void showButton2Frame() {
+        JFrame button1Frame = new JFrame("Button 2 Frame");
+        button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+
+        // Example: Adding a button to close the Button 1 frame and show the CPU frame again
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1Frame.dispose();
+                cpuFrame.setVisible(true); // Show the CPU frame again
+            }
+        });
+        button1Frame.add(closeButton);
+
+        button1Frame.setVisible(true);
+    }
+
+    private void showButton3Frame() {
+        JFrame button1Frame = new JFrame("Button 3 Frame");
+        button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+
+        // Example: Adding a button to close the Button 1 frame and show the CPU frame again
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1Frame.dispose();
+                cpuFrame.setVisible(true); // Show the CPU frame again
+            }
+        });
+        button1Frame.add(closeButton);
+
+        button1Frame.setVisible(true);
+    }
+
+    private void showButton4Frame() {
+        JFrame button1Frame = new JFrame("Button 4 Frame");
+        button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+
+        // Example: Adding a button to close the Button 1 frame and show the CPU frame again
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1Frame.dispose();
+                cpuFrame.setVisible(true); // Show the CPU frame again
+            }
+        });
+        button1Frame.add(closeButton);
+
+        button1Frame.setVisible(true);
+    }
+
+
+
 
     private void showResultFrame(int width, int height) {
         resultFrame = new JFrame("Results");
@@ -128,7 +265,7 @@ public class Gui {
         resultFrame.add(resultLabel, BorderLayout.CENTER);
 
         // Add background image
-        JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "image4.png", widthRes, heightRes);
+        JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "image5.jpg", widthRes, heightRes);
         resultFrame.add(backgroundLabel);
 
         // Example: Adding a button to close the result frame and show the main frame again
@@ -222,3 +359,6 @@ public class Gui {
         new Gui();
     }
 }
+
+
+
