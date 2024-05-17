@@ -23,7 +23,7 @@ public class Firebase {
         writeBenchmarkResult(new BenchmarkInfo("CPU",100,1));
     }
     public static void writeBenchmarkResult(BenchmarkInfo benchmarkInfo) throws Exception {
-        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Florin\\IdeaProjects\\DC-PROJECT\\resources\\firebase\\serviceAccountKey.json");
+        FileInputStream serviceAccount = new FileInputStream("resources/firebase/serviceAccountKey.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -45,14 +45,14 @@ public class Firebase {
         data.put("CPU", computerIdentifier.getCpu());
         data.put("GPU", computerIdentifier.getGpu());
         data.put("RAM", computerIdentifier.getRam());
-        ApiFuture<WriteResult> result = docRef.set(data);
+        docRef.set(data);
 
-        docRef = db.collection("users").document(computerIdentifier.getUUID()).collection("benchmarks").document(SystemSpecs.generateUUID());
+        docRef = db.collection("users").document(computerIdentifier.getUUID()).collection("benchmarks").document(benchmarkInfo.getBenchmarkName());
         data = new HashMap<>();
-        data.put("Benchmark Name", benchmarkInfo.getBenchmarkName());
+        //data.put("Benchmark Name", benchmarkInfo.getBenchmarkName());
         data.put("Score", benchmarkInfo.getScore());
         data.put("Time", benchmarkInfo.getTime());
-        result = docRef.set(data);
+        ApiFuture<WriteResult> result = docRef.set(data);
         // ...
         // result.get() blocks on response
         System.out.println("Update time : " + result.get().getUpdateTime());
