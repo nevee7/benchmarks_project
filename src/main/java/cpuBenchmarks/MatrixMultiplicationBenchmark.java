@@ -3,6 +3,15 @@ package cpuBenchmarks;
 import java.util.Random;
 
 public class MatrixMultiplicationBenchmark {
+    double score = 0;
+
+    public void computeScore(double time, long operationNumber){
+        this.score = (double) operationNumber / (time);
+    }
+
+    public double getScore(){
+        return score;
+    }
 
     // Function to multiply two matrices
     public static int[][] multiply(int[][] a, int[][] b) {
@@ -38,6 +47,10 @@ public class MatrixMultiplicationBenchmark {
 
         // Output the size of matrices and elapsed time
         System.out.println("Matrix multiplication of size " + size + "x" + size + " took " + elapsedTime + " miliseconds");
+
+        MatrixMultiplicationBenchmark benchmark = new MatrixMultiplicationBenchmark();
+        benchmark.computeScore(elapsedTime,size);
+        System.out.println("Score: " + benchmark.getScore());
     }
 
     // Helper function to generate a random matrix of given dimensions
