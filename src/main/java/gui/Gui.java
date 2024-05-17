@@ -100,16 +100,11 @@ public class Gui {
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Use FlowLayout with vertical alignment
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        // Add CPU details components to the panel
-        JLabel cpuLabel = new JLabel("CPU Details");
-        cpuLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        cpuLabel.setPreferredSize(new Dimension(width - 40, 30)); // Set preferred size
-        panel.add(cpuLabel);
-
-        // Add buttons for CPU details with smaller dimensions
-        JButton button1 = createButton("Button 1");
+        // Add buttons for CPU details with specific positions and sizes
+        JButton button1 = createButton("FIBONACCI SEQUENCE");
+        button1.setBounds(60, 240, 400, 50); // Set position and size
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Hide the CPU frame
@@ -118,10 +113,10 @@ public class Gui {
                 showButton1Frame();
             }
         });
-        button1.setPreferredSize(new Dimension(80, 30)); // Set button size
         panel.add(button1);
 
-        JButton button2 = createButton("Button 2");
+        JButton button2 = createButton("ARITHMETIC OPS");
+        button2.setBounds(60, 310, 400, 50); // Set position and size
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Hide the CPU frame
@@ -130,10 +125,10 @@ public class Gui {
                 showButton2Frame();
             }
         });
-        button2.setPreferredSize(new Dimension(80, 30)); // Set button size
         panel.add(button2);
 
-        JButton button3 = createButton("Button 3");
+        JButton button3 = createButton("PI DIGIT COMPUTATION");
+        button3.setBounds(60, 380, 400, 50); // Set position and size
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Hide the CPU frame
@@ -142,10 +137,10 @@ public class Gui {
                 showButton3Frame();
             }
         });
-        button3.setPreferredSize(new Dimension(80, 30)); // Set button size
         panel.add(button3);
 
-        JButton button4 = createButton("Button 4");
+        JButton button4 = createButton("MATRIX MULTIPLICATION");
+        button4.setBounds(60, 450, 400, 50); // Set position and size
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Hide the CPU frame
@@ -154,11 +149,11 @@ public class Gui {
                 showButton4Frame();
             }
         });
-        button4.setPreferredSize(new Dimension(80, 30)); // Set button size
         panel.add(button4);
 
         // Example: Adding a button to close the CPU frame and show the main frame again
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = createButton("CLOSE");
+        closeButton.setBounds(60, 550, 400, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cpuFrame.dispose();
@@ -249,7 +244,6 @@ public class Gui {
 
 
 
-
     private void showResultFrame(int width, int height) {
         resultFrame = new JFrame("Results");
         int widthRes = 1041;
@@ -281,21 +275,34 @@ public class Gui {
 
     private void showGPUFrame(int width, int height) {
         gpuFrame = new JFrame("GPU Details");
-        int widthGPU = 1041;
-        int heightGPU = 704;
-        gpuFrame.setSize(width, height);
         gpuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        gpuFrame.setSize(width, height);
         gpuFrame.setLocationRelativeTo(null);
-        gpuFrame.setVisible(true);
 
-        // Add GPU details components to this frame
-        JLabel gpuLabel = new JLabel("GPU Details");
-        gpuLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gpuFrame.add(gpuLabel, BorderLayout.CENTER);
+        // Create a JPanel to hold the background image and buttons
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "imageGPU1.png");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Use FlowLayout with vertical alignment
 
-        // Add background image
-        JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "imageGPU1.png", widthGPU, heightGPU);
-        gpuFrame.add(backgroundLabel);
+        // Add buttons for GPU details with smaller dimensions
+        JButton button1 = createButton("Button 1");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Hide the GPU frame
+                gpuFrame.setVisible(false);
+                // Show the Button 1 frame
+                showButton1GPUFrame();
+            }
+        });
+        button1.setPreferredSize(new Dimension(80, 30)); // Set button size
+        panel.add(button1);
 
         // Example: Adding a button to close the GPU frame and show the main frame again
         JButton closeButton = new JButton("Close");
@@ -305,7 +312,30 @@ public class Gui {
                 frame.setVisible(true);
             }
         });
-        gpuFrame.add(closeButton, BorderLayout.SOUTH);
+
+        panel.add(closeButton);
+
+        gpuFrame.setContentPane(panel); // Set the panel as the content pane
+        gpuFrame.setVisible(true);
+    }
+
+    private void showButton1GPUFrame() {
+        JFrame button1GPUFrame = new JFrame("Button 1 Frame");
+        button1GPUFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        button1GPUFrame.setSize(300, 200); // Set size as needed
+        button1GPUFrame.setLocationRelativeTo(gpuFrame); // Position relative to GPU frame
+
+        // Example: Adding a button to close the Button 1 frame and show the GPU frame again
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1GPUFrame.dispose();
+                gpuFrame.setVisible(true); // Show the GPU frame again
+            }
+        });
+        button1GPUFrame.add(closeButton);
+
+        button1GPUFrame.setVisible(true);
     }
 
     private void playAudio(String filePath, boolean loop, int loopCount) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -327,7 +357,7 @@ public class Gui {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(getBackground());
-                g2.setComposite(AlphaComposite.SrcOver.derive(0.7f)); // Set the transparency here
+                g2.setComposite(AlphaComposite.SrcOver.derive(0.8f)); // Set the transparency here
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
                 g2.dispose();
 
@@ -337,6 +367,7 @@ public class Gui {
 
         transparentButton.setContentAreaFilled(false); // Ensure that the button doesn't paint its background
         transparentButton.setBorderPainted(false); // Remove the border
+        transparentButton.setFocusable(false);
 
         // Set a larger font for the button text
         Font buttonFont = new Font("Dreaming Outloud Pro", Font.BOLD, 18); // You can adjust the size (18) as needed
