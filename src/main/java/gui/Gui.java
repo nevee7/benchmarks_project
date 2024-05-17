@@ -169,7 +169,7 @@ public class Gui {
     private void showButton1Frame() {
         JFrame button1Frame = new JFrame("Button 1 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -188,7 +188,7 @@ public class Gui {
     private void showButton2Frame() {
         JFrame button1Frame = new JFrame("Button 2 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -207,7 +207,7 @@ public class Gui {
     private void showButton3Frame() {
         JFrame button1Frame = new JFrame("Button 3 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -226,7 +226,7 @@ public class Gui {
     private void showButton4Frame() {
         JFrame button1Frame = new JFrame("Button 4 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -323,7 +323,7 @@ public class Gui {
     private void showButton1GPUFrame() {
         JFrame button1GPUFrame = new JFrame("Button 1 Frame");
         button1GPUFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1GPUFrame.setSize(300, 200); // Set size as needed
+        button1GPUFrame.setSize(1041, 704); // Set size as needed
         button1GPUFrame.setLocationRelativeTo(gpuFrame); // Position relative to GPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the GPU frame again
