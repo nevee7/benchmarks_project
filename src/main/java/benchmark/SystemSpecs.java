@@ -1,14 +1,14 @@
 package benchmark;
 
-import java.io.*;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
-import java.util.Arrays;
-import java.util.UUID;
-import com.sun.jna.platform.win32.Advapi32;
 import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.WinReg;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
+import java.util.UUID;
 
 public class SystemSpecs {
     static String computerUUID;
@@ -48,7 +48,7 @@ public class SystemSpecs {
             cpuInfo.append("This method is for Windows only.");
         }
 
-        return cpuInfo.toString().replaceAll("GenuineIntel","").trim();
+        return cpuInfo.toString().replaceAll("GenuineIntel ","").replaceAll("AuthenticAMD ","");
     }
     public static String getRamCapacity(){
         // Use platform-specific MXBean for other OS (less reliable)

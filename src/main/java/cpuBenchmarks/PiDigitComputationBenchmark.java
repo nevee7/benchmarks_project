@@ -4,8 +4,18 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import benchmark.BenchmarkInfo;
 
 public class PiDigitComputationBenchmark {
+    double score = 0;
+
+    public void computeScore(double time, long operationNumber){
+        this.score = (double) operationNumber / (time) * 100;
+    }
+
+    public double getScore(){
+        return score;
+    }
 
     // Computes pi using the Bailey–Borwein–Plouffe (BBP) formula
     public static BigDecimal computePi(int numDigits) {
@@ -59,5 +69,10 @@ public class PiDigitComputationBenchmark {
         System.out.println("Computed " + numDigits + " digits of pi:");
         System.out.println(pi);
         System.out.println("Time taken: " + elapsedTimeMilliseconds + " milliseconds");
+
+        PiDigitComputationBenchmark benchmark = new PiDigitComputationBenchmark();
+        benchmark.computeScore(elapsedTimeMilliseconds,numDigits);
+        System.out.println("Score: " + benchmark.getScore());
+
     }
 }
