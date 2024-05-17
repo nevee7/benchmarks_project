@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import benchmark.BenchmarkInfo;
 
 public class PiDigitComputationBenchmark {
     double score = 0;
 
     public void computeScore(double time, long operationNumber){
-        this.score = (double) operationNumber / (time);
+        this.score = (double) operationNumber / (time) * 100;
     }
 
     public double getScore(){

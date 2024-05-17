@@ -1,5 +1,7 @@
 package cpuBenchmarks;
 
+import benchmark.BenchmarkInfo;
+
 public class FibonacciBenchmark {
     double score = 0;
 
@@ -20,7 +22,7 @@ public class FibonacciBenchmark {
         }
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         int n = 47; // Choose the Fibonacci number to calculate (adjust as needed)
         long startTime = System.nanoTime(); // Record start time
 

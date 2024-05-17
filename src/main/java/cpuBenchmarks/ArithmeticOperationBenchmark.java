@@ -13,6 +13,10 @@ public class ArithmeticOperationBenchmark {
         return score;
     }
 
+    public static void main(String[] args) {
+        ArithmeticOperationBenchmark B1 = new ArithmeticOperationBenchmark();
+        B1.startBenchmark();
+    }
     public BenchmarkInfo startBenchmark() {
         long operationNumber = 1_000_000_000; // Number of arithmetic operations to perform (adjust as needed)
 
