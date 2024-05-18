@@ -17,9 +17,6 @@ public class SystemSpecs {
         return uuid.toString();
     }
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(SystemSpecs.getCpuModel());
-    }
     public static String getOSVersion(){
         return System.getProperty("os.name");
     }
@@ -64,7 +61,7 @@ public class SystemSpecs {
         BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
         while ((line = input.readLine()) != null) {
             if (line.contains("AMD") || line.contains("NVIDIA") || line.contains("INTEL"))
-                return line;
+                return line.trim();
         }
         input.close();
 
