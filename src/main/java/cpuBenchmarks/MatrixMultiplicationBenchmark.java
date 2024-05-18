@@ -1,12 +1,13 @@
 package cpuBenchmarks;
 
 import java.util.Random;
+import benchmark.BenchmarkInfo;
 
 public class MatrixMultiplicationBenchmark {
     double score = 0;
 
     public void computeScore(double time, long operationNumber){
-        this.score = (double) operationNumber / (time);
+        this.score = (double) operationNumber / (time) * 7900;
     }
 
     public double getScore(){
@@ -32,7 +33,7 @@ public class MatrixMultiplicationBenchmark {
         return result;
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         int size = 1200; // Size of the square matrices (adjust as needed)
         int[][] matrixA = generateRandomMatrix(size, size);
         int[][] matrixB = generateRandomMatrix(size, size);
@@ -51,6 +52,7 @@ public class MatrixMultiplicationBenchmark {
         MatrixMultiplicationBenchmark benchmark = new MatrixMultiplicationBenchmark();
         benchmark.computeScore(elapsedTime,size);
         System.out.println("Score: " + benchmark.getScore());
+
     }
 
     // Helper function to generate a random matrix of given dimensions

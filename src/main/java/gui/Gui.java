@@ -85,7 +85,7 @@ public class Gui {
     }
 
     private void showCPUFrame(int width, int height) {
-        cpuFrame = new JFrame("CPU Details");
+        cpuFrame = new JFrame("CPU Benchmarks");
         cpuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cpuFrame.setSize(width, height);
         cpuFrame.setLocationRelativeTo(null);
@@ -169,7 +169,7 @@ public class Gui {
     private void showButton1Frame() {
         JFrame button1Frame = new JFrame("Button 1 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -188,7 +188,7 @@ public class Gui {
     private void showButton2Frame() {
         JFrame button1Frame = new JFrame("Button 2 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -207,7 +207,7 @@ public class Gui {
     private void showButton3Frame() {
         JFrame button1Frame = new JFrame("Button 3 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -226,7 +226,7 @@ public class Gui {
     private void showButton4Frame() {
         JFrame button1Frame = new JFrame("Button 4 Frame");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(300, 200); // Set size as needed
+        button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the CPU frame again
@@ -274,7 +274,7 @@ public class Gui {
     }
 
     private void showGPUFrame(int width, int height) {
-        gpuFrame = new JFrame("GPU Details");
+        gpuFrame = new JFrame("GPU Benchmarks");
         gpuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         gpuFrame.setSize(width, height);
         gpuFrame.setLocationRelativeTo(null);
@@ -289,10 +289,11 @@ public class Gui {
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Use FlowLayout with vertical alignment
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        // Add buttons for GPU details with smaller dimensions
-        JButton button1 = createButton("Button 1");
+        // Add buttons for GPU details with specific positions and sizes
+        JButton button1 = createButton("GENERATING 3D MODELS AND FPS COUNTING");
+        button1.setBounds(60, 230, 480, 60); // Set position and size
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Hide the GPU frame
@@ -301,28 +302,28 @@ public class Gui {
                 showButton1GPUFrame();
             }
         });
-        button1.setPreferredSize(new Dimension(80, 30)); // Set button size
         panel.add(button1);
 
         // Example: Adding a button to close the GPU frame and show the main frame again
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = createButton("Close");
+        closeButton.setBounds(60, 550, 400, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gpuFrame.dispose();
                 frame.setVisible(true);
             }
         });
-
         panel.add(closeButton);
 
         gpuFrame.setContentPane(panel); // Set the panel as the content pane
         gpuFrame.setVisible(true);
     }
 
+
     private void showButton1GPUFrame() {
         JFrame button1GPUFrame = new JFrame("Button 1 Frame");
         button1GPUFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1GPUFrame.setSize(300, 200); // Set size as needed
+        button1GPUFrame.setSize(1041, 704); // Set size as needed
         button1GPUFrame.setLocationRelativeTo(gpuFrame); // Position relative to GPU frame
 
         // Example: Adding a button to close the Button 1 frame and show the GPU frame again
