@@ -12,29 +12,33 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+import java.util.*;
 
 public class Firebase {
     public static void main(String[] args) throws Exception {
-        SystemSpecs.isFirstRun();
+        initializeFirebase();
         writeBenchmarkResult(new BenchmarkInfo("CPU",100,1),new ComputerIdentifier());
-        System.out.println(getMyData("CPU",new ComputerIdentifier()));
+        //System.out.println(getMyData("CPU",new ComputerIdentifier()));
+        //System.out.println(getAllData("CPU").indexOf(156.3));
     }
-    public static void writeBenchmarkResult(BenchmarkInfo benchmarkInfo, ComputerIdentifier computerIdentifier) throws Exception {
+
+    public static void initializeFirebase() throws IOException {
+        SystemSpecs.isFirstRun();
         FileInputStream serviceAccount = new FileInputStream("resources/firebase/serviceAccountKey.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
         FirebaseApp.initializeApp(options);
-
-        writeData(benchmarkInfo,computerIdentifier);
     }
 
-    private static void writeData(BenchmarkInfo benchmarkInfo, ComputerIdentifier computerIdentifier) throws ExecutionException, InterruptedException, IOException {
+    public static void writeBenchmarkResult(BenchmarkInfo benchmarkInfo, ComputerIdentifier computerIdentifier) throws Exception {
+
+        writeData(benchmarkInfo);
+    }
+
+    public static void writeData(BenchmarkInfo benchmarkInfo) throws Exception {
+        ComputerIdentifier computerIdentifier = new ComputerIdentifier();
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection("users").document(computerIdentifier.getUUID());
 
@@ -55,7 +59,8 @@ public class Firebase {
         // result.get() blocks execution until response
         result.get();
     }
-    public static Double getMyData(String benchmarkName, ComputerIdentifier computerIdentifier){
+
+    public static Double getMyData(String benchmarkName, ComputerIdentifier computerIdentifier) {
 
         Map<String, Object> data = null;
         try {
@@ -72,37 +77,46 @@ public class Firebase {
         return (Double) data.get("Score");
     }
 
-    public static void getAllData(){
+    public static List<Double> getAllData(String benchmarkName) {
+        List<Double> data = new ArrayList<>();
         try {
-            List<QueryDocumentSnapshot> documents = getQueryDocumentSnapshots();
+            Firestore db = FirestoreClient.getFirestore();
 
-            // Iterate through all the documents
-            for (QueryDocumentSnapshot document : documents) {
-                System.out.println("Document ID: " + document.getId());
-                System.out.println("Document Data: " + document.getData());
+            // Reference to the users collection
+            CollectionReference usersCollection = db.collection("users");
+
+            // Asynchronously retrieve all users
+            ApiFuture<QuerySnapshot> query = usersCollection.get();
+
+            // QuerySnapshot contains the results of the query
+            QuerySnapshot querySnapshot = query.get();
+
+            // Get a list of all user documents in the collection
+            List<QueryDocumentSnapshot> users = querySnapshot.getDocuments();
+
+            // Iterate through each user document
+            for (QueryDocumentSnapshot userDocument : users) {
+                String userId = userDocument.getId();
+                // Access the benchmark/benchmark_type document for each user
+                DocumentReference benchmarkDocRef = usersCollection
+                        .document(userId)
+                        .collection("benchmarks")
+                        .document(benchmarkName);
+
+                // Asynchronously retrieve the benchmark/benchmark_type document
+                ApiFuture<DocumentSnapshot> benchmarkFuture = benchmarkDocRef.get();
+                DocumentSnapshot benchmarkDocument = benchmarkFuture.get();
+
+                // Check if the document exists and print its data
+                if (benchmarkDocument.exists()) {
+                    data.add((Double) benchmarkDocument.getData().get("Score"));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static List<QueryDocumentSnapshot> getQueryDocumentSnapshots() throws InterruptedException, ExecutionException {
-        Firestore db = FirestoreClient.getFirestore();
-
-        CollectionReference collectionRef = db.collection("your-collection");
-
-        // Asynchronously retrieve all documents
-        ApiFuture<QuerySnapshot> query = collectionRef.get();
-
-        // QuerySnapshot contains the results of the query
-        QuerySnapshot querySnapshot = query.get();
-
-        // Get a list of all documents in the collection
-        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-        return documents;
+        data.sort(Collections.reverseOrder());
+        return data;
     }
 }
-
-
-
 
