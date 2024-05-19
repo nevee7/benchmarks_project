@@ -1,6 +1,10 @@
 package gui;
 
 import benchmark.BenchmarkInfo;
+import cpuBenchmarks.ArithmeticOperationBenchmark;
+import cpuBenchmarks.FibonacciBenchmark;
+import cpuBenchmarks.MatrixMultiplicationBenchmark;
+import cpuBenchmarks.PiDigitComputationBenchmark;
 import firebase.Firebase;
 import org.lwjglb.game.Main;
 import org.lwjglb.game.Warmup;
@@ -36,6 +40,7 @@ public class Gui {
     private JFrame cpuFrame;
 
     public Gui() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        Firebase.initializeFirebase();
         playAudio("resources" + File.separator + "gui" + File.separator + "melodie1.wav", true, 1000);
 
         frame = new JFrame("SRESSING TITANS");
@@ -191,7 +196,13 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-              //functionality
+                FibonacciBenchmark fibonacciBenchmark = new FibonacciBenchmark();
+                BenchmarkInfo data = fibonacciBenchmark.startBenchmark();
+                try {
+                    Firebase.writeData(data);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         panel.add(specificButton);
@@ -230,7 +241,13 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Perform specific functionality
+                ArithmeticOperationBenchmark arithmeticOperationBenchmark = new ArithmeticOperationBenchmark();
+                BenchmarkInfo data = arithmeticOperationBenchmark.startBenchmark();
+                try {
+                    Firebase.writeData(data);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         panel.add(specificButton);
@@ -269,7 +286,13 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //functionality
+                PiDigitComputationBenchmark piDigitComputationBenchmark = new PiDigitComputationBenchmark();
+                BenchmarkInfo data = piDigitComputationBenchmark.startBenchmark();
+                try {
+                    Firebase.writeData(data);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         panel.add(specificButton);
@@ -308,7 +331,13 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Perform specific functionality
+                MatrixMultiplicationBenchmark matrixMultiplicationBenchmark = new MatrixMultiplicationBenchmark();
+                BenchmarkInfo data = matrixMultiplicationBenchmark.startBenchmark();
+                try {
+                    Firebase.writeData(data);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         panel.add(specificButton);

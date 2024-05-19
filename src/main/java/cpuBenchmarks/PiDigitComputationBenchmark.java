@@ -54,8 +54,8 @@ public class PiDigitComputationBenchmark {
         return result;
     }
 
-    public static void main(String[] args) {
-        int numDigits = 4000; // Number of digits of pi to compute (adjust as needed)
+    public BenchmarkInfo startBenchmark() {
+        int numDigits = 7000; // Number of digits of pi to compute (adjust as needed)
 
         long startTime = System.nanoTime(); // Record start time
         BigDecimal pi = computePi(numDigits);
@@ -73,6 +73,6 @@ public class PiDigitComputationBenchmark {
         PiDigitComputationBenchmark benchmark = new PiDigitComputationBenchmark();
         benchmark.computeScore(elapsedTimeMilliseconds,numDigits);
         System.out.println("Score: " + benchmark.getScore());
-
+        return new BenchmarkInfo(this.getClass().getSimpleName(),benchmark.getScore(),0);
     }
 }

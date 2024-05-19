@@ -33,7 +33,7 @@ public class MatrixMultiplicationBenchmark {
         return result;
     }
 
-    public void main(String[] args) {
+    public BenchmarkInfo startBenchmark() {
         int size = 1200; // Size of the square matrices (adjust as needed)
         int[][] matrixA = generateRandomMatrix(size, size);
         int[][] matrixB = generateRandomMatrix(size, size);
@@ -52,7 +52,7 @@ public class MatrixMultiplicationBenchmark {
         MatrixMultiplicationBenchmark benchmark = new MatrixMultiplicationBenchmark();
         benchmark.computeScore(elapsedTime,size);
         System.out.println("Score: " + benchmark.getScore());
-
+        return new BenchmarkInfo(this.getClass().getSimpleName(),benchmark.getScore(),0);
     }
 
     // Helper function to generate a random matrix of given dimensions
