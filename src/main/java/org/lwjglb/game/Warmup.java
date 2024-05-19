@@ -49,10 +49,10 @@ public class Warmup implements IAppLogic {
 
     public static void main(String[] args) {
         Warmup main = new Warmup();
-        main.runMain();
+        main.runWarmup();
     }
 
-    public BenchmarkInfo runMain() {
+    public BenchmarkInfo runWarmup() {
         Warmup main = new Warmup();
         int totalRuns = 1;
         int batchSize = 1;

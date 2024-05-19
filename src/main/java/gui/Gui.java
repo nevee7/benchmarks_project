@@ -3,6 +3,7 @@ package gui;
 import benchmark.BenchmarkInfo;
 import firebase.Firebase;
 import org.lwjglb.game.Main;
+import org.lwjglb.game.Warmup;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -389,8 +390,8 @@ public class Gui {
         panel.add(button1);
 
         // Adding a button to close the GPU frame and show the main frame again
-        JButton closeButton = createButton("Close");
-        closeButton.setBounds(60, 550, 200, 50); // Set position and size
+        JButton closeButton = createButton("Go to the previous menu");
+        closeButton.setBounds(60, 550, 300, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gpuFrame.dispose();
@@ -423,7 +424,18 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Adding a button for some functionality specific to this frame
-        JButton specificButton = createButton("START");
+        JButton warmupButton = createButton("Start Warm-Up");
+        warmupButton.setBounds(50, 330, 250, 55); // Set position and size
+        warmupButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Warmup main = new Warmup();
+                main.runWarmup();
+            }
+        });
+        panel.add(warmupButton);
+
+        // Adding a button for some functionality specific to this frame
+        JButton specificButton = createButton("Start Benchmark");
         specificButton.setBounds(50, 440, 250, 55); // Set position and size
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -440,8 +452,8 @@ public class Gui {
         panel.add(specificButton);
 
         // Add a button to close this frame and show the GPU frame again
-        JButton closeButton = createButton("Close");
-        closeButton.setBounds(50, 550, 200, 55); // Set position and size
+        JButton closeButton = createButton("Go to the previous menu");
+        closeButton.setBounds(50, 550, 300, 55); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button1GPUFrame.dispose();
