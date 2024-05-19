@@ -1,5 +1,7 @@
 package gui;
 
+import org.lwjglb.game.Main;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -186,7 +188,7 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Perform specific functionality
+              //functionality
             }
         });
         panel.add(specificButton);
@@ -264,7 +266,7 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Perform specific functionality
+                //functionality
             }
         });
         panel.add(specificButton);
@@ -401,7 +403,7 @@ public class Gui {
 
 
     private void showButton1GPUFrame() {
-        JFrame button1GPUFrame = new JFrame("Button 1 Frame");
+        JFrame button1GPUFrame = new JFrame("You entered Trigon's hell");
         button1GPUFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         button1GPUFrame.setSize(1041, 704); // Set size as needed
         button1GPUFrame.setLocationRelativeTo(gpuFrame); // Position relative to GPU frame
@@ -423,7 +425,8 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55); // Set position and size
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Perform specific functionality
+                Main main = new Main();
+                main.runMain();
             }
         });
         panel.add(specificButton);
