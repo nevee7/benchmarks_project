@@ -1,13 +1,11 @@
 package benchmark;
 
-import java.io.IOException;
-
 public class ComputerIdentifier {
-    String os;
-    String cpu;
-    String gpu;
-    String ram;
-    String UUID;
+    private String os;
+    private String cpu;
+    private String gpu;
+    private String ram;
+    private String UUID;
     public ComputerIdentifier() throws Exception {
         this.os = SystemSpecs.getOSVersion();
         this.cpu = SystemSpecs.getCpuModel();

@@ -1,5 +1,7 @@
 package gui;
 
+import benchmark.BenchmarkInfo;
+import firebase.Firebase;
 import org.lwjglb.game.Main;
 
 import java.awt.*;
@@ -426,7 +428,13 @@ public class Gui {
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main main = new Main();
-                main.runMain();
+                BenchmarkInfo data = main.runMain();
+                try {
+                    Firebase.initializeFirebase();
+                    Firebase.writeData(data);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         panel.add(specificButton);
