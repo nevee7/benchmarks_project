@@ -57,14 +57,20 @@ public class SystemSpecs {
     }
     public static String getGPUModel() throws IOException {
         String line;
-        Process p = Runtime.getRuntime().exec("wmic PATH Win32_videocontroller GET description");
-        BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        while ((line = input.readLine()) != null) {
-            if (line.contains("AMD") || line.contains("NVIDIA") || line.contains("INTEL"))
-                return line.trim();
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("windows")) {
+            try {
+                Process p = Runtime.getRuntime().exec("wmic PATH Win32_videocontroller GET description");
+                BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                while ((line = input.readLine()) != null) {
+                    if (line.contains("AMD") || line.contains("NVIDIA") || line.contains("INTEL"))
+                        return line.trim();
+                }
+                input.close();
+            } catch (Exception e) {
+            e.printStackTrace();
+            }
         }
-        input.close();
-
         return null;
     }
 
@@ -72,7 +78,9 @@ public class SystemSpecs {
         String REGISTRY_PATH = "Software\\StressingTitans";
         String REGISTRY_KEY = "UUID";
         String UUID = generateUUID();
-        try {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("windows"))
+            try {
             if (!Advapi32Util.registryKeyExists(WinReg.HKEY_CURRENT_USER, REGISTRY_PATH)) {
                 // The registry key does not exist, meaning it is the first run
                 Advapi32Util.registryCreateKey(WinReg.HKEY_CURRENT_USER, REGISTRY_PATH);
@@ -82,9 +90,11 @@ public class SystemSpecs {
                 // The registry key exists, check if the FirstRun value exists
                 computerUUID = Advapi32Util.registryGetStringValue(WinReg.HKEY_CURRENT_USER, REGISTRY_PATH, REGISTRY_KEY);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        else
+            computerUUID = "LINUX";
     }
 }
 
