@@ -53,8 +53,20 @@ public class PiDigitComputationBenchmark {
         }
         return result;
     }
-
     public BenchmarkInfo startBenchmark() {
+        double benchmarkInfo1;
+        double benchmarkInfo2;
+        double benchmarkInfo3;
+        PiDigitComputationBenchmark B1 = new PiDigitComputationBenchmark();
+        for (int k = 0; k < 5; k++) {
+            B1.runBenchmark();
+        }
+        benchmarkInfo1 = B1.runBenchmark();
+        benchmarkInfo2 = B1.runBenchmark();
+        benchmarkInfo3 = B1.runBenchmark();
+        return new BenchmarkInfo(this.getClass().getSimpleName(),(benchmarkInfo1+benchmarkInfo2+benchmarkInfo3)/3,0);
+    }
+    public double runBenchmark() {
         int numDigits = 7000; // Number of digits of pi to compute (adjust as needed)
 
         long startTime = System.nanoTime(); // Record start time
@@ -65,14 +77,10 @@ public class PiDigitComputationBenchmark {
         // Convert elapsed time from nanoseconds to milliseconds
         double elapsedTimeMilliseconds = elapsedTime / 1_000_000.0;
 
-        // Output the computed pi and elapsed time in milliseconds
-        System.out.println("Computed " + numDigits + " digits of pi:");
-        System.out.println(pi);
-        System.out.println("Time taken: " + elapsedTimeMilliseconds + " milliseconds");
-
         PiDigitComputationBenchmark benchmark = new PiDigitComputationBenchmark();
         benchmark.computeScore(elapsedTimeMilliseconds,numDigits);
         System.out.println("Score: " + benchmark.getScore());
-        return new BenchmarkInfo(this.getClass().getSimpleName(),benchmark.getScore(),0);
+        score = benchmark.getScore();
+        return score;
     }
 }

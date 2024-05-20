@@ -28,8 +28,20 @@ public class FibonacciBenchmark {
             return fibonacci(n - 1) + fibonacci(n - 2);
         }
     }
-
     public BenchmarkInfo startBenchmark() {
+        double benchmarkInfo1;
+        double benchmarkInfo2;
+        double benchmarkInfo3;
+        FibonacciBenchmark B1 = new FibonacciBenchmark();
+        for (int k = 0; k < 5; k++) {
+            B1.runBenchmark();
+        }
+        benchmarkInfo1 = B1.runBenchmark();
+        benchmarkInfo2 = B1.runBenchmark();
+        benchmarkInfo3 = B1.runBenchmark();
+        return new BenchmarkInfo(this.getClass().getSimpleName(),(benchmarkInfo1+benchmarkInfo2+benchmarkInfo3)/3,0);
+    }
+    public double runBenchmark() {
         int n = 47; // Choose the Fibonacci number to calculate (adjust as needed)
         long startTime = System.nanoTime(); // Record start time
 
@@ -41,6 +53,6 @@ public class FibonacciBenchmark {
 
         computeScore(result, elapsedTime);
         System.out.println("Score: " + this.getScore());
-        return new BenchmarkInfo(this.getClass().getSimpleName(),this.getScore(),0);
+        return this.getScore();
     }
 }

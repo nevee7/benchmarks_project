@@ -32,8 +32,21 @@ public class MatrixMultiplicationBenchmark {
 
         return result;
     }
-
     public BenchmarkInfo startBenchmark() {
+        double benchmarkInfo1;
+        double benchmarkInfo2;
+        double benchmarkInfo3;
+        MatrixMultiplicationBenchmark B1 = new MatrixMultiplicationBenchmark();
+        for (int k = 0; k < 5; k++) {
+            B1.runBenchmark();
+        }
+
+        benchmarkInfo1 = B1.runBenchmark();
+        benchmarkInfo2 = B1.runBenchmark();
+        benchmarkInfo3 = B1.runBenchmark();
+        return new BenchmarkInfo(this.getClass().getSimpleName(),(benchmarkInfo1+benchmarkInfo2+benchmarkInfo3)/3,0);
+    }
+    public double runBenchmark() {
         int size = 1200; // Size of the square matrices (adjust as needed)
         int[][] matrixA = generateRandomMatrix(size, size);
         int[][] matrixB = generateRandomMatrix(size, size);
@@ -47,12 +60,12 @@ public class MatrixMultiplicationBenchmark {
         long elapsedTime = (endTime - startTime)/1000000; // Calculate elapsed time in nanoseconds
 
         // Output the size of matrices and elapsed time
-        System.out.println("Matrix multiplication of size " + size + "x" + size + " took " + elapsedTime + " miliseconds");
+        //System.out.println("Matrix multiplication of size " + size + "x" + size + " took " + elapsedTime + " miliseconds");
 
         MatrixMultiplicationBenchmark benchmark = new MatrixMultiplicationBenchmark();
         benchmark.computeScore(elapsedTime,size);
         System.out.println("Score: " + benchmark.getScore());
-        return new BenchmarkInfo(this.getClass().getSimpleName(),benchmark.getScore(),0);
+        return benchmark.score;
     }
 
     // Helper function to generate a random matrix of given dimensions

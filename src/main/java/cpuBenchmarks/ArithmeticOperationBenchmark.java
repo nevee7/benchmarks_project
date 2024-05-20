@@ -13,11 +13,21 @@ public class ArithmeticOperationBenchmark {
         return score;
     }
 
-    public static void main(String[] args) {
-        ArithmeticOperationBenchmark B1 = new ArithmeticOperationBenchmark();
-        B1.startBenchmark();
-    }
     public BenchmarkInfo startBenchmark() {
+        double benchmarkInfo1;
+        double benchmarkInfo2;
+        double benchmarkInfo3;
+        ArithmeticOperationBenchmark B1 = new ArithmeticOperationBenchmark();
+        for (int k = 0; k < 5; k++) {
+            B1.runBenchmark();
+        }
+        benchmarkInfo1 = B1.runBenchmark();
+        benchmarkInfo2 = B1.runBenchmark();
+        benchmarkInfo3 = B1.runBenchmark();
+        return new BenchmarkInfo(this.getClass().getSimpleName(),(benchmarkInfo1+benchmarkInfo2+benchmarkInfo3)/3,0);
+    }
+
+    public double runBenchmark() {
         long operationNumber = 1_000_000_000; // Number of arithmetic operations to perform (adjust as needed)
 
         // Benchmark addition
@@ -33,13 +43,10 @@ public class ArithmeticOperationBenchmark {
         long elapsedTimeMultiplication = (endTimeMultiplication - startTimeMultiplication) / 1_000_000; // Convert nanoseconds to milliseconds
 
         // Output benchmark results
-        System.out.println("Arithmetic Operation Benchmark:");
-        System.out.println("Number of operations: " + operationNumber);
-        System.out.println("Time taken for addition: " + elapsedTimeAddition + " milliseconds");
-        System.out.println("Time taken for multiplication: " + elapsedTimeMultiplication + " milliseconds");
         computeScore(elapsedTimeAddition,elapsedTimeMultiplication,operationNumber);
-        long time = elapsedTimeAddition + elapsedTimeMultiplication;
-        return new BenchmarkInfo(this.getClass().getSimpleName(),score,time);
+        score = score / 500;
+        System.out.println("Score: " + score);
+        return score;
     }
 
     // Perform addition operations
