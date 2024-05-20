@@ -9,21 +9,20 @@ import java.util.List;
 
 public class Engine {
 
-    private List<Double> fpsList = new ArrayList<>(); //to store FPS values
+    private final List<Double> fpsList = new ArrayList<>(); //to store FPS values
 
-    private int runNumber; //the no. of the current run (returned from main)
+    private final int runNumber; //the no. of the current run (returned from main)
 
     public static final int TARGET_UPS =10000;
 
     private final long stopTimeMillis; // To track when to stop
     private final IAppLogic appLogic;
     private final Window window;
-    private Render render;
+    private final Render render;
     private boolean running;
-    private Scene scene;
-    private int targetFps;
-    private int targetUps;
-    private int nrOfFrames;
+    private final Scene scene;
+    private final int targetFps;
+    private final int targetUps;
     public long TimeToClose = 10000;
 
     public Engine(String windowTitle, Window.WindowOptions opts, IAppLogic appLogic, int runNumber) {
@@ -103,7 +102,7 @@ public class Engine {
             if (currentTime > warmUpTime && currentTime - lastFpsPrintTime >= 1000) { // Print FPS every second
                 long elapsedTime = currentTime - startTime;
                 double fps = (totalFrames * 1000.0) / elapsedTime;
-                System.out.println("FPS: " + fps);
+                //System.out.println("FPS: " + fps);
                 fpsList.add(fps);
                 lastFpsPrintTime = currentTime; // Reset last FPS print time
             }

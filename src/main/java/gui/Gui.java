@@ -6,7 +6,7 @@ import cpuBenchmarks.FibonacciBenchmark;
 import cpuBenchmarks.MatrixMultiplicationBenchmark;
 import cpuBenchmarks.PiDigitComputationBenchmark;
 import firebase.Firebase;
-import org.lwjglb.game.Main;
+import org.lwjglb.game.GPUBenchmarky;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -569,14 +569,14 @@ public class Gui {
                 try{
                     button1GPUFrame.setVisible(false);
                     int number = Integer.parseInt(input);
-                    Main main = new Main();
-                    main.setCubesToGenerate(number);
-                    BenchmarkInfo data = main.runMain();
+                    GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+                    GPUBenchmarky.setCubesToGenerate(number);
+                    BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
-                    double finalScore = main.GetFinalScore();
-                    double fps_average=main.GetFPSAverage();
-                    int total_runs=main.GetRunsNumber();
+                    double finalScore = GPUBenchmarky.GetFinalScore();
+                    double fps_average= GPUBenchmarky.GetFPSAverage();
+                    int total_runs= GPUBenchmarky.GetRunsNumber();
                     if (finalScore > 200) {
                         showVictoryFrame(finalScore, fps_average,total_runs);
                     } else if (finalScore > 100) {
@@ -605,14 +605,14 @@ public class Gui {
         specificButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                     button1GPUFrame.setVisible(false);
-                    Main main = new Main();
-                    main.setCubesToGenerate(10000);
-                    BenchmarkInfo data = main.runMain();
+                    GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+                    GPUBenchmarky.setCubesToGenerate(10000);
+                    BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
-                    double finalScore = main.GetFinalScore();
-                    double fps_average=main.GetFPSAverage();
-                    int total_runs=main.GetRunsNumber();
+                    double finalScore = GPUBenchmarky.GetFinalScore();
+                    double fps_average= GPUBenchmarky.GetFPSAverage();
+                    int total_runs= GPUBenchmarky.GetRunsNumber();
                     if (finalScore > 200) {
                         showVictoryFrame(finalScore,fps_average, total_runs);
                     } else if (finalScore > 100) {

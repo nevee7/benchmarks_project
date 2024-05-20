@@ -1,8 +1,5 @@
 package org.lwjglb.game;
 
-import imgui.ImGui;
-import imgui.ImGuiIO;
-import imgui.flag.ImGuiCond;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjglb.engine.*;
@@ -20,7 +17,7 @@ import org.lwjglb.engine.scene.lights.SpotLight;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.*;
 
-public class Main implements IAppLogic {
+public class GPUBenchmarky implements IAppLogic {
 
     private static final float MOUSE_SENSITIVITY = 0.1f;
     private static final float MOVEMENT_SPEED = 0.005f;
@@ -32,13 +29,10 @@ public class Main implements IAppLogic {
     public static int nrOfCubesToGenerate=1;
     private long lastCubeGenerationTime;
 
-    private Entity cubeEntity;
     private Model cubeModel;
-    private LightControls lightControls;
 
-    private static List<Entity> cubes = new ArrayList<>();
+    private static final List<Entity> cubes = new ArrayList<>();
     private static int nrOfCubes = 0;
-    private static int total_no_cubes=0;
 
     private float rotation;
     private float lightAngle;
@@ -47,48 +41,45 @@ public class Main implements IAppLogic {
     private double FPSAverage;
     private int TotalRuns;
 
-    public static void main(String[] args) {
-        Main main = new Main();
-        main.runMain();
+/*    public static void main(String[] args) {
+        GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+        GPUBenchmarky.runMain();
     }
-
+*/ //commented out for no confussion
     public BenchmarkInfo runMain() {
         System.out.println(nrOfCubesToGenerate);
-        Main main = new Main();
+        GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
         int totalRuns = 6;
         TotalRuns=totalRuns;
         int batchSize = 2;
         List<Double> allFpsValues = new ArrayList<>();
 
-        Engine warmup = new Engine("GPU-Benchmark: Warm-Up", new Window.WindowOptions(), main, 0);
+        Engine warmup = new Engine("GPU-Benchmark: Warm-Up", new Window.WindowOptions(), GPUBenchmarky, 0);
         warmup.start();
         warmup.stop();
-        System.out.println("Number of generated cubes in warm-up:  "+ total_no_cubes);
-        total_no_cubes=0;
+        //System.out.println("Number of generated cubes in warm-up:  "+ total_no_cubes);
         cubes.clear();
         nrOfCubes = 0;
 
         for (int i = 0; i < totalRuns; i++) {
-            Engine gameEng = new Engine("GPU-Benchmark:" + (i + 1) + "/" + totalRuns, new Window.WindowOptions(), main, i + 1);
+            Engine gameEng = new Engine("GPU-Benchmark:" + (i + 1) + "/" + totalRuns, new Window.WindowOptions(), GPUBenchmarky, i + 1);
             gameEng.start();
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
-            System.out.println("Number of generated cubes:  "+ total_no_cubes);
-            total_no_cubes=0;
+            //System.out.println("Number of generated cubes:  "+ total_no_cubes);
             cubes.clear();
             nrOfCubes = 0;
 
             if ((i + 1) % batchSize == 0) {
                 List<Double> fpsBatch = allFpsValues.subList(i + 1 - batchSize, i + 1);
-                double averageFps = calculateAverage(fpsBatch);
-                FPSAverage=averageFps;
-                System.out.println("\nAverage FPS after " + (i + 1) + " runs: " + averageFps);
+                FPSAverage= calculateAverage(fpsBatch);
+                //System.out.println("\nAverage FPS after " + (i + 1) + " runs: " + averageFps);
             }
         }
 
         double finalScore = calculateFinalScore(allFpsValues);
         FinalScore=finalScore;
-        System.out.println("\nFinal score: " + finalScore);
+        //System.out.println("\nFinal score: " + finalScore);
         return new BenchmarkInfo("GPU benchmark", finalScore, nrOfCubesToGenerate);
     }
 
@@ -133,7 +124,7 @@ public class Main implements IAppLogic {
         cubeModel = ModelLoader.loadModel("cube-model", "resources/models/cube/cube.obj", scene.getTextureCache());
         scene.addModel(cubeModel);
 
-        cubeEntity = new Entity("cube-entity", cubeModel.getId());
+        Entity cubeEntity = new Entity("cube-entity", cubeModel.getId());
         cubeEntity.setPosition(0, 0f, -10);
         cubeEntity.updateModelMatrix();
         scene.addEntity(cubeEntity);
@@ -147,11 +138,6 @@ public class Main implements IAppLogic {
         Vector3f coneDir = new Vector3f(0, 0, -1);
         sceneLights.getSpotLights().add(new SpotLight(new PointLight(new Vector3f(1, 1, 1), new Vector3f(0, 0, -1.4f), 0.0f), coneDir, 140.0f));
 
-        /*
-        GUI FOR LIGHTS
-         */
-        lightControls = new LightControls(scene);
-        //scene.setGuiInstance(lightControls); //gui for lights
 
         lastCubeGenerationTime = System.currentTimeMillis();
         nrOfCubes++;
@@ -162,10 +148,9 @@ public class Main implements IAppLogic {
         scene.addModel(quadModel);
 
         int numRows = NUM_CHUNKS * 2 + 1;
-        int numCols = numRows;
-        terrainEntities = new Entity[numRows][numCols];
+        terrainEntities = new Entity[numRows][numRows];
         for (int j = 0; j < numRows; j++) {
-            for (int i = 0; i < numCols; i++) {
+            for (int i = 0; i < numRows; i++) {
                 Entity entity = new Entity("TERRAIN_" + j + "_" + i, quadModelId);
                 // Adjust Y position to be lower than the cubes
                 entity.setPosition((j - NUM_CHUNKS) * 10, -10, (i - NUM_CHUNKS) * 10);
@@ -192,7 +177,7 @@ public class Main implements IAppLogic {
 
     @Override
     public void input(Window window, Scene scene, long diffTimeMillis, boolean inputConsumed) {
-        if (inputConsumed) {
+       /* if (inputConsumed) {
             return;
         }
         float move = diffTimeMillis * MOVEMENT_SPEED;
@@ -231,7 +216,7 @@ public class Main implements IAppLogic {
             Vector2f displVec = mouseInput.getDisplVec();
             camera.addRotation((float) Math.toRadians(-displVec.x * MOUSE_SENSITIVITY), (float) Math.toRadians(-displVec.y * MOUSE_SENSITIVITY));
         }
-
+*/
         SceneLights sceneLights = scene.getSceneLights();
         DirLight dirLight = sceneLights.getDirLight();
         double angRad = Math.toRadians(lightAngle);
@@ -241,8 +226,8 @@ public class Main implements IAppLogic {
 
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
-        updateTerrain(scene);
-        rotation += 1.5;
+        //updateTerrain(scene);
+        rotation += 1.5F;
         if (rotation > 360) {
             rotation = 0;
         }
@@ -267,12 +252,11 @@ public class Main implements IAppLogic {
         int cellRow = (int) (cameraPos.z / cellSize);
 
         int numRows = NUM_CHUNKS * 2 + 1;
-        int numCols = numRows;
         int zOffset = -NUM_CHUNKS;
         float scale = cellSize / 2.0f;
         for (int j = 0; j < numRows; j++) {
             int xOffset = -NUM_CHUNKS;
-            for (int i = 0; i < numCols; i++) {
+            for (int i = 0; i < numRows; i++) {
                 Entity entity = terrainEntities[j][i];
                 entity.setScale(scale);
                 entity.setPosition((cellCol + xOffset) * 2.0f, -10, (cellRow + zOffset) * 2.0f); // Y position set to -10
@@ -286,7 +270,6 @@ public class Main implements IAppLogic {
     private void generateCubes(Scene scene) {
         for (int i = 0; i < nrOfCubesToGenerate; i++) {
             nrOfCubes++;
-            total_no_cubes=nrOfCubes;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
             float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
@@ -312,6 +295,6 @@ public class Main implements IAppLogic {
     }
 
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
-        Main.nrOfCubesToGenerate =nrOfCubesToGenerate;
+        GPUBenchmarky.nrOfCubesToGenerate =nrOfCubesToGenerate;
     }
 }
