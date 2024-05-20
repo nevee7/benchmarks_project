@@ -197,15 +197,23 @@ public class Gui {
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button1Frame.setVisible(false);
-                showWaitingFrame();
-                FibonacciBenchmark fibonacciBenchmark = new FibonacciBenchmark();
-                BenchmarkInfo data = fibonacciBenchmark.startBenchmark();
-                try {
-                    Firebase.writeData(data);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-                showScoreCPU(data.getScore());
+                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        FibonacciBenchmark fibonacciBenchmark = new FibonacciBenchmark();
+                        BenchmarkInfo data = fibonacciBenchmark.startBenchmark();
+                        try {
+                            Firebase.writeData(data);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        waitingFrame.setVisible(false);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                showScoreCPU(data.getScore());
+                            }
+                        });
+                    }
+                });
             }
         });
         panel.add(specificButton);
@@ -244,15 +252,25 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ArithmeticOperationBenchmark arithmeticOperationBenchmark = new ArithmeticOperationBenchmark();
-                BenchmarkInfo data = arithmeticOperationBenchmark.startBenchmark();
-                try {
-                    Firebase.writeData(data);
-                    button2Frame.dispose();
-                    showScoreCPU(data.getScore());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+
+                button2Frame.setVisible(false);
+                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        ArithmeticOperationBenchmark arithmeticOperationBenchmark = new ArithmeticOperationBenchmark();
+                        BenchmarkInfo data = arithmeticOperationBenchmark.startBenchmark();
+                        try {
+                            Firebase.writeData(data);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        waitingFrame.setVisible(false);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                showScoreCPU(data.getScore());
+                            }
+                        });
+                    }
+                });
             }
         });
         panel.add(specificButton);
@@ -291,15 +309,24 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                PiDigitComputationBenchmark piDigitComputationBenchmark = new PiDigitComputationBenchmark();
-                BenchmarkInfo data = piDigitComputationBenchmark.startBenchmark();
-                try {
-                    Firebase.writeData(data);
-                    button3Frame.dispose();
-                    showScoreCPU(data.getScore());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+                button3Frame.setVisible(false);
+                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        PiDigitComputationBenchmark piDigitComputationBenchmark = new PiDigitComputationBenchmark();
+                        BenchmarkInfo data = piDigitComputationBenchmark.startBenchmark();
+                        try {
+                            Firebase.writeData(data);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        waitingFrame.setVisible(false);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                showScoreCPU(data.getScore());
+                            }
+                        });
+                    }
+                });
             }
         });
         panel.add(specificButton);
@@ -338,15 +365,24 @@ public class Gui {
         specificButton.setBounds(25, 45, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MatrixMultiplicationBenchmark matrixMultiplicationBenchmark = new MatrixMultiplicationBenchmark();
-                BenchmarkInfo data = matrixMultiplicationBenchmark.startBenchmark();
-                try {
-                    Firebase.writeData(data);
-                    button4Frame.dispose();
-                    showScoreCPU(data.getScore());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+                button4Frame.setVisible(false);
+                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        MatrixMultiplicationBenchmark matrixMultiplicationBenchmark = new MatrixMultiplicationBenchmark();
+                        BenchmarkInfo data = matrixMultiplicationBenchmark.startBenchmark();
+                        try {
+                            Firebase.writeData(data);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        waitingFrame.setVisible(false);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                showScoreCPU(data.getScore());
+                            }
+                        });
+                    }
+                });
             }
         });
         panel.add(specificButton);
@@ -367,7 +403,7 @@ public class Gui {
     private void showScoreCPU(double score) {
         JFrame defeatFrame = new JFrame("Score");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        defeatFrame.setSize(800, 600); // Set size as needed
+        defeatFrame.setSize(720, 540); // Set size as needed
         defeatFrame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel() {
@@ -375,7 +411,7 @@ public class Gui {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeatGPU.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "cpuscore.png");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -385,13 +421,13 @@ public class Gui {
         JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", score));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(400, 450, 300, 50);
+        finalScoreLabel.setBounds(230, 300, 300, 50);
         panel.add(finalScoreLabel);
 
 
         // Add a button to close the frame
         JButton closeButton = createButton("Close");
-        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.setBounds(50, 400, 200, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 defeatFrame.dispose();
@@ -661,7 +697,7 @@ public class Gui {
         defeatFrame.setVisible(true);
     }
     private void showWaitingFrame() {
-        waitingFrame = new JFrame("Defeat");
+        waitingFrame = new JFrame("Running Benchmark");
         waitingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         waitingFrame.setSize(800, 600); // Set size as needed
         waitingFrame.setLocationRelativeTo(null);
