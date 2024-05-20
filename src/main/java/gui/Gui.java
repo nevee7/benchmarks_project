@@ -59,7 +59,7 @@ public class Gui {
         cpuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                showCPUFrame(frameWidth, frameHeight);
+                showVictoryFrame(20);//showCPUFrame(frameWidth, frameHeight);
             }
         });
 
@@ -467,11 +467,11 @@ public class Gui {
                 // Check the final score and show the corresponding frame
                 double finalScore = main.GetFinalScore();
                 if (finalScore > 200) {
-                    showVictoryFrame();
+                    showVictoryFrame(finalScore);
                 } else if (finalScore > 100) {
-                    showMediumFrame();
+                    showMediumFrame(finalScore);
                 } else {
-                    showDefeatFrame();
+                    showDefeatFrame(finalScore);
                 }
 
                 // Hide the current frame
@@ -495,7 +495,7 @@ public class Gui {
         button1GPUFrame.setVisible(true);
     }
 
-    private void showVictoryFrame() {
+    public void showVictoryFrame(double finalScore) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(800, 600); // Set size as needed
@@ -512,6 +512,12 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
+        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(550, 200, 300, 50);
+        panel.add(finalScoreLabel);
+
         // Add a button to close the frame
         JButton closeButton = createButton("Close");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
@@ -527,7 +533,7 @@ public class Gui {
         victoryFrame.setVisible(true);
     }
 
-    private void showMediumFrame() {
+    public void showMediumFrame(double finalScore) {
         JFrame mediumFrame = new JFrame("Medium Score");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(800, 600); // Set size as needed
@@ -544,6 +550,13 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
+        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(300, 150, 300, 50);
+        panel.add(finalScoreLabel);
+
+
         // Add a button to close the frame
         JButton closeButton = createButton("Close");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
@@ -559,7 +572,7 @@ public class Gui {
         mediumFrame.setVisible(true);
     }
 
-    private void showDefeatFrame() {
+    public void showDefeatFrame(double finalScore) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(800, 600); // Set size as needed
@@ -575,6 +588,14 @@ public class Gui {
             }
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+
+        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(400, 450, 300, 50);
+        panel.add(finalScoreLabel);
+
 
         // Add a button to close the frame
         JButton closeButton = createButton("Close");
