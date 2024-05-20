@@ -465,14 +465,14 @@ public class Gui {
                 }
 
                 // Check the final score and show the corresponding frame
-               /* int finalScore = main.GetFinalScore();
+                double finalScore = main.GetFinalScore();
                 if (finalScore > 200) {
                     showVictoryFrame();
                 } else if (finalScore > 100) {
                     showMediumFrame();
                 } else {
                     showDefeatFrame();
-                }*/
+                }
 
                 // Hide the current frame
                 button1GPUFrame.setVisible(false);

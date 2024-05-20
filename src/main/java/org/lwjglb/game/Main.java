@@ -45,6 +45,8 @@ public class Main implements IAppLogic {
     private float rotation;
     private float lightAngle;
 
+    private double FinalScore;
+
     public static void main(String[] args) {
         Main main = new Main();
         main.runMain();
@@ -82,6 +84,7 @@ public class Main implements IAppLogic {
         }
 
         double finalScore = calculateFinalScore(allFpsValues);
+        FinalScore=finalScore;
         System.out.println("\nFinal score: " + finalScore);
         return new BenchmarkInfo("GPU benchmark", finalScore, nrOfCubesToGenerate);
     }
@@ -288,5 +291,9 @@ public class Main implements IAppLogic {
             scene.addEntity(cubeEntity);
             cubes.add(cubeEntity);
         }
+    }
+
+    public double GetFinalScore(){
+        return FinalScore;
     }
 }
