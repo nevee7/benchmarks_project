@@ -30,8 +30,6 @@ public class Main implements IAppLogic {
     private Entity[][] terrainEntities;
 
     public static int nrOfCubesToGenerate=1;
-    private int frameCount = 0;
-    private long lastTime;
     private long lastCubeGenerationTime;
 
     private Entity cubeEntity;
