@@ -576,12 +576,13 @@ public class Gui {
                     // Check the final score and show the corresponding frame
                     double finalScore = main.GetFinalScore();
                     double fps_average=main.GetFPSAverage();
+                    int total_runs=main.GetRunsNumber();
                     if (finalScore > 200) {
-                        showVictoryFrame(finalScore, fps_average);
+                        showVictoryFrame(finalScore, fps_average,total_runs);
                     } else if (finalScore > 100) {
-                        showMediumFrame(finalScore, fps_average);
+                        showMediumFrame(finalScore, fps_average,total_runs);
                     } else {
-                        showDefeatFrame(finalScore, fps_average);
+                        showDefeatFrame(finalScore, fps_average,total_runs);
                     }
 
                     try {
@@ -611,12 +612,13 @@ public class Gui {
                     // Check the final score and show the corresponding frame
                     double finalScore = main.GetFinalScore();
                     double fps_average=main.GetFPSAverage();
+                    int total_runs=main.GetRunsNumber();
                     if (finalScore > 200) {
-                        showVictoryFrame(finalScore,fps_average);
+                        showVictoryFrame(finalScore,fps_average, total_runs);
                     } else if (finalScore > 100) {
-                        showMediumFrame(finalScore,fps_average);
+                        showMediumFrame(finalScore,fps_average,total_runs);
                     } else {
-                        showDefeatFrame(finalScore,fps_average);
+                        showDefeatFrame(finalScore,fps_average,total_runs);
                     }
 
                     try {
@@ -643,7 +645,7 @@ public class Gui {
         button1GPUFrame.setVisible(true);
     }
 
-    private void showVictoryFrame(double finalScore, double fps_average) {
+    private void showVictoryFrame(double finalScore, double fps_average, int total_runs) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(800, 600); // Set size as needed
@@ -660,16 +662,16 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
-        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f f.s.", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(550, 200, 300, 50);
+        finalScoreLabel.setBounds(500, 200, 300, 50);
         panel.add(finalScoreLabel);
 
-        JLabel finalFPSLabel = new JLabel(String.format("%.0f FPS Average", fps_average));
-        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBounds(550, 250, 300, 50);
+        finalFPSLabel.setBounds(500, 235, 300, 100);
         panel.add(finalFPSLabel);
 
         // Add a button to close the frame
@@ -687,7 +689,7 @@ public class Gui {
         victoryFrame.setVisible(true);
     }
 
-    private void showMediumFrame(double finalScore, double fps_average) {
+    private void showMediumFrame(double finalScore, double fps_average, int total_runs) {
         JFrame mediumFrame = new JFrame("Draw");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(800, 600); // Set size as needed
@@ -704,16 +706,16 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
-        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f f.s.", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
         finalScoreLabel.setBounds(300, 150, 300, 50);
         panel.add(finalScoreLabel);
 
-        JLabel finalFPSLabel = new JLabel(String.format("%.0f FPS Average", fps_average));
-        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBounds(550, 200, 300, 50);
+        finalFPSLabel.setBounds(300, 185, 300, 100);
         panel.add(finalFPSLabel);
 
 
@@ -732,7 +734,7 @@ public class Gui {
         mediumFrame.setVisible(true);
     }
 
-    private void showDefeatFrame(double finalScore, double fps_average) {
+    private void showDefeatFrame(double finalScore, double fps_average, int total_runs) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(800, 600); // Set size as needed
@@ -750,16 +752,16 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
 
-        JLabel finalScoreLabel = new JLabel(String.format(" %.2f", finalScore));
-        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f f.s.", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
         finalScoreLabel.setBounds(400, 450, 300, 50);
         panel.add(finalScoreLabel);
 
-        JLabel finalFPSLabel = new JLabel(String.format("%.0f FPS Average", fps_average));
-        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBounds(400, 500, 300, 50);
+        finalFPSLabel.setBounds(400, 485, 300, 100);
         panel.add(finalFPSLabel);
 
 

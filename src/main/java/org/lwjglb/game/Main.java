@@ -47,6 +47,7 @@ public class Main implements IAppLogic {
 
     private double FinalScore;
     private double FPSAverage;
+    private int TotalRuns;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -57,6 +58,7 @@ public class Main implements IAppLogic {
         System.out.println(nrOfCubesToGenerate);
         Main main = new Main();
         int totalRuns = 6;
+        TotalRuns=totalRuns;
         int batchSize = 2;
         List<Double> allFpsValues = new ArrayList<>();
 
@@ -305,6 +307,10 @@ public class Main implements IAppLogic {
 
     public double GetFPSAverage(){
         return FPSAverage;
+    }
+
+    public int GetRunsNumber(){
+        return TotalRuns;
     }
 
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
