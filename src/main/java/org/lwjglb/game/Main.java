@@ -198,6 +198,7 @@ public class Main implements IAppLogic {
         }
         float move = diffTimeMillis * MOVEMENT_SPEED;
         Camera camera = scene.getCamera();
+
         if (window.isKeyPressed(GLFW_KEY_W)) {
             camera.moveForward(move);
         } else if (window.isKeyPressed(GLFW_KEY_S)) {
@@ -208,6 +209,12 @@ public class Main implements IAppLogic {
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
             camera.moveRight(move);
         }
+        if (window.isKeyPressed(GLFW_KEY_PAGE_UP)) {
+            camera.moveUp(move);
+        } else if (window.isKeyPressed(GLFW_KEY_PAGE_DOWN)) {
+            camera.moveDown(move);
+        }
+
         if (window.isKeyPressed(GLFW_KEY_LEFT)) {
             lightAngle -= 2.5f;
             if (lightAngle < -90) {
