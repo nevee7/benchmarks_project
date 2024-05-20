@@ -59,7 +59,7 @@ public class Gui {
         cpuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                showVictoryFrame(20);//showCPUFrame(frameWidth, frameHeight);
+                showCPUFrame(frameWidth, frameHeight);
             }
         });
 
@@ -495,7 +495,7 @@ public class Gui {
         button1GPUFrame.setVisible(true);
     }
 
-    public void showVictoryFrame(double finalScore) {
+    private void showVictoryFrame(double finalScore) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(800, 600); // Set size as needed
@@ -533,7 +533,7 @@ public class Gui {
         victoryFrame.setVisible(true);
     }
 
-    public void showMediumFrame(double finalScore) {
+    private void showMediumFrame(double finalScore) {
         JFrame mediumFrame = new JFrame("Medium Score");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(800, 600); // Set size as needed
@@ -572,7 +572,7 @@ public class Gui {
         mediumFrame.setVisible(true);
     }
 
-    public void showDefeatFrame(double finalScore) {
+    private void showDefeatFrame(double finalScore) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(800, 600); // Set size as needed
