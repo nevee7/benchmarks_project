@@ -512,7 +512,7 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", finalScore));
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
         finalScoreLabel.setBounds(550, 200, 300, 50);
@@ -550,7 +550,7 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", finalScore));
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
         finalScoreLabel.setBounds(300, 150, 300, 50);
@@ -590,7 +590,7 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
 
-        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", finalScore));
+        JLabel finalScoreLabel = new JLabel(String.format(" %.2f", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
         finalScoreLabel.setBounds(400, 450, 300, 50);
