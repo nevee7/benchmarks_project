@@ -411,7 +411,7 @@ public class Gui {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "cpuscore.png");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "scoreCPU.png");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
