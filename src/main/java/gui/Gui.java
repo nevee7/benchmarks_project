@@ -7,7 +7,6 @@ import cpuBenchmarks.MatrixMultiplicationBenchmark;
 import cpuBenchmarks.PiDigitComputationBenchmark;
 import firebase.Firebase;
 import org.lwjglb.game.Main;
-import org.lwjglb.game.Warmup;
 
 import java.awt.*;
 import java.awt.event.*;
