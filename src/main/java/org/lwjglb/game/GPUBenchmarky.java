@@ -33,6 +33,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private static final List<Entity> cubes = new ArrayList<>();
     private static int nrOfCubes = 0;
+    private static int total_no_cubes=0;
 
     private float rotation;
     private float lightAngle;
@@ -40,6 +41,7 @@ public class GPUBenchmarky implements IAppLogic {
     private double FinalScore;
     private double FPSAverage;
     private int TotalRuns;
+    private int TotalGeneratedCubes=0;
 
 /*    public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -58,6 +60,7 @@ public class GPUBenchmarky implements IAppLogic {
         warmup.start();
         warmup.stop();
         //System.out.println("Number of generated cubes in warm-up:  "+ total_no_cubes);
+        total_no_cubes=0;
         cubes.clear();
         nrOfCubes = 0;
 
@@ -67,6 +70,8 @@ public class GPUBenchmarky implements IAppLogic {
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
             //System.out.println("Number of generated cubes:  "+ total_no_cubes);
+            TotalGeneratedCubes=TotalGeneratedCubes+total_no_cubes;
+            total_no_cubes=0;
             cubes.clear();
             nrOfCubes = 0;
 
@@ -285,6 +290,7 @@ public class GPUBenchmarky implements IAppLogic {
     private void generateCubes(Scene scene) {
         for (int i = 0; i < nrOfCubesToGenerate; i++) {
             nrOfCubes++;
+            total_no_cubes=nrOfCubes;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
             float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
@@ -311,5 +317,9 @@ public class GPUBenchmarky implements IAppLogic {
 
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
         GPUBenchmarky.nrOfCubesToGenerate =nrOfCubesToGenerate;
+    }
+
+    public int TotalGeneratedCubes(){
+        return TotalGeneratedCubes;
     }
 }
