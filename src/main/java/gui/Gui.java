@@ -37,6 +37,7 @@ public class Gui {
     private JFrame resultFrame;
     private JFrame gpuFrame;
     private JFrame cpuFrame;
+    private JFrame waitingFrame;
 
     public Gui() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Firebase.initializeFirebase();
@@ -176,7 +177,7 @@ public class Gui {
     }
 
     private void showButton1Frame() {
-        JFrame button1Frame = new JFrame("Button 1 Frame");
+        JFrame button1Frame = new JFrame("Fibonacci Sequence");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         button1Frame.setSize(1041, 704); // Set size as needed
         button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
@@ -195,6 +196,8 @@ public class Gui {
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                button1Frame.setVisible(false);
+                showWaitingFrame();
                 FibonacciBenchmark fibonacciBenchmark = new FibonacciBenchmark();
                 BenchmarkInfo data = fibonacciBenchmark.startBenchmark();
                 try {
@@ -202,6 +205,7 @@ public class Gui {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
+                showScoreCPU(data.getScore());
             }
         });
         panel.add(specificButton);
@@ -221,7 +225,7 @@ public class Gui {
     }
 
     private void showButton2Frame() {
-        JFrame button2Frame = new JFrame("Button 2 Frame");
+        JFrame button2Frame = new JFrame("Arithmetic Operations");
         button2Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         button2Frame.setSize(1041, 704); // Set size as needed
         button2Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
@@ -244,6 +248,8 @@ public class Gui {
                 BenchmarkInfo data = arithmeticOperationBenchmark.startBenchmark();
                 try {
                     Firebase.writeData(data);
+                    button2Frame.dispose();
+                    showScoreCPU(data.getScore());
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -266,7 +272,7 @@ public class Gui {
     }
 
     private void showButton3Frame() {
-        JFrame button3Frame = new JFrame("Button 3 Frame");
+        JFrame button3Frame = new JFrame("PI Digit Computation");
         button3Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         button3Frame.setSize(1041, 704); // Set size as needed
         button3Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
@@ -289,6 +295,8 @@ public class Gui {
                 BenchmarkInfo data = piDigitComputationBenchmark.startBenchmark();
                 try {
                     Firebase.writeData(data);
+                    button3Frame.dispose();
+                    showScoreCPU(data.getScore());
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -311,7 +319,7 @@ public class Gui {
     }
 
     private void showButton4Frame() {
-        JFrame button4Frame = new JFrame("Button 4 Frame");
+        JFrame button4Frame = new JFrame("Matrix Multiplication");
         button4Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         button4Frame.setSize(1041, 704); // Set size as needed
         button4Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
@@ -334,6 +342,8 @@ public class Gui {
                 BenchmarkInfo data = matrixMultiplicationBenchmark.startBenchmark();
                 try {
                     Firebase.writeData(data);
+                    button4Frame.dispose();
+                    showScoreCPU(data.getScore());
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -353,6 +363,45 @@ public class Gui {
 
         button4Frame.setContentPane(panel);
         button4Frame.setVisible(true);
+    }
+    private void showScoreCPU(double score) {
+        JFrame defeatFrame = new JFrame("Score");
+        defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        defeatFrame.setSize(800, 600); // Set size as needed
+        defeatFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeatGPU.jpg");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+
+        JLabel finalScoreLabel = new JLabel(String.format("Final Score: %.2f", score));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(400, 450, 300, 50);
+        panel.add(finalScoreLabel);
+
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                defeatFrame.dispose();
+                cpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        defeatFrame.setContentPane(panel); // Set the panel as the content pane
+        defeatFrame.setVisible(true);
     }
 
 
@@ -610,6 +659,26 @@ public class Gui {
 
         defeatFrame.setContentPane(panel); // Set the panel as the content pane
         defeatFrame.setVisible(true);
+    }
+    private void showWaitingFrame() {
+        waitingFrame = new JFrame("Defeat");
+        waitingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        waitingFrame.setSize(800, 600); // Set size as needed
+        waitingFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "runningBenchmarkCPU.png");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+        waitingFrame.setContentPane(panel); // Set the panel as the content pane
+        waitingFrame.setVisible(true);
     }
 
 
