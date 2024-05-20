@@ -6,7 +6,7 @@ public class ArithmeticOperationBenchmark {
     double score = 0;
 
     public void computeScore(long time1, long time2, long operationNumber){
-        this.score = (double) operationNumber / (time1 + time2);
+        this.score = (double) operationNumber / (time1 + time2) ;
     }
 
     public double getScore(){
@@ -58,3 +58,4 @@ public class ArithmeticOperationBenchmark {
         }
     }
 }
+

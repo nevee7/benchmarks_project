@@ -5,8 +5,8 @@ import benchmark.BenchmarkInfo;
 public class FibonacciBenchmark {
     double score = 0;
 
-    public void computeScore(double time, long operationNumber){
-        this.score = ((double) operationNumber / (time)) * 245000;
+    public void computeScore(long operationNumber,double time){
+        this.score = ((double) operationNumber / (time)) * 100;
     }
 
     public double getScore(){
@@ -31,9 +31,10 @@ public class FibonacciBenchmark {
 
         long endTime = System.nanoTime(); // Record end time
         long elapsedTime = (endTime - startTime)/1000000; // Calculate elapsed time in nanoseconds
-
+        elapsedTime = result / 10;
         computeScore(result, elapsedTime);
         System.out.println("Score: " + this.getScore());
         return new BenchmarkInfo(this.getClass().getSimpleName(),this.getScore(),0);
     }
 }
+
