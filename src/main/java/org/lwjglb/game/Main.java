@@ -29,7 +29,7 @@ public class Main implements IAppLogic {
     private static final int NUM_CHUNKS = 4;
     private Entity[][] terrainEntities;
 
-    private int nrOfCubesToGenerate = 10000;
+    public static int nrOfCubesToGenerate=1;
     private int frameCount = 0;
     private long lastTime;
     private long lastCubeGenerationTime;
@@ -53,6 +53,7 @@ public class Main implements IAppLogic {
     }
 
     public BenchmarkInfo runMain() {
+        System.out.println(nrOfCubesToGenerate);
         Main main = new Main();
         int totalRuns = 6;
         int batchSize = 2;
@@ -87,10 +88,6 @@ public class Main implements IAppLogic {
         FinalScore=finalScore;
         System.out.println("\nFinal score: " + finalScore);
         return new BenchmarkInfo("GPU benchmark", finalScore, nrOfCubesToGenerate);
-    }
-
-    public void setNrOfCubesToGenerate(int nr) {
-        this.nrOfCubesToGenerate = nr;
     }
 
     private static double calculateFinalScore(List<Double> allFpsValues) {
@@ -304,7 +301,7 @@ public class Main implements IAppLogic {
         return FinalScore;
     }
 
-    public int setCubesToGenerate(int nrOfCubesToGenerate) {
-        return nrOfCubesToGenerate;
+    public void setCubesToGenerate(int nrOfCubesToGenerate) {
+        Main.nrOfCubesToGenerate =nrOfCubesToGenerate;
     }
 }

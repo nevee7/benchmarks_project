@@ -500,27 +500,45 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
+        // Add a JLabel and JTextField for the number input
+        JLabel numberLabel = new JLabel("<html>Enter the number of<br>cubes/second to generate</html>\"");
+        numberLabel.setBounds(50, 410, 200, 30);
+        numberLabel.setForeground(Color.WHITE); // Set text color to white
+        panel.add(numberLabel);
+
+        JTextField numberField = new JTextField();
+        numberField.setBounds(250, 410, 100, 30);
+        panel.add(numberField);
+
         // Adding a button for some functionality specific to this frame
-        JButton specificButton = createButton("Start Benchmark");
-        specificButton.setBounds(50, 440, 250, 55); // Set position and size
+        JButton specificButton = createButton("<html>Start Benchmark<br>(with input number)</html>\"");
+        specificButton.setBounds(50, 460, 250, 55); // Set position and size
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Main main = new Main();
-                BenchmarkInfo data = main.runMain();
-                try {
-                    Firebase.writeData(data);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+                String input = numberField.getText();
+                try{
+                    int number = Integer.parseInt(input);
+                    Main main = new Main();
+                    main.setCubesToGenerate(number);
+                    BenchmarkInfo data = main.runMain();
 
-                // Check the final score and show the corresponding frame
-                double finalScore = main.GetFinalScore();
-                if (finalScore > 200) {
-                    showVictoryFrame(finalScore);
-                } else if (finalScore > 100) {
-                    showMediumFrame(finalScore);
-                } else {
-                    showDefeatFrame(finalScore);
+                    // Check the final score and show the corresponding frame
+                    double finalScore = main.GetFinalScore();
+                    if (finalScore > 200) {
+                        showVictoryFrame(finalScore);
+                    } else if (finalScore > 100) {
+                        showMediumFrame(finalScore);
+                    } else {
+                        showDefeatFrame(finalScore);
+                    }
+
+                    try {
+                        Firebase.writeData(data);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(button1GPUFrame, "Please enter a valid number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 }
 
                 // Hide the current frame
@@ -529,9 +547,40 @@ public class Gui {
         });
         panel.add(specificButton);
 
+        // Adding a button for some functionality specific to this frame
+        JButton specificButton2 = createButton("<html>Start Default Benchmark<br>(10000 cubes / sec generated)</html>\"");
+        specificButton2.setBounds(50, 540, 350, 70); // Set position and size
+        specificButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                    Main main = new Main();
+                    main.setCubesToGenerate(10000);
+                    BenchmarkInfo data = main.runMain();
+
+                    // Check the final score and show the corresponding frame
+                    double finalScore = main.GetFinalScore();
+                    if (finalScore > 200) {
+                        showVictoryFrame(finalScore);
+                    } else if (finalScore > 100) {
+                        showMediumFrame(finalScore);
+                    } else {
+                        showDefeatFrame(finalScore);
+                    }
+
+                    try {
+                        Firebase.writeData(data);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                // Hide the current frame
+                button1GPUFrame.setVisible(false);
+            }
+        });
+        panel.add(specificButton2);
+
         // Add a button to close this frame and show the GPU frame again
         JButton closeButton = createButton("Go to the previous menu");
-        closeButton.setBounds(50, 550, 300, 55); // Set position and size
+        closeButton.setBounds(600, 540, 300, 70); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button1GPUFrame.dispose();
@@ -568,7 +617,7 @@ public class Gui {
         panel.add(finalScoreLabel);
 
         // Add a button to close the frame
-        JButton closeButton = createButton("Close");
+        JButton closeButton = createButton("Close results");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -607,7 +656,7 @@ public class Gui {
 
 
         // Add a button to close the frame
-        JButton closeButton = createButton("Close");
+        JButton closeButton = createButton("Close results");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -647,7 +696,7 @@ public class Gui {
 
 
         // Add a button to close the frame
-        JButton closeButton = createButton("Close");
+        JButton closeButton = createButton("Close results");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
