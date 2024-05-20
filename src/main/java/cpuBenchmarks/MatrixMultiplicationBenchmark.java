@@ -6,11 +6,11 @@ import benchmark.BenchmarkInfo;
 public class MatrixMultiplicationBenchmark {
     double score = 0;
 
-    public void computeScore(double time, long operationNumber) {
+    public void computeScore(double time, long operationNumber){
         this.score = (double) operationNumber / (time) * 7900;
     }
 
-    public double getScore() {
+    public double getScore(){
         return score;
     }
 
@@ -33,7 +33,7 @@ public class MatrixMultiplicationBenchmark {
         return result;
     }
 
-    public BenchmarkInfo runBenchmark() {
+    public BenchmarkInfo startBenchmark() {
         int size = 1200; // Size of the square matrices (adjust as needed)
         int[][] matrixA = generateRandomMatrix(size, size);
         int[][] matrixB = generateRandomMatrix(size, size);
@@ -44,15 +44,15 @@ public class MatrixMultiplicationBenchmark {
         int[][] result = multiply(matrixA, matrixB);
 
         long endTime = System.nanoTime(); // Record end time
-        long elapsedTime = (endTime - startTime) / 1000000; // Calculate elapsed time in milliseconds
+        long elapsedTime = (endTime - startTime)/1000000; // Calculate elapsed time in nanoseconds
 
         // Output the size of matrices and elapsed time
-        System.out.println("Matrix multiplication of size " + size + "x" + size + " took " + elapsedTime + " milliseconds");
+        System.out.println("Matrix multiplication of size " + size + "x" + size + " took " + elapsedTime + " miliseconds");
 
-        computeScore(elapsedTime, size);
-        System.out.println("Score: " + getScore());
-
-        return new BenchmarkInfo(this.getClass().getSimpleName(), getScore(), elapsedTime);
+        MatrixMultiplicationBenchmark benchmark = new MatrixMultiplicationBenchmark();
+        benchmark.computeScore(elapsedTime,size);
+        System.out.println("Score: " + benchmark.getScore());
+        return new BenchmarkInfo(this.getClass().getSimpleName(),benchmark.getScore(),0);
     }
 
     // Helper function to generate a random matrix of given dimensions
@@ -67,11 +67,5 @@ public class MatrixMultiplicationBenchmark {
         }
 
         return matrix;
-    }
-
-    public static void main(String[] args) {
-        MatrixMultiplicationBenchmark benchmark = new MatrixMultiplicationBenchmark();
-        BenchmarkInfo info = benchmark.runBenchmark();
-        //System.out.println("Benchmark Info: " + info);
     }
 }

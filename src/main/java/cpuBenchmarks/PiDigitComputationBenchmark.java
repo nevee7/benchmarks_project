@@ -9,16 +9,12 @@ import benchmark.BenchmarkInfo;
 public class PiDigitComputationBenchmark {
     double score = 0;
 
-    public void computeScore(double time, long operationNumber) {
+    public void computeScore(double time, long operationNumber){
         this.score = (double) operationNumber / (time) * 100;
     }
 
-    public double getScore() {
+    public double getScore(){
         return score;
-    }
-
-    public BenchmarkInfo getBenchmarkInfo(double time) {
-        return new BenchmarkInfo(this.getClass().getSimpleName(), score, time);
     }
 
     // Computes pi using the Bailey–Borwein–Plouffe (BBP) formula
@@ -58,8 +54,8 @@ public class PiDigitComputationBenchmark {
         return result;
     }
 
-    public static void main(String[] args) {
-        int numDigits = 4000; // Number of digits of pi to compute (adjust as needed)
+    public BenchmarkInfo startBenchmark() {
+        int numDigits = 7000; // Number of digits of pi to compute (adjust as needed)
 
         long startTime = System.nanoTime(); // Record start time
         BigDecimal pi = computePi(numDigits);
@@ -75,11 +71,8 @@ public class PiDigitComputationBenchmark {
         System.out.println("Time taken: " + elapsedTimeMilliseconds + " milliseconds");
 
         PiDigitComputationBenchmark benchmark = new PiDigitComputationBenchmark();
-        benchmark.computeScore(elapsedTimeMilliseconds, numDigits);
+        benchmark.computeScore(elapsedTimeMilliseconds,numDigits);
         System.out.println("Score: " + benchmark.getScore());
-
-        // Get and print the BenchmarkInfo
-        BenchmarkInfo info = benchmark.getBenchmarkInfo(elapsedTimeMilliseconds);
-        //System.out.println("Benchmark Info: " + info);
+        return new BenchmarkInfo(this.getClass().getSimpleName(),benchmark.getScore(),0);
     }
 }
