@@ -303,4 +303,8 @@ public class Main implements IAppLogic {
     public double GetFinalScore(){
         return FinalScore;
     }
+
+    public int setCubesToGenerate(int nrOfCubesToGenerate) {
+        return nrOfCubesToGenerate;
+    }
 }
