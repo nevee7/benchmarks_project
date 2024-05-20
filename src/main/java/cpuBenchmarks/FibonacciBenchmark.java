@@ -22,8 +22,7 @@ public class FibonacciBenchmark {
         }
     }
 
-    public void main(String[] args) {
-        int n = 47; // Choose the Fibonacci number to calculate (adjust as needed)
+    public BenchmarkInfo runBenchmark(int n) {
         long startTime = System.nanoTime(); // Record start time
 
         // Calculate Fibonacci number
@@ -34,10 +33,19 @@ public class FibonacciBenchmark {
 
         // Output the result and elapsed time
         System.out.println("Fibonacci number " + n + " = " + result);
-        System.out.println("Time taken: " + elapsedTime + " miliseconds");
+        System.out.println("Time taken: " + elapsedTime + " milliseconds");
 
+        // Compute and print score
+        computeScore(elapsedTime, n);
+        System.out.println("Score: " + getScore());
+
+        // Return BenchmarkInfo
+        return new BenchmarkInfo(this.getClass().getSimpleName(), getScore(), elapsedTime);
+    }
+
+    public static void main(String[] args) {
         FibonacciBenchmark benchmark = new FibonacciBenchmark();
-        benchmark.computeScore(elapsedTime,n);
-        System.out.println("Score: " + benchmark.getScore());
+        BenchmarkInfo benchmarkInfo = benchmark.runBenchmark(47);
+        // Use benchmarkInfo object as needed
     }
 }
