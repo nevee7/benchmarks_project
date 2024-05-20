@@ -503,7 +503,7 @@ public class Gui {
         panel.add(button1);
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating cubes<br><br>RANKING:<br>Victory -> Final Score larger than 200<br>Draw -> Final Score between 200 and 100<br>Defeat -> Final Score lower than 100 </html>\"");
+        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating cubes<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>\"");
         numberLabel.setBounds(55, 330, 500, 160);
         numberLabel.setForeground(Color.WHITE); // Set text color to white
 
@@ -577,9 +577,9 @@ public class Gui {
                     double finalScore = GPUBenchmarky.GetFinalScore();
                     double fps_average= GPUBenchmarky.GetFPSAverage();
                     int total_runs= GPUBenchmarky.GetRunsNumber();
-                    if (finalScore > 200) {
+                    if (finalScore > 550) {
                         showVictoryFrame(finalScore, fps_average,total_runs);
-                    } else if (finalScore > 100) {
+                    } else if (finalScore > 500) {
                         showMediumFrame(finalScore, fps_average,total_runs);
                     } else {
                         showDefeatFrame(finalScore, fps_average,total_runs);

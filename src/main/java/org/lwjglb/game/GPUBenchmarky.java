@@ -93,8 +93,23 @@ public class GPUBenchmarky implements IAppLogic {
         double weightAvg = 0.6;
         double weightMin = 0.3;
         double weightMax = 0.1;
+        int CubeFactor=getHighestPowerOfTen(nrOfCubesToGenerate)*100;
 
-        return weightAvg * normalizedAvg + weightMin * minFPS + weightMax * maxFPS;
+        return weightAvg * normalizedAvg + weightMin * minFPS + weightMax * maxFPS+CubeFactor;
+    }
+
+
+    private static int getHighestPowerOfTen(int number) {
+        if (number == 0) {
+            return 0; // Special case: 0 doesn't have a power of 10
+        }
+
+        int highestPower = 0;
+        while (number % 10 == 0) {
+            highestPower++;
+            number /= 10;
+        }
+        return highestPower;
     }
 
     private static double calculateAverage(List<Double> values) {
