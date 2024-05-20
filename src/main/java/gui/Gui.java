@@ -506,7 +506,7 @@ public class Gui {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "victory.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "victoryGPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -538,7 +538,7 @@ public class Gui {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "medium.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "mediumGPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -570,7 +570,7 @@ public class Gui {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeat.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeatGPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
