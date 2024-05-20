@@ -575,12 +575,13 @@ public class Gui {
 
                     // Check the final score and show the corresponding frame
                     double finalScore = main.GetFinalScore();
+                    double fps_average=main.GetFPSAverage();
                     if (finalScore > 200) {
-                        showVictoryFrame(finalScore);
+                        showVictoryFrame(finalScore, fps_average);
                     } else if (finalScore > 100) {
-                        showMediumFrame(finalScore);
+                        showMediumFrame(finalScore, fps_average);
                     } else {
-                        showDefeatFrame(finalScore);
+                        showDefeatFrame(finalScore, fps_average);
                     }
 
                     try {
@@ -609,12 +610,13 @@ public class Gui {
 
                     // Check the final score and show the corresponding frame
                     double finalScore = main.GetFinalScore();
+                    double fps_average=main.GetFPSAverage();
                     if (finalScore > 200) {
-                        showVictoryFrame(finalScore);
+                        showVictoryFrame(finalScore,fps_average);
                     } else if (finalScore > 100) {
-                        showMediumFrame(finalScore);
+                        showMediumFrame(finalScore,fps_average);
                     } else {
-                        showDefeatFrame(finalScore);
+                        showDefeatFrame(finalScore,fps_average);
                     }
 
                     try {
@@ -641,7 +643,7 @@ public class Gui {
         button1GPUFrame.setVisible(true);
     }
 
-    private void showVictoryFrame(double finalScore) {
+    private void showVictoryFrame(double finalScore, double fps_average) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(800, 600); // Set size as needed
@@ -664,6 +666,12 @@ public class Gui {
         finalScoreLabel.setBounds(550, 200, 300, 50);
         panel.add(finalScoreLabel);
 
+        JLabel finalFPSLabel = new JLabel(String.format("%.0f FPS Average", fps_average));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
+        finalFPSLabel.setBounds(550, 250, 300, 50);
+        panel.add(finalFPSLabel);
+
         // Add a button to close the frame
         JButton closeButton = createButton("Close results");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
@@ -679,8 +687,8 @@ public class Gui {
         victoryFrame.setVisible(true);
     }
 
-    private void showMediumFrame(double finalScore) {
-        JFrame mediumFrame = new JFrame("Medium Score");
+    private void showMediumFrame(double finalScore, double fps_average) {
+        JFrame mediumFrame = new JFrame("Draw");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(800, 600); // Set size as needed
         mediumFrame.setLocationRelativeTo(null);
@@ -702,6 +710,12 @@ public class Gui {
         finalScoreLabel.setBounds(300, 150, 300, 50);
         panel.add(finalScoreLabel);
 
+        JLabel finalFPSLabel = new JLabel(String.format("%.0f FPS Average", fps_average));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
+        finalFPSLabel.setBounds(550, 200, 300, 50);
+        panel.add(finalFPSLabel);
+
 
         // Add a button to close the frame
         JButton closeButton = createButton("Close results");
@@ -718,7 +732,7 @@ public class Gui {
         mediumFrame.setVisible(true);
     }
 
-    private void showDefeatFrame(double finalScore) {
+    private void showDefeatFrame(double finalScore, double fps_average) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(800, 600); // Set size as needed
@@ -741,6 +755,12 @@ public class Gui {
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
         finalScoreLabel.setBounds(400, 450, 300, 50);
         panel.add(finalScoreLabel);
+
+        JLabel finalFPSLabel = new JLabel(String.format("%.0f FPS Average", fps_average));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
+        finalFPSLabel.setBounds(400, 500, 300, 50);
+        panel.add(finalFPSLabel);
 
 
         // Add a button to close the frame

@@ -46,6 +46,7 @@ public class Main implements IAppLogic {
     private float lightAngle;
 
     private double FinalScore;
+    private double FPSAverage;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -80,6 +81,7 @@ public class Main implements IAppLogic {
             if ((i + 1) % batchSize == 0) {
                 List<Double> fpsBatch = allFpsValues.subList(i + 1 - batchSize, i + 1);
                 double averageFps = calculateAverage(fpsBatch);
+                FPSAverage=averageFps;
                 System.out.println("\nAverage FPS after " + (i + 1) + " runs: " + averageFps);
             }
         }
@@ -299,6 +301,10 @@ public class Main implements IAppLogic {
 
     public double GetFinalScore(){
         return FinalScore;
+    }
+
+    public double GetFPSAverage(){
+        return FPSAverage;
     }
 
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
