@@ -186,7 +186,7 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "button1background.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "fiboCPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -231,7 +231,7 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "button2background.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "ariCPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -276,7 +276,7 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "button3background.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "piCPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -321,14 +321,14 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "button4background.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "matrixCPU.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         JButton specificButton = createButton("START");
-        specificButton.setBounds(50, 440, 250, 55);
+        specificButton.setBounds(25, 45, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MatrixMultiplicationBenchmark matrixMultiplicationBenchmark = new MatrixMultiplicationBenchmark();
@@ -343,7 +343,7 @@ public class Gui {
         panel.add(specificButton);
 
         JButton closeButton = createButton("Close");
-        closeButton.setBounds(50, 550, 200, 55);
+        closeButton.setBounds(800, 40, 200, 55);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button4Frame.dispose();
@@ -373,7 +373,7 @@ public class Gui {
         resultFrame.add(resultLabel, BorderLayout.CENTER);
 
         // Add background image
-        JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "image5.jpg", widthRes, heightRes);
+        JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "resultsFin.jpg", widthRes, heightRes);
         resultFrame.add(backgroundLabel);
 
         // Example: Adding a button to close the result frame and show the main frame again
@@ -453,17 +453,6 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Adding a button for some functionality specific to this frame
-        JButton warmupButton = createButton("Start Warm-Up");
-        warmupButton.setBounds(50, 330, 250, 55); // Set position and size
-        warmupButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Warmup main = new Warmup();
-                main.runWarmup();
-            }
-        });
-        panel.add(warmupButton);
-
-        // Adding a button for some functionality specific to this frame
         JButton specificButton = createButton("Start Benchmark");
         specificButton.setBounds(50, 440, 250, 55); // Set position and size
         specificButton.addActionListener(new ActionListener() {
@@ -475,6 +464,19 @@ public class Gui {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
+
+                // Check the final score and show the corresponding frame
+               /* int finalScore = main.GetFinalScore();
+                if (finalScore > 200) {
+                    showVictoryFrame();
+                } else if (finalScore > 100) {
+                    showMediumFrame();
+                } else {
+                    showDefeatFrame();
+                }*/
+
+                // Hide the current frame
+                button1GPUFrame.setVisible(false);
             }
         });
         panel.add(specificButton);
@@ -493,6 +495,103 @@ public class Gui {
         button1GPUFrame.setContentPane(panel); // Set the panel as the content pane
         button1GPUFrame.setVisible(true);
     }
+
+    private void showVictoryFrame() {
+        JFrame victoryFrame = new JFrame("Victory");
+        victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        victoryFrame.setSize(800, 600); // Set size as needed
+        victoryFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "victory.jpg");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                victoryFrame.dispose();
+                gpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        victoryFrame.setContentPane(panel); // Set the panel as the content pane
+        victoryFrame.setVisible(true);
+    }
+
+    private void showMediumFrame() {
+        JFrame mediumFrame = new JFrame("Medium Score");
+        mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mediumFrame.setSize(800, 600); // Set size as needed
+        mediumFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "medium.jpg");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mediumFrame.dispose();
+                gpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        mediumFrame.setContentPane(panel); // Set the panel as the content pane
+        mediumFrame.setVisible(true);
+    }
+
+    private void showDefeatFrame() {
+        JFrame defeatFrame = new JFrame("Defeat");
+        defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        defeatFrame.setSize(800, 600); // Set size as needed
+        defeatFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeat.jpg");
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                defeatFrame.dispose();
+                gpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        defeatFrame.setContentPane(panel); // Set the panel as the content pane
+        defeatFrame.setVisible(true);
+    }
+
 
     private void playAudio(String filePath, boolean loop, int loopCount) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File musicPath = new File(filePath);
