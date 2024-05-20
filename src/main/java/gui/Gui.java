@@ -502,9 +502,20 @@ public class Gui {
         });
         panel.add(button1);
 
+        // Add a JLabel and JTextField for the number input
+        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating cubes<br><br>RANKING:<br>Victory -> Final Score larger than 200<br>Draw -> Final Score between 200 and 100<br>Defeat -> Final Score lower than 100 </html>\"");
+        numberLabel.setBounds(55, 330, 500, 160);
+        numberLabel.setForeground(Color.WHITE); // Set text color to white
+
+        // Create a new Font object with the desired size
+        Font font = new Font("Arial", Font.BOLD, 19); // Adjust the font size as needed
+        numberLabel.setFont(font); // Set the font of the JLabel
+
+        panel.add(numberLabel);
+
         // Adding a button to close the GPU frame and show the main frame again
         JButton closeButton = createButton("Go to the previous menu");
-        closeButton.setBounds(60, 550, 300, 50); // Set position and size
+        closeButton.setBounds(50, 550, 300, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gpuFrame.dispose();
@@ -537,13 +548,16 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Enter the number of<br>cubes/second to generate</html>\"");
-        numberLabel.setBounds(50, 410, 200, 30);
+        JLabel numberLabel = new JLabel("<html>Enter the number of<br>cubes/second to generate:</html>\"");
+        numberLabel.setBounds(55, 400, 300, 40);
         numberLabel.setForeground(Color.WHITE); // Set text color to white
         panel.add(numberLabel);
 
+        Font font = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
+        numberLabel.setFont(font); // Set the font of the JLabel
+
         JTextField numberField = new JTextField();
-        numberField.setBounds(250, 410, 100, 30);
+        numberField.setBounds(350, 400, 100, 40);
         panel.add(numberField);
 
         // Adding a button for some functionality specific to this frame
