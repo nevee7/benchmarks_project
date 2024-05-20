@@ -662,16 +662,20 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f f.s.", finalScore));
+        JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(500, 200, 300, 50);
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
+        finalScoreLabel.setBackground(Color.RED); // Set background color to white
+        finalScoreLabel.setOpaque(true); // Make the
+        finalScoreLabel.setBounds(500, 200, 260, 50);
         panel.add(finalScoreLabel);
 
         JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
         finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBounds(500, 235, 300, 100);
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
+        finalFPSLabel.setBackground(Color.RED); // Set background color to white
+        finalFPSLabel.setOpaque(true); // Make the
+        finalFPSLabel.setBounds(500, 260, 280, 80);
         panel.add(finalFPSLabel);
 
         // Add a button to close the frame
@@ -706,16 +710,20 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f f.s.", finalScore));
+        JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(300, 150, 300, 50);
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
+        finalScoreLabel.setBackground(Color.RED); // Set background color to white
+        finalScoreLabel.setOpaque(true); // Make the JLabel opaque to display the background color
+        finalScoreLabel.setBounds(300, 170, 260, 50);
         panel.add(finalScoreLabel);
 
         JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
         finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBounds(300, 185, 300, 100);
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
+        finalFPSLabel.setBackground(Color.RED); // Set background color to white
+        finalFPSLabel.setOpaque(true); // Make the JLabel opaque to display the background color
+        finalFPSLabel.setBounds(300, 230, 280, 80);
         panel.add(finalFPSLabel);
 
 
@@ -752,16 +760,20 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f f.s.", finalScore));
+        JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(400, 450, 300, 50);
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
+        finalScoreLabel.setBackground(Color.RED); // Set background color to white
+        finalScoreLabel.setOpaque(true); // Make the
+        finalScoreLabel.setBounds(400, 460, 260, 50);
         panel.add(finalScoreLabel);
 
         JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
         finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBounds(400, 485, 300, 100);
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
+        finalFPSLabel.setBackground(Color.RED); // Set background color to white
+        finalFPSLabel.setOpaque(true); // Make the
+        finalFPSLabel.setBounds(400, 520, 280, 80);
         panel.add(finalFPSLabel);
 
 
