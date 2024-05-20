@@ -2,11 +2,18 @@ package cpuBenchmarks;
 
 import benchmark.BenchmarkInfo;
 
+
 public class FibonacciBenchmark {
     double score = 0;
 
+    public static void main(String[] args) {
+        FibonacciBenchmark benchmark = new FibonacciBenchmark();
+        benchmark.startBenchmark();
+        //System.out.println(benchmark.getScore());
+    }
+
     public void computeScore(long operationNumber,double time){
-        this.score = ((double) operationNumber / (time)) * 100;
+        this.score = ((double) operationNumber / (time)) * 4400;
     }
 
     public double getScore(){
@@ -30,11 +37,10 @@ public class FibonacciBenchmark {
         long result = fibonacci(n);
 
         long endTime = System.nanoTime(); // Record end time
-        long elapsedTime = (endTime - startTime)/1000000; // Calculate elapsed time in nanoseconds
-        elapsedTime = result / 10;
+        long elapsedTime = (endTime - startTime); // Calculate elapsed time in nanoseconds
+
         computeScore(result, elapsedTime);
         System.out.println("Score: " + this.getScore());
         return new BenchmarkInfo(this.getClass().getSimpleName(),this.getScore(),0);
     }
 }
-

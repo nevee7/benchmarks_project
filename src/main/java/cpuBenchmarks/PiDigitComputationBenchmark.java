@@ -10,7 +10,7 @@ public class PiDigitComputationBenchmark {
     double score = 0;
 
     public void computeScore(double time, long operationNumber){
-        this.score = (double) operationNumber / (time) * 100;
+        this.score = (double) operationNumber / (time) * 110;
     }
 
     public double getScore(){
