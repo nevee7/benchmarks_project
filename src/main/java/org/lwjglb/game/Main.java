@@ -56,12 +56,20 @@ public class Main implements IAppLogic {
         int batchSize = 2;
         List<Double> allFpsValues = new ArrayList<>();
 
+        Engine warmup = new Engine("GPU-Benchmark: Warm-Up", new Window.WindowOptions(), main, 0);
+        warmup.start();
+        warmup.stop();
+        System.out.println("Number of generated cubes in warm-up:  "+ total_no_cubes);
+        total_no_cubes=0;
+        cubes.clear();
+        nrOfCubes = 0;
+
         for (int i = 0; i < totalRuns; i++) {
             Engine gameEng = new Engine("GPU-Benchmark:" + (i + 1) + "/" + totalRuns, new Window.WindowOptions(), main, i + 1);
             gameEng.start();
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
-            System.out.println("Number of generated cubes:  "+total_no_cubes);
+            System.out.println("Number of generated cubes:  "+ total_no_cubes);
             total_no_cubes=0;
             cubes.clear();
             nrOfCubes = 0;

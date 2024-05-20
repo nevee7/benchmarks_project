@@ -453,17 +453,6 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Adding a button for some functionality specific to this frame
-        JButton warmupButton = createButton("Start Warm-Up");
-        warmupButton.setBounds(50, 330, 250, 55); // Set position and size
-        warmupButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Warmup main = new Warmup();
-                main.runWarmup();
-            }
-        });
-        panel.add(warmupButton);
-
-        // Adding a button for some functionality specific to this frame
         JButton specificButton = createButton("Start Benchmark");
         specificButton.setBounds(50, 440, 250, 55); // Set position and size
         specificButton.addActionListener(new ActionListener() {
