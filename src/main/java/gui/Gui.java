@@ -569,6 +569,11 @@ public class Gui {
                 try{
                     button1GPUFrame.setVisible(false);
                     int number = Integer.parseInt(input);
+                    if (number > 1000000){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "The provided number is too large!", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
                     Main main = new Main();
                     main.setCubesToGenerate(number);
                     BenchmarkInfo data = main.runMain();
@@ -577,12 +582,13 @@ public class Gui {
                     double finalScore = main.GetFinalScore();
                     double fps_average=main.GetFPSAverage();
                     int total_runs=main.GetRunsNumber();
+                    int total_gen_cubes=main.TotalGeneratedCubes();
                     if (finalScore > 200) {
-                        showVictoryFrame(finalScore, fps_average,total_runs);
+                        showVictoryFrame(finalScore, fps_average,total_runs, total_gen_cubes);
                     } else if (finalScore > 100) {
-                        showMediumFrame(finalScore, fps_average,total_runs);
+                        showMediumFrame(finalScore, fps_average,total_runs, total_gen_cubes);
                     } else {
-                        showDefeatFrame(finalScore, fps_average,total_runs);
+                        showDefeatFrame(finalScore, fps_average,total_runs, total_gen_cubes);
                     }
 
                     try {
@@ -592,7 +598,7 @@ public class Gui {
                     }
 
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(button1GPUFrame, "Please enter a valid number.", "error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(button1GPUFrame, "Please enter a valid number!", "error", JOptionPane.ERROR_MESSAGE);
                     button1GPUFrame.setVisible(true);
                 }
             }
@@ -613,12 +619,13 @@ public class Gui {
                     double finalScore = main.GetFinalScore();
                     double fps_average=main.GetFPSAverage();
                     int total_runs=main.GetRunsNumber();
+                    int total_gen_cubes=main.TotalGeneratedCubes();
                     if (finalScore > 200) {
-                        showVictoryFrame(finalScore,fps_average, total_runs);
+                        showVictoryFrame(finalScore,fps_average, total_runs, total_gen_cubes);
                     } else if (finalScore > 100) {
-                        showMediumFrame(finalScore,fps_average,total_runs);
+                        showMediumFrame(finalScore,fps_average,total_runs, total_gen_cubes);
                     } else {
-                        showDefeatFrame(finalScore,fps_average,total_runs);
+                        showDefeatFrame(finalScore,fps_average,total_runs, total_gen_cubes);
                     }
 
                     try {
@@ -645,7 +652,7 @@ public class Gui {
         button1GPUFrame.setVisible(true);
     }
 
-    private void showVictoryFrame(double finalScore, double fps_average, int total_runs) {
+    private void showVictoryFrame(double finalScore, double fps_average, int total_runs, int total_gen_cubes) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(800, 600); // Set size as needed
@@ -678,6 +685,14 @@ public class Gui {
         finalFPSLabel.setBounds(500, 260, 280, 80);
         panel.add(finalFPSLabel);
 
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>cubes gen.</html>", total_gen_cubes));
+        finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
+        finalCubesLabel.setBackground(Color.RED); // Set background color to white
+        finalCubesLabel.setOpaque(true); // Make the
+        finalCubesLabel.setBounds(500, 350, 190, 80);
+        panel.add(finalCubesLabel);
+
         // Add a button to close the frame
         JButton closeButton = createButton("Close results");
         closeButton.setBounds(50, 500, 300, 50); // Set position and size
@@ -693,7 +708,7 @@ public class Gui {
         victoryFrame.setVisible(true);
     }
 
-    private void showMediumFrame(double finalScore, double fps_average, int total_runs) {
+    private void showMediumFrame(double finalScore, double fps_average, int total_runs, int total_gen_cubes) {
         JFrame mediumFrame = new JFrame("Draw");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(800, 600); // Set size as needed
@@ -726,6 +741,14 @@ public class Gui {
         finalFPSLabel.setBounds(300, 230, 280, 80);
         panel.add(finalFPSLabel);
 
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>cubes gen.</html>", total_gen_cubes));
+        finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
+        finalCubesLabel.setBackground(Color.RED); // Set background color to white
+        finalCubesLabel.setOpaque(true); // Make the
+        finalCubesLabel.setBounds(300, 320, 190, 80);
+        panel.add(finalCubesLabel);
+
 
         // Add a button to close the frame
         JButton closeButton = createButton("Close results");
@@ -742,7 +765,7 @@ public class Gui {
         mediumFrame.setVisible(true);
     }
 
-    private void showDefeatFrame(double finalScore, double fps_average, int total_runs) {
+    private void showDefeatFrame(double finalScore, double fps_average, int total_runs, int total_gen_cubes) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(800, 600); // Set size as needed
@@ -765,7 +788,7 @@ public class Gui {
         finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
         finalScoreLabel.setBackground(Color.RED); // Set background color to white
         finalScoreLabel.setOpaque(true); // Make the
-        finalScoreLabel.setBounds(400, 460, 260, 50);
+        finalScoreLabel.setBounds(450, 260, 260, 50);
         panel.add(finalScoreLabel);
 
         JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
@@ -773,8 +796,16 @@ public class Gui {
         finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
         finalFPSLabel.setBackground(Color.RED); // Set background color to white
         finalFPSLabel.setOpaque(true); // Make the
-        finalFPSLabel.setBounds(400, 520, 280, 80);
+        finalFPSLabel.setBounds(450, 320, 280, 80);
         panel.add(finalFPSLabel);
+
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>cubes gen.</html>", total_gen_cubes));
+        finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
+        finalCubesLabel.setBackground(Color.RED); // Set background color to white
+        finalCubesLabel.setOpaque(true); // Make the
+        finalCubesLabel.setBounds(450, 410, 190, 80);
+        panel.add(finalCubesLabel);
 
 
         // Add a button to close the frame

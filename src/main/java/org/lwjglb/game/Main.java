@@ -48,6 +48,7 @@ public class Main implements IAppLogic {
     private double FinalScore;
     private double FPSAverage;
     private int TotalRuns;
+    private int TotalGeneratedCubes=0;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -76,6 +77,7 @@ public class Main implements IAppLogic {
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
             System.out.println("Number of generated cubes:  "+ total_no_cubes);
+            TotalGeneratedCubes=TotalGeneratedCubes+total_no_cubes;
             total_no_cubes=0;
             cubes.clear();
             nrOfCubes = 0;
@@ -315,5 +317,9 @@ public class Main implements IAppLogic {
 
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
         Main.nrOfCubesToGenerate =nrOfCubesToGenerate;
+    }
+
+    public int TotalGeneratedCubes(){
+        return TotalGeneratedCubes;
     }
 }
