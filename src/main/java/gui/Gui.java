@@ -553,6 +553,7 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 String input = numberField.getText();
                 try{
+                    button1GPUFrame.setVisible(false);
                     int number = Integer.parseInt(input);
                     Main main = new Main();
                     main.setCubesToGenerate(number);
@@ -573,12 +574,11 @@ public class Gui {
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(button1GPUFrame, "Please enter a valid number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                }
 
-                // Hide the current frame
-                button1GPUFrame.setVisible(false);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(button1GPUFrame, "Please enter a valid number.", "error", JOptionPane.ERROR_MESSAGE);
+                    button1GPUFrame.setVisible(true);
+                }
             }
         });
         panel.add(specificButton);
@@ -588,6 +588,7 @@ public class Gui {
         specificButton2.setBounds(50, 540, 350, 70); // Set position and size
         specificButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                    button1GPUFrame.setVisible(false);
                     Main main = new Main();
                     main.setCubesToGenerate(10000);
                     BenchmarkInfo data = main.runMain();
@@ -607,9 +608,6 @@ public class Gui {
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-
-                // Hide the current frame
-                button1GPUFrame.setVisible(false);
             }
         });
         panel.add(specificButton2);
