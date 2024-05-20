@@ -471,7 +471,6 @@ public class Gui {
                 Main main = new Main();
                 BenchmarkInfo data = main.runMain();
                 try {
-                    Firebase.initializeFirebase();
                     Firebase.writeData(data);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
