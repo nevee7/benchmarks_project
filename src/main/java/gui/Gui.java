@@ -52,6 +52,9 @@ public class Gui {
         int frameHeight = 704;
         frame.setSize(frameWidth, frameHeight);
 
+        before_gpu_frames=frame; //do not delete or comment this
+                                 //we are using this on gpu to get back on the main menu
+
         JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "image3.png", frameWidth, frameHeight);
 
         int offset = 230;
@@ -540,6 +543,7 @@ public class Gui {
         resultFrame.add(closeButton, BorderLayout.SOUTH);
     }
 
+    JFrame before_gpu_frames; //used for returning on the select frame after victory, draw or defeat
 
     private void SelectGPUFrame(JFrame previousFrame, int width, int height) {
         JFrame selectFrame = new JFrame("GPU Benchmarks");
@@ -588,20 +592,20 @@ public class Gui {
 
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                selectFrame.dispose(); // Close the current frame
-                StartGPUBenchmarkFrame(selectFrame); // Open the frame with "You entered Trigon's hell"
+                selectFrame.dispose(); //close the current frame
+                StartGPUBenchmarkFrame(selectFrame); //open "You entered Trigon's hell" frame
             }
         });
 
-        // Add component listener to handle resizing events
+        //add component listener to handle resizing events
         selectFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                // Adjust button positions based on frame size
+                //adjust button positions based on frame size
                 int frameWidth = selectFrame.getWidth();
                 int frameHeight = selectFrame.getHeight();
 
-                // Set the buttons' positions relative to the frame size
+                //set the buttons' positions relative to the frame size
                 button1.setBounds(frameWidth * 50 / width, frameHeight * 230 / height, frameWidth * 300 / width, frameHeight * 70 / height);
                 instructionsLabel.setBounds(frameWidth * 55 / width, frameHeight * 330 / height, frameWidth * 500 / width, frameHeight * 160 / height);
                 closeButton.setBounds(frameWidth * 50 / width, frameHeight * 550 / height, frameWidth * 300 / width, frameHeight * 50 / height);
@@ -780,11 +784,11 @@ public class Gui {
 
         //close button
         JButton closeButton = gpu_button("Go to the previous menu");
-        closeButton.setBounds(50, 540, 300, 70); // Set position and size
+        closeButton.setBounds(50, 540, 300, 70);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                startFrame.dispose();
-                previousFrame.setVisible(true);
+                startFrame.dispose(); //close the current frame
+                previousFrame.setVisible(true); //opens the previous frame "GPU Benchmarks"
             }
         });
         panel.add(closeButton);
@@ -830,7 +834,7 @@ public class Gui {
     private void gpuVictoryFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame previousFrame) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        victoryFrame.setSize(1041, 704); // Updated size
+        victoryFrame.setSize(1041, 704);
         victoryFrame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel() {
@@ -872,8 +876,8 @@ public class Gui {
         closeButton.setBounds(50, 500, 200, 50);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                victoryFrame.dispose();
-                SelectGPUFrame(previousFrame, 1041, 704);
+                victoryFrame.dispose(); //close the current frame
+                SelectGPUFrame(before_gpu_frames, 1041, 704); //opens the frame "GPU Benchmarks"
             }
         });
         panel.add(closeButton);
@@ -969,8 +973,8 @@ public class Gui {
         closeButton.setBounds(50, 500, 200, 50);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mediumFrame.dispose();
-                SelectGPUFrame(previousFrame, 1041, 704);
+                mediumFrame.dispose(); //close the current frame
+                SelectGPUFrame(before_gpu_frames, 1041, 704); //opens the frame "GPU Benchmarks"
             }
         });
         panel.add(closeButton);
@@ -1039,8 +1043,8 @@ public class Gui {
         closeButton.setBounds(50, 555, 200, 50);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                defeatFrame.dispose();
-                SelectGPUFrame(previousFrame, 1041, 704);
+                defeatFrame.dispose(); //close the current frame
+                SelectGPUFrame(before_gpu_frames, 1041, 704); //opens the frame "GPU Benchmarks"
             }
         });
         panel.add(closeButton);
