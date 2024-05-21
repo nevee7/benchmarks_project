@@ -86,7 +86,7 @@ public class Gui {
         gpuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                showGPUFrame(frameWidth, frameHeight);
+                showGPUFrame(frame, frameWidth, frameHeight); // Pass the frame object as the first argument
             }
         });
 
@@ -541,8 +541,8 @@ public class Gui {
     }
 
 
-    private void showGPUFrame(int width, int height) {
-        gpuFrame = new JFrame("GPU Benchmarks");
+    private void showGPUFrame(JFrame previousFrame, int width, int height) {
+        JFrame gpuFrame = new JFrame("GPU Benchmarks");
         gpuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         gpuFrame.setSize(width, height);
         gpuFrame.setLocationRelativeTo(null);
@@ -560,46 +560,58 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Add buttons for GPU details with specific positions and sizes
-        JButton button1 = createButton("<html>GENERATING 3D MODELS<br>AND FPS COUNTING</html>");
+        JButton button1 = createButton2("<html>GENERATING 3D MODELS<br>AND FPS COUNTING</html>");
         button1.setBounds(50, 230, 300, 70); // Set position and size
-        button1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Hide the GPU frame
-                gpuFrame.setVisible(false);
-                // Show the Button 1 frame
-                showButton1GPUFrame();
-            }
-        });
         panel.add(button1);
 
-        // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating entities<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>\"");
-        numberLabel.setBounds(55, 330, 500, 160);
-        numberLabel.setForeground(Color.WHITE); // Set text color to white
+        // Add a JLabel for instructions
+        JLabel instructionsLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating entities<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>");
+        instructionsLabel.setBounds(55, 330, 500, 160);
+        instructionsLabel.setForeground(Color.WHITE); // Set text color to white
+        instructionsLabel.setFont(new Font("Arial", Font.BOLD, 19)); // Set font
+        panel.add(instructionsLabel);
 
-        // Create a new Font object with the desired size
-        Font font = new Font("Arial", Font.BOLD, 19); // Adjust the font size as needed
-        numberLabel.setFont(font); // Set the font of the JLabel
-
-        panel.add(numberLabel);
-
-        // Adding a button to close the GPU frame and show the main frame again
-        JButton closeButton = createButton("Go to the previous menu");
+        // Adding a button to close the GPU frame and show the previous frame again
+        JButton closeButton = createButton2("Go to the previous menu");
         closeButton.setBounds(50, 550, 300, 50); // Set position and size
-        closeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                gpuFrame.dispose();
-                frame.setVisible(true);
-            }
-        });
         panel.add(closeButton);
 
         gpuFrame.setContentPane(panel); // Set the panel as the content pane
         gpuFrame.setVisible(true);
+
+        // Add action listener for the close button
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gpuFrame.dispose();
+                previousFrame.setVisible(true); // Show the previous frame
+            }
+        });
+
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gpuFrame.dispose(); // Close the current frame
+                showButton1GPUFrame(gpuFrame); // Open the frame with "You entered Trigon's hell"
+            }
+        });
+
+        // Add component listener to handle resizing events
+        gpuFrame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Adjust button positions based on frame size
+                int frameWidth = gpuFrame.getWidth();
+                int frameHeight = gpuFrame.getHeight();
+
+                // Set the buttons' positions relative to the frame size
+                button1.setBounds(frameWidth * 50 / width, frameHeight * 230 / height, frameWidth * 300 / width, frameHeight * 70 / height);
+                instructionsLabel.setBounds(frameWidth * 55 / width, frameHeight * 330 / height, frameWidth * 500 / width, frameHeight * 160 / height);
+                closeButton.setBounds(frameWidth * 50 / width, frameHeight * 550 / height, frameWidth * 300 / width, frameHeight * 50 / height);
+            }
+        });
     }
 
 
-    private void showButton1GPUFrame() {
+    private void showButton1GPUFrame(JFrame previousFrame) {
         JFrame button1GPUFrame = new JFrame("You entered Trigon's hell");
         button1GPUFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         button1GPUFrame.setSize(1041, 704); // Set size as needed
@@ -618,11 +630,11 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Enter the number<br>of cubes/second<br>to generate:</html>\"");
+        JLabel numberLabel = new JLabel("<html>Enter the number<br>of cubes/second<br>to generate:</html>");
         numberLabel.setBounds(605, 200, 200, 70);
-        numberLabel.setForeground(Color.WHITE); // Set text color to red
-        numberLabel.setBackground(Color.RED); // Set background color to white
-        numberLabel.setOpaque(true); // Make the
+        numberLabel.setForeground(Color.WHITE); // Set text color to white
+        numberLabel.setBackground(Color.RED); // Set background color to red
+        numberLabel.setOpaque(true); // Make the background color visible
         panel.add(numberLabel);
 
         Font font = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
@@ -633,11 +645,11 @@ public class Gui {
         panel.add(numberField);
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel2 = new JLabel("<html>Enter the number<br>of titans/second<br>to generate:</html>\"");
+        JLabel numberLabel2 = new JLabel("<html>Enter the number<br>of titans/second<br>to generate:</html>");
         numberLabel2.setBounds(605, 300, 200, 70);
-        numberLabel2.setForeground(Color.WHITE); // Set text color to red
-        numberLabel2.setBackground(Color.RED); // Set background color to white
-        numberLabel2.setOpaque(true); // Make the
+        numberLabel2.setForeground(Color.WHITE); // Set text color to white
+        numberLabel2.setBackground(Color.RED); // Set background color to red
+        numberLabel2.setOpaque(true); // Make the background color visible
         panel.add(numberLabel2);
 
         Font font2 = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
@@ -648,84 +660,84 @@ public class Gui {
         panel.add(numberField2);
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel3 = new JLabel("<html>Enter the number<br>of runs for<br>the benchmark:</html>\"");
+        JLabel numberLabel3 = new JLabel("<html>Enter the number<br>of runs for<br>the benchmark:</html>");
         numberLabel3.setBounds(605, 400, 200, 70);
-        numberLabel3.setForeground(Color.WHITE); // Set text color to red
-        numberLabel3.setBackground(Color.RED); // Set background color to white
-        numberLabel3.setOpaque(true); // Make the
+        numberLabel3.setForeground(Color.WHITE); // Set text color to white
+        numberLabel3.setBackground(Color.RED); // Set background color to red
+        numberLabel3.setOpaque(true); // Make the background color visible
         panel.add(numberLabel3);
 
         Font font3 = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
-        numberLabel3.setFont(font2); // Set the font of the JLabel
+        numberLabel3.setFont(font3); // Set the font of the JLabel
 
         JTextField numberField3 = new JTextField();
         numberField3.setBounds(850, 415, 100, 40);
         panel.add(numberField3);
 
         // Adding a button for some functionality specific to this frame
-        JButton specificButton = createButton("<html>Start Benchmark<br>(with input numbers)</html>\"");
+        JButton specificButton = createButton2("<html>Start Benchmark<br>(with input numbers)</html>");
         specificButton.setBounds(605, 540, 350, 70); // Set position and size
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String input = numberField.getText();
                 String input2 = numberField2.getText();
                 String input3 = numberField3.getText();
-                try{
+                try {
                     button1GPUFrame.setVisible(false);
                     int number = Integer.parseInt(input);
                     int number2 = Integer.parseInt(input2);
                     int number3 = Integer.parseInt(input3);
-                    if (number > 1000000){
+                    if (number > 1000000) {
                         JOptionPane.showMessageDialog(button1GPUFrame, "<html>The provided number is too large!<br>Maximum 1.000.000 cubes/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if (number < 0){
+                    if (number < 0) {
                         JOptionPane.showMessageDialog(button1GPUFrame, "<html>The provided number is too small!<br>Numbers smaller than 0 are not accepted!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if(number2 % 5 != 0){
+                    if (number2 % 5 != 0) {
                         JOptionPane.showMessageDialog(button1GPUFrame, "The number of titans should be a multiple of 5!", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if(number2 > 100000){
+                    if (number2 > 100000) {
                         JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 100.000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if (number2 < 0){
+                    if (number2 < 0) {
                         JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too small!<br>Numbers smaller than 0 are not accepted!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if(number3 > 10){
+                    if (number3 > 10) {
                         JOptionPane.showMessageDialog(button1GPUFrame, "Maximum 10 runs are accepted!", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
                     GPUBenchmarky.setCubesToGenerate(number);
-                    GPUBenchmarky.setRobinsToGenerate(number2/5);
-                    GPUBenchmarky.setBboysToGenerate(number2/5);
-                    GPUBenchmarky.setCyborgsToGenerate(number2/5);
-                    GPUBenchmarky.setSarsToGenerate(number2/5);
-                    GPUBenchmarky.setRavensToGenerate(number2/5);
+                    GPUBenchmarky.setRobinsToGenerate(number2 / 5);
+                    GPUBenchmarky.setBboysToGenerate(number2 / 5);
+                    GPUBenchmarky.setCyborgsToGenerate(number2 / 5);
+                    GPUBenchmarky.setSarsToGenerate(number2 / 5);
+                    GPUBenchmarky.setRavensToGenerate(number2 / 5);
                     GPUBenchmarky.SetTotalRuns(number3);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
                     double finalScore = GPUBenchmarky.GetFinalScore();
-                    double fps_average= GPUBenchmarky.GetFPSAverage();
-                    int total_runs= GPUBenchmarky.GetRunsNumber();
-                    int total_gen_enitities=GPUBenchmarky.TotalGeneratedEntities();
+                    double fps_average = GPUBenchmarky.GetFPSAverage();
+                    int total_runs = GPUBenchmarky.GetRunsNumber();
+                    int total_gen_enitities = GPUBenchmarky.TotalGeneratedEntities();
                     if (finalScore > 550) {
-                        showVictoryFrame(finalScore, fps_average,total_runs, total_gen_enitities);
+                        showVictoryFrame(finalScore, fps_average, total_runs, total_gen_enitities);
                     } else if (finalScore > 500) {
-                        showMediumFrame(finalScore, fps_average,total_runs, total_gen_enitities);
+                        showMediumFrame(finalScore, fps_average, total_runs, total_gen_enitities);
                     } else {
-                        showDefeatFrame(finalScore, fps_average,total_runs, total_gen_enitities);
+                        showDefeatFrame(finalScore, fps_average, total_runs, total_gen_enitities);
                     }
 
                     try {
@@ -743,57 +755,91 @@ public class Gui {
         panel.add(specificButton);
 
         // Adding a button for some functionality specific to this frame
-        JButton specificButton2 = createButton("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>\"");
+        JButton specificButton2 = createButton2("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>");
         specificButton2.setBounds(50, 410, 350, 90); // Set position and size
         specificButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                    button1GPUFrame.setVisible(false);
-                    GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
-                    GPUBenchmarky.setCubesToGenerate(5);
-                    GPUBenchmarky.setRobinsToGenerate(5);
-                    GPUBenchmarky.setBboysToGenerate(5);
-                    GPUBenchmarky.setCyborgsToGenerate(5);
-                    GPUBenchmarky.setSarsToGenerate(5);
-                    GPUBenchmarky.setRavensToGenerate(5);
-                    GPUBenchmarky.SetTotalRuns(5);
-                    BenchmarkInfo data = GPUBenchmarky.runMain();
+                button1GPUFrame.setVisible(false);
+                GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+                GPUBenchmarky.setCubesToGenerate(5);
+                GPUBenchmarky.setRobinsToGenerate(5);
+                GPUBenchmarky.setBboysToGenerate(5);
+                GPUBenchmarky.setCyborgsToGenerate(5);
+                GPUBenchmarky.setSarsToGenerate(5);
+                GPUBenchmarky.setRavensToGenerate(5);
+                GPUBenchmarky.SetTotalRuns(5);
+                BenchmarkInfo data = GPUBenchmarky.runMain();
 
-                    // Check the final score and show the corresponding frame
-                    double finalScore = GPUBenchmarky.GetFinalScore();
-                    double fps_average= GPUBenchmarky.GetFPSAverage();
-                    int total_gen_entities=GPUBenchmarky.TotalGeneratedEntities();
-                    int total_runs=GPUBenchmarky.GetRunsNumber();
-                    if (finalScore > 550) {
-                        showVictoryFrame(finalScore,fps_average, total_runs, total_gen_entities);
-                    } else if (finalScore > 500) {
-                        showMediumFrame(finalScore,fps_average,total_runs, total_gen_entities);
-                    } else {
-                        showDefeatFrame(finalScore,fps_average,total_runs, total_gen_entities);
-                    }
+                // Check the final score and show the corresponding frame
+                double finalScore = GPUBenchmarky.GetFinalScore();
+                double fps_average = GPUBenchmarky.GetFPSAverage();
+                int total_gen_entities = GPUBenchmarky.TotalGeneratedEntities();
+                int total_runs = GPUBenchmarky.GetRunsNumber();
+                if (finalScore > 550) {
+                    showVictoryFrame(finalScore, fps_average, total_runs, total_gen_entities);
+                } else if (finalScore > 500) {
+                    showMediumFrame(finalScore, fps_average, total_runs, total_gen_entities);
+                } else {
+                    showDefeatFrame(finalScore, fps_average, total_runs, total_gen_entities);
+                }
 
-                    try {
-                        Firebase.writeData(data);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                try {
+                    Firebase.writeData(data);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         panel.add(specificButton2);
 
         // Add a button to close this frame and show the GPU frame again
-        JButton closeButton = createButton("Go to the previous menu");
+        JButton closeButton = createButton2("Go to the previous menu");
         closeButton.setBounds(50, 540, 300, 70); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button1GPUFrame.dispose();
-                gpuFrame.setVisible(true); // Show the GPU frame again
+                previousFrame.setVisible(true); // Show the GPU frame again
             }
         });
         panel.add(closeButton);
 
         button1GPUFrame.setContentPane(panel); // Set the panel as the content pane
         button1GPUFrame.setVisible(true);
+
+        // Add a component listener to handle resizing events
+        button1GPUFrame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Reposition components based on new size
+                int frameWidth = button1GPUFrame.getWidth();
+                int frameHeight = button1GPUFrame.getHeight();
+
+                // Update component positions and sizes based on frame size
+                numberLabel.setBounds(frameWidth * 605 / 1041, frameHeight * 200 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
+                numberField.setBounds(frameWidth * 850 / 1041, frameHeight * 215 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
+
+                numberLabel2.setBounds(frameWidth * 605 / 1041, frameHeight * 300 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
+                numberField2.setBounds(frameWidth * 850 / 1041, frameHeight * 315 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
+
+                numberLabel3.setBounds(frameWidth * 605 / 1041, frameHeight * 400 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
+                numberField3.setBounds(frameWidth * 850 / 1041, frameHeight * 415 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
+
+                specificButton.setBounds(frameWidth * 605 / 1041, frameHeight * 540 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
+                specificButton2.setBounds(frameWidth * 50 / 1041, frameHeight * 410 / 704, frameWidth * 350 / 1041, frameHeight * 90 / 704);
+                closeButton.setBounds(frameWidth * 50 / 1041, frameHeight * 540 / 704, frameWidth * 300 / 1041, frameHeight * 70 / 704);
+
+                panel.repaint(); // Repaint the panel to adjust the background image
+            }
+        });
     }
+
+    // Helper method to create buttons with specific styling
+    private JButton createButton2(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 18));
+        return button;
+    }
+
 
     private void showVictoryFrame(double finalScore, double fps_average, int total_runs, int gen_cubes) {
         JFrame victoryFrame = new JFrame("Victory");
