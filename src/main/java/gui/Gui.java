@@ -690,8 +690,8 @@ public class Gui {
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if(number2 > 1000){
-                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 1000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
+                    if(number2 > 100000){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 100.000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
