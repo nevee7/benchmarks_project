@@ -612,20 +612,25 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                     button1GPUFrame.setVisible(false);
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
-                    GPUBenchmarky.setCubesToGenerate(10000);
+                    GPUBenchmarky.setCubesToGenerate(5000);
+                    GPUBenchmarky.setRobinsToGenerate(5000);
+                    GPUBenchmarky.setBboysToGenerate(5000);
+                    GPUBenchmarky.setCyborgsToGenerate(5000);
+                    GPUBenchmarky.setSarsToGenerate(5000);
+                    GPUBenchmarky.setRavensToGenerate(5000);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
                     double finalScore = GPUBenchmarky.GetFinalScore();
                     double fps_average= GPUBenchmarky.GetFPSAverage();
                     int total_runs= GPUBenchmarky.GetRunsNumber();
-                    int total_gen_cubes=5;
-                    if (finalScore > 200) {
-                        showVictoryFrame(finalScore,fps_average, total_runs, total_gen_cubes);
-                    } else if (finalScore > 100) {
-                        showMediumFrame(finalScore,fps_average,total_runs, total_gen_cubes);
+                    int total_gen_entities=GPUBenchmarky.TotalGeneratedEntities();
+                    if (finalScore > 550) {
+                        showVictoryFrame(finalScore,fps_average, total_runs, total_gen_entities);
+                    } else if (finalScore > 500) {
+                        showMediumFrame(finalScore,fps_average,total_runs, total_gen_entities);
                     } else {
-                        showDefeatFrame(finalScore,fps_average,total_runs, total_gen_cubes);
+                        showDefeatFrame(finalScore,fps_average,total_runs, total_gen_entities);
                     }
 
                     try {
@@ -685,7 +690,7 @@ public class Gui {
         finalFPSLabel.setBounds(500, 260, 280, 80);
         panel.add(finalFPSLabel);
 
-        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>cubes gen.</html>", gen_cubes));
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
         finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
         finalCubesLabel.setBackground(Color.RED); // Set background color to white
@@ -741,7 +746,7 @@ public class Gui {
         finalFPSLabel.setBounds(300, 230, 280, 80);
         panel.add(finalFPSLabel);
 
-        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>cubes gen.</html>", gen_cubes));
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
         finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
         finalCubesLabel.setBackground(Color.RED); // Set background color to white
@@ -799,7 +804,7 @@ public class Gui {
         finalFPSLabel.setBounds(450, 320, 280, 80);
         panel.add(finalFPSLabel);
 
-        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>cubes gen.</html>", gen_cubes));
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
         finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
         finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
         finalCubesLabel.setBackground(Color.RED); // Set background color to white

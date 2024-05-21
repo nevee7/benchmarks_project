@@ -39,10 +39,6 @@ public class GPUBenchmarky implements IAppLogic {
 
     private Model RobinModel;
 
-
-
-
-
     private static final List<Entity> cubes = new ArrayList<>();
 
     private static final List<Entity> titans = new ArrayList<>();
@@ -55,13 +51,13 @@ public class GPUBenchmarky implements IAppLogic {
 
     private int nrofCybotgs=0;
 
-    private  int nrofCyborgsToGenerate=1;
-    private int nrofBeastBoysToGenerate=1;
+    private  static int nrofCyborgsToGenerate=1;
+    private static int nrofBeastBoysToGenerate=1;
 
-    private int nrofRavensToGenerate=1;
+    private static int nrofRavensToGenerate=1;
 
-    private int nrofRobinsToGenerate=1;
-    private int nrofStarFireToGenerate=1;
+    private static int nrofRobinsToGenerate=1;
+    private static int nrofStarFireToGenerate=1;
 
 
     private float rotation;
@@ -70,6 +66,16 @@ public class GPUBenchmarky implements IAppLogic {
     private double FinalScore;
     private double FPSAverage;
     private int TotalRuns;
+    private int TotalGeneratedEntities=0;
+
+    private static int total_no_cubes=0;
+    private static int total_no_robins=0;
+    private static int total_no_cyborgs=0;
+    private static int total_no_ravens=0;
+    private static int total_no_sfires=0;
+    private static int total_no_bboys=0;
+    private static int total_no_entities=0;
+
 
    public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -88,7 +94,14 @@ public class GPUBenchmarky implements IAppLogic {
         warmup.start();
         warmup.stop();
         //System.out.println("Number of generated cubes in warm-up:  "+ total_no_cubes);
+        total_no_cubes=0;
+        total_no_robins=0;
+        total_no_ravens=0;
+        total_no_cyborgs=0;
+        total_no_bboys=0;
+        total_no_sfires=0;
         cubes.clear();
+        titans.clear();
         nrOfCubes = 0;
 
         for (int i = 0; i < totalRuns; i++) {
@@ -97,6 +110,15 @@ public class GPUBenchmarky implements IAppLogic {
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
             //System.out.println("Number of generated cubes:  "+ total_no_cubes);
+            total_no_entities=total_no_bboys+total_no_cyborgs+total_no_ravens+total_no_sfires+total_no_robins;
+            TotalGeneratedEntities=TotalGeneratedEntities+total_no_cubes+total_no_entities;
+            total_no_robins=0;
+            total_no_ravens=0;
+            total_no_cyborgs=0;
+            total_no_bboys=0;
+            total_no_sfires=0;
+            total_no_entities=0;
+            total_no_cubes=0;
             cubes.clear();
             titans.clear();
             nrOfCubes = 0;
@@ -185,14 +207,11 @@ public class GPUBenchmarky implements IAppLogic {
         RobinModel = ModelLoader.loadModel("robi-model", "resources/models/Robin/Robin.obj", scene.getTextureCache());
         scene.addModel(RobinModel);
 
-
         Entity RobinEntity = new Entity("robi-entity", RobinModel.getId());
         RobinEntity.setPosition(0, -4, -10);
         RobinEntity.setScale(2.2f);
         RobinEntity.updateModelMatrix();
         scene.addEntity(RobinEntity);
-
-
 
         Entity RavenEntity = new Entity("raven-entity", RavenModel.getId());
         RavenEntity.setPosition(8, -4, -10);
@@ -216,7 +235,6 @@ public class GPUBenchmarky implements IAppLogic {
         Cyborg.setScale(1.25f);
         Cyborg.updateModelMatrix();
         scene.addEntity(Cyborg);
-
 
         titans.add(beastBoyEntity);
         titans.add(RavenEntity);
@@ -381,6 +399,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateCubes(Scene scene) {
         for (int i = 0; i < nrOfCubesToGenerate; i++) {
+            total_no_cubes=nrOfCubes;
             nrOfCubes++;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
@@ -396,6 +415,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateBeastBoys(Scene scene) {
         for (int i = 0; i < nrofBeastBoysToGenerate; i++) {
+            total_no_bboys=nrofBeastBoys;
             nrofBeastBoys++;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
@@ -412,6 +432,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateRavens(Scene scene) {
         for (int i = 0; i < nrofRavensToGenerate; i++) {
+            total_no_ravens=nrofRavens;
             nrofRavens++;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
@@ -429,6 +450,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateCyborgs(Scene scene) {
         for (int i = 0; i < nrofCyborgsToGenerate; i++) {
+            total_no_cyborgs=nrofCybotgs;
             nrofCybotgs++;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
@@ -445,6 +467,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateStarFires(Scene scene) {
         for (int i = 0; i < nrofStarFireToGenerate; i++) {
+            total_no_sfires=nrofStars;
             nrofStars++;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
@@ -461,6 +484,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateRobins(Scene scene) {
         for (int i = 0; i < nrofRobinsToGenerate; i++) {
+            total_no_robins=nrofRobins;
             nrofRobins++;
             float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
             float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
@@ -490,5 +514,25 @@ public class GPUBenchmarky implements IAppLogic {
 
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
         GPUBenchmarky.nrOfCubesToGenerate =nrOfCubesToGenerate;
+    }
+
+    public void setRobinsToGenerate(int nrOfRobinsToGenerate) {
+        GPUBenchmarky.nrofRobinsToGenerate=nrOfRobinsToGenerate;
+    }
+    public void setCyborgsToGenerate(int nrOfCyborgsToGenerate) {
+        GPUBenchmarky.nrofCyborgsToGenerate=nrOfCyborgsToGenerate;
+    }
+    public void setRavensToGenerate(int nrOfRavensToGenerate) {
+        GPUBenchmarky.nrofRavensToGenerate=nrOfRavensToGenerate;
+    }
+    public void setBboysToGenerate(int nrOfBboysToGenerate) {
+        GPUBenchmarky.nrofBeastBoysToGenerate=nrOfBboysToGenerate;
+    }
+    public void setSarsToGenerate(int nrOfStarsToGenerate) {
+        GPUBenchmarky.nrofStarFireToGenerate=nrOfStarsToGenerate;
+    }
+
+    public int TotalGeneratedEntities(){
+        return TotalGeneratedEntities;
     }
 }
