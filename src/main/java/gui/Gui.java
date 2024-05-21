@@ -588,7 +588,7 @@ public class Gui {
         panel.add(gen3d_button);
 
         //description for the gpu benchmark and ranking
-        JLabel instructionsLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating entities<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>");
+        JLabel instructionsLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating entities<br><br>RANKING:<br>Victory -> Final Score larger than 100<br>Draw -> Final Score between 100 and 50<br>Defeat -> Final Score lower than 50 </html>");
         instructionsLabel.setBounds(55, 330, 500, 160);
         instructionsLabel.setForeground(Color.WHITE);
         instructionsLabel.setFont(new Font("Arial", Font.BOLD, 19));
@@ -748,9 +748,9 @@ public class Gui {
                     double fps_average = GPUBenchmarky.GetFPSAverage();
                     int total_runs = GPUBenchmarky.GetRunsNumber();
                     int total_gen_enitities = GPUBenchmarky.TotalGeneratedEntities();
-                    if (finalScore > 550) {
+                    if (finalScore > 100) {
                         gpuVictoryFrame(finalScore, fps_average, total_runs, total_gen_enitities, previousFrame);
-                    } else if (finalScore > 500) {
+                    } else if (finalScore > 50) {
                         gpuDrawFrame(finalScore, fps_average, total_runs, total_gen_enitities, previousFrame);
                     } else {
                         gpuDefeatFrame(finalScore, fps_average, total_runs, total_gen_enitities, previousFrame);
@@ -786,9 +786,9 @@ public class Gui {
                 double fps_average = GPUBenchmarky.GetFPSAverage();
                 int total_gen_entities = GPUBenchmarky.TotalGeneratedEntities();
                 int total_runs = GPUBenchmarky.GetRunsNumber();
-                if (finalScore > 550) {
+                if (finalScore > 100) {
                     gpuVictoryFrame(finalScore, fps_average, total_runs, total_gen_entities, previousFrame);
-                } else if (finalScore > 500) {
+                } else if (finalScore > 50) {
                     gpuDrawFrame(finalScore, fps_average, total_runs, total_gen_entities, previousFrame);
                 } else {
                     gpuDefeatFrame(finalScore, fps_average, total_runs, total_gen_entities, previousFrame);

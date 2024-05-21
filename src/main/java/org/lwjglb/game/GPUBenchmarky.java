@@ -88,27 +88,36 @@ public class GPUBenchmarky implements IAppLogic {
         return new BenchmarkInfo("GPU benchmark", finalScore, nrOfCubesToGenerate);
     }
 
-    private static double calculateFinalScore(List<Double> allFpsValues) {
+    private double calculateFinalScore(List<Double> allFpsValues) {
         double avgFPS = calculateAverage(allFpsValues);
         double minFPS = Collections.min(allFpsValues);
-        double maxFPS = Collections.max(allFpsValues);
-
         double normalizedAvg = normalize(avgFPS, allFpsValues);
 
-        double weightAvg = 0.7;
-        double weightMin = 0.15;
-        double weightMax = 0.15;
+        double generatedStuff=this.TotalGeneratedEntities();
+        double stressLevel=(generatedStuff-total_no_cubes)*0.09+total_no_cubes*0.0001;
+        double weightAvg = 0.5;
+        double weightMin = 0.3;
+        double weightAvgDef=0.2;
 
-        return weightAvg * normalizedAvg + weightMin * minFPS + weightMax * maxFPS;
+        return weightAvg * normalizedAvg + weightMin * minFPS + weightAvgDef * avgFPS+stressLevel;
     }
 
 
 
     private static double calculateAverage(List<Double> values) {
         double sum = 0;
+        double max=-1;
+        double min=10000000;
         for (double value : values) {
             sum += value;
+            if(value>max)
+                max=value;
+            if(value < min)
+                min=value;
         }
+
+        System.out.println("Max:"+max);
+        System.out.println("Min:"+min);
         return sum / values.size();
     }
 
