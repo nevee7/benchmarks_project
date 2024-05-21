@@ -612,12 +612,12 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                     button1GPUFrame.setVisible(false);
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
-                    GPUBenchmarky.setCubesToGenerate(5000);
-                    GPUBenchmarky.setRobinsToGenerate(5000);
-                    GPUBenchmarky.setBboysToGenerate(5000);
-                    GPUBenchmarky.setCyborgsToGenerate(5000);
-                    GPUBenchmarky.setSarsToGenerate(5000);
-                    GPUBenchmarky.setRavensToGenerate(5000);
+                    GPUBenchmarky.setCubesToGenerate(5);
+                    GPUBenchmarky.setRobinsToGenerate(5);
+                    GPUBenchmarky.setBboysToGenerate(5);
+                    GPUBenchmarky.setCyborgsToGenerate(5);
+                    GPUBenchmarky.setSarsToGenerate(5);
+                    GPUBenchmarky.setRavensToGenerate(5);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
