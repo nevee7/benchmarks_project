@@ -583,9 +583,9 @@ public class Gui {
                     double fps_average= GPUBenchmarky.GetFPSAverage();
                     int total_runs= GPUBenchmarky.GetRunsNumber();
                     //int total_gen_cubes=GPUBenchmarky.TotalGeneratedCubes();
-                    if (finalScore > 550) {
+                    if (finalScore > 150) {
                         showVictoryFrame(finalScore, fps_average,total_runs, 5);
-                    } else if (finalScore > 500) {
+                    } else if (finalScore > 100) {
                         showMediumFrame(finalScore, fps_average,total_runs, 5);
                     } else {
                         showDefeatFrame(finalScore, fps_average,total_runs, 5);
@@ -620,7 +620,7 @@ public class Gui {
                     double fps_average= GPUBenchmarky.GetFPSAverage();
                     int total_runs= GPUBenchmarky.GetRunsNumber();
                     int total_gen_cubes=5;
-                    if (finalScore > 200) {
+                    if (finalScore > 150) {
                         showVictoryFrame(finalScore,fps_average, total_runs, total_gen_cubes);
                     } else if (finalScore > 100) {
                         showMediumFrame(finalScore,fps_average,total_runs, total_gen_cubes);
