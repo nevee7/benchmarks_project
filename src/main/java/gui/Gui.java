@@ -43,6 +43,8 @@ public class Gui {
     private JFrame cpuFrame;
     private JFrame waitingFrame;
 
+    private Clip clip;
+
     public Gui() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Firebase.initializeFirebase();
         playAudio("resources" + File.separator + "gui" + File.separator + "melodie1.wav", true, 1000);
@@ -565,8 +567,23 @@ public class Gui {
     * */
 
     JFrame before_gpu_frames; //used for returning on the select frame after victory, draw or defeat
+    private int gpu_runned=0; //a telling if the gpu test bench runned or not
 
     private void SelectGPUFrame(JFrame previousFrame, int width, int height) {
+        if(gpu_runned==1){
+            clip.stop();
+            try {
+                playAudio("resources" + File.separator + "gui" + File.separator + "melodie1.wav", true, 1000);
+            } catch (UnsupportedAudioFileException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+            gpu_runned=0;
+        }
+
         JFrame selectFrame = new JFrame("GPU Benchmarks");
         selectFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         selectFrame.setSize(width, height);
@@ -633,7 +650,6 @@ public class Gui {
             }
         });
     }
-
 
     private void StartGPUBenchmarkFrame(JFrame previousFrame) {
         JFrame startFrame = new JFrame("You entered Trigon's hell");
@@ -737,6 +753,18 @@ public class Gui {
                         startFrame.setVisible(true);
                         throw new RuntimeException();
                     }
+
+                    clip.stop();
+                    try {
+                        playAudio("resources" + File.separator + "gui" + File.separator + "themeSong.wav", true, 1000);
+                    } catch (UnsupportedAudioFileException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (LineUnavailableException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
                     GPUBenchmarky.setCubesToGenerate(cubes_number);
                     GPUBenchmarky.setTitansToGenerate(titans_number);
@@ -775,7 +803,20 @@ public class Gui {
         start_default.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startFrame.setVisible(false);
+
                 GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+
+                clip.stop();
+                try {
+                    playAudio("resources" + File.separator + "gui" + File.separator + "themeSong.wav", true, 1000);
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 GPUBenchmarky.setCubesToGenerate(5);
                 GPUBenchmarky.setTitansToGenerate(5);
                 GPUBenchmarky.SetTotalRuns(5);
@@ -853,6 +894,18 @@ public class Gui {
 
 
     private void gpuVictoryFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame previousFrame) {
+        gpu_runned=1;
+        clip.stop();
+        try {
+            playAudio("resources" + File.separator + "gui" + File.separator + "tada.wav", true, 0);
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(1041, 704);
@@ -950,6 +1003,18 @@ public class Gui {
 
 
     private void gpuDrawFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame previousFrame) {
+        gpu_runned=1;
+        clip.stop();
+        try {
+            playAudio("resources" + File.separator + "gui" + File.separator + "cricket.wav", true, 1000);
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+
         JFrame mediumFrame = new JFrame("Draw");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(1041, 704); // Set size as needed
@@ -1020,6 +1085,18 @@ public class Gui {
     }
 
     private void gpuDefeatFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame previousFrame) {
+        gpu_runned=1;
+        clip.stop();
+        try {
+            playAudio("resources" + File.separator + "gui" + File.separator + "fail.wav", true, 1000);
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(1041, 704);
@@ -1237,7 +1314,7 @@ public class Gui {
     private void playAudio(String filePath, boolean loop, int loopCount) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File musicPath = new File(filePath);
         AudioInputStream song = AudioSystem.getAudioInputStream(musicPath);
-        Clip clip = AudioSystem.getClip();
+        clip = AudioSystem.getClip();
         clip.open(song);
         if (loop) {
             clip.loop(loopCount);

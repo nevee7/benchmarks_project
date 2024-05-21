@@ -19,7 +19,6 @@ public class GPUBenchmarky implements IAppLogic {
 
     private static final long CUBE_GENERATION_INTERVAL = 1000;
 
-
     public static int nrOfCubesToGenerate=1;
     private long lastCubeGenerationTime;
 
@@ -30,7 +29,6 @@ public class GPUBenchmarky implements IAppLogic {
     private static final List<Entity> titans = new ArrayList<>();
 
     private static int TitansToGenerate=5;
-
 
     private float rotation;
     private float lightAngle;
@@ -50,11 +48,13 @@ public class GPUBenchmarky implements IAppLogic {
     private static int totalRuns=2;
     Model[] TitansModels=new Model[5];
 
+
     public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
         GPUBenchmarky.runMain();
     }
- //commented out for no confussion
+
+
     public BenchmarkInfo runMain() {
         System.out.println(nrOfCubesToGenerate);
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -103,7 +103,6 @@ public class GPUBenchmarky implements IAppLogic {
     }
 
 
-
     private static double calculateAverage(List<Double> values) {
         double sum = 0;
         double max=-1;
@@ -121,16 +120,19 @@ public class GPUBenchmarky implements IAppLogic {
         return sum / values.size();
     }
 
+
     private static double normalize(double value, List<Double> values) {
         double min = Collections.min(values);
         double max = Collections.max(values);
         return 100 * (value - min) / (max - min);
     }
 
+
     @Override
     public void cleanup() {
         // Nothing to be done yet
     }
+
 
     private void resetCountersAndEntities() {
         // Reset counters
@@ -146,11 +148,13 @@ public class GPUBenchmarky implements IAppLogic {
         titans.clear();
     }
 
+
     private void updateTotalGeneratedEntities() {
         int total_no_entities = total_no_bboys + total_no_cyborgs + total_no_ravens + total_no_sfires + total_no_robins;
         if(total_no_entities==0) TotalGeneratedEntities = TotalGeneratedEntities +  total_no_cubes;
         else TotalGeneratedEntities = TotalGeneratedEntities + total_no_cubes + total_no_entities;
     }
+
 
     @Override
     public void init(Window window, Scene scene, Render render) {
@@ -249,7 +253,6 @@ public class GPUBenchmarky implements IAppLogic {
         scene.getCamera().moveUp(0.1f);
 
         lightAngle = -35;
-
     }
 
 
@@ -269,6 +272,7 @@ public class GPUBenchmarky implements IAppLogic {
             generateTitan(scene,TitansModels[i%5]);
         }
     }
+
 
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
@@ -355,14 +359,15 @@ public class GPUBenchmarky implements IAppLogic {
         GPUBenchmarky.nrOfCubesToGenerate =nrOfCubesToGenerate;
     }
 
-    public void setTitansToGenerate(int TitansToGenerate)
-    {
+    public void setTitansToGenerate(int TitansToGenerate) {
         GPUBenchmarky.TitansToGenerate=TitansToGenerate;
     }
-    public int TotalGeneratedEntities(){
+
+    public int TotalGeneratedEntities() {
         return TotalGeneratedEntities;
     }
-    public void SetTotalRuns(int totalRuns){
+
+    public void SetTotalRuns(int totalRuns) {
         GPUBenchmarky.totalRuns=totalRuns;
     }
 }
