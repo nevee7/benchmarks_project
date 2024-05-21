@@ -804,8 +804,6 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 startFrame.setVisible(false);
 
-                GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
-
                 clip.stop();
                 try {
                     playAudio("resources" + File.separator + "gui" + File.separator + "themeSong.wav", true, 1000);
@@ -817,6 +815,7 @@ public class Gui {
                     throw new RuntimeException(ex);
                 }
 
+                GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
                 GPUBenchmarky.setCubesToGenerate(5);
                 GPUBenchmarky.setTitansToGenerate(5);
                 GPUBenchmarky.SetTotalRuns(5);
