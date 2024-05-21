@@ -35,6 +35,12 @@ public class GPUBenchmarky implements IAppLogic {
     private Model RavenModel;
     private Model CyborgModel;
 
+    private Model StarModel;
+
+    private Model RobinModel;
+
+
+
 
 
     private static final List<Entity> cubes = new ArrayList<>();
@@ -44,6 +50,8 @@ public class GPUBenchmarky implements IAppLogic {
     private static int nrOfCubes = 0;
     private int nrofBeastBoys=0;
     private int nrofRavens=0;
+    private int nrofRobins=0;
+    private int nrofStars=0;
 
     private int nrofCybotgs=0;
 
@@ -51,6 +59,10 @@ public class GPUBenchmarky implements IAppLogic {
     private int nrofBeastBoysToGenerate=1;
 
     private int nrofRavensToGenerate=1;
+
+    private int nrofRobinsToGenerate=1;
+    private int nrofStarFireToGenerate=1;
+
 
     private float rotation;
     private float lightAngle;
@@ -86,6 +98,7 @@ public class GPUBenchmarky implements IAppLogic {
             gameEng.stop();
             //System.out.println("Number of generated cubes:  "+ total_no_cubes);
             cubes.clear();
+            titans.clear();
             nrOfCubes = 0;
 
             if ((i + 1) % batchSize == 0) {
@@ -160,26 +173,45 @@ public class GPUBenchmarky implements IAppLogic {
         BeastBoyModel = ModelLoader.loadModel("beast-model", "resources/models/Beastboy/untitled.obj", scene.getTextureCache());
         scene.addModel(BeastBoyModel);
 
-        RavenModel = ModelLoader.loadModel("raven-model", "resources/models/Raven/INJ_iOS_HERO_Rachel_Roth_Raven_Teen_Titans.obj", scene.getTextureCache());
+        RavenModel = ModelLoader.loadModel("raven-model", "resources/models/Raven/Raven.obj", scene.getTextureCache());
         scene.addModel(RavenModel);
 
         CyborgModel = ModelLoader.loadModel("cyborg-model", "resources/models/Cyborg/cyborg.obj", scene.getTextureCache());
         scene.addModel(CyborgModel);
 
+        StarModel = ModelLoader.loadModel("star-model", "resources/models/Starfire/theteentitansGamecube.obj", scene.getTextureCache());
+        scene.addModel(StarModel);
+
+        RobinModel = ModelLoader.loadModel("robi-model", "resources/models/Robin/Robin.obj", scene.getTextureCache());
+        scene.addModel(RobinModel);
+
+
+        Entity RobinEntity = new Entity("robi-entity", RobinModel.getId());
+        RobinEntity.setPosition(0, 0, -10);
+        RobinEntity.setScale(2.2f);
+        RobinEntity.updateModelMatrix();
+        scene.addEntity(RobinEntity);
+
 
 
         Entity RavenEntity = new Entity("raven-entity", RavenModel.getId());
         RavenEntity.setPosition(4, -5, -10);
-        RavenEntity.setScale(4.0f);
+        RavenEntity.setScale(2.2f);
         RavenEntity.updateModelMatrix();
         scene.addEntity(RavenEntity);
+
+        Entity StarfireEntity = new Entity("raven-entity", StarModel.getId());
+        StarfireEntity.setPosition(-4, -5, -10);
+        StarfireEntity.setScale(2.2f);
+        StarfireEntity.updateModelMatrix();
+        scene.addEntity(StarfireEntity);
 
         Entity beastBoyEntity = new Entity("beast-entity", BeastBoyModel.getId());
         beastBoyEntity.setPosition(-4, 0f, -10);
         beastBoyEntity.updateModelMatrix();
         scene.addEntity(beastBoyEntity);
 
-        Entity Cyborg = new Entity("beast-entity", CyborgModel.getId());
+        Entity Cyborg = new Entity("Cyborg-entity", CyborgModel.getId());
         Cyborg.setPosition(0, 0f, -10);
         Cyborg.updateModelMatrix();
         scene.addEntity(Cyborg);
@@ -188,6 +220,8 @@ public class GPUBenchmarky implements IAppLogic {
         titans.add(beastBoyEntity);
         titans.add(RavenEntity);
         titans.add(Cyborg);
+        titans.add(StarfireEntity);
+        titans.add(RobinEntity);
 
         Entity cubeEntity = new Entity("cube-entity", cubeModel.getId());
         cubeEntity.setPosition(0, 0f, -10);
@@ -314,6 +348,9 @@ public class GPUBenchmarky implements IAppLogic {
             generateBeastBoys(scene);
             generateRavens(scene);
             generateCyborgs(scene);
+            generateStarFires(scene);
+            generateRobins(scene);
+
             lastCubeGenerationTime = currentTime;
         }
     }
@@ -404,6 +441,40 @@ public class GPUBenchmarky implements IAppLogic {
             titans.add(Cybo);
         }
     }
+
+    private void generateStarFires(Scene scene) {
+        for (int i = 0; i < nrofStarFireToGenerate; i++) {
+            nrofStars++;
+            float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
+            float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
+            float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
+            float scale = (float) Math.random() * 5 - 1;
+            Entity Starfire = new Entity("Star-entity" + nrofStars, StarModel.getId());
+            Starfire.setPosition(x, y, z);
+            Starfire.setScale(scale);
+            Starfire.updateModelMatrix();
+            scene.addEntity(Starfire);
+            titans.add(Starfire);
+        }
+    }
+
+    private void generateRobins(Scene scene) {
+        for (int i = 0; i < nrofRobinsToGenerate; i++) {
+            nrofRobins++;
+            float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
+            float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
+            float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
+            float scale = (float) Math.random() * 5 - 1;
+            Entity Robin = new Entity("Robin-entity" + nrofStars, RobinModel.getId());
+            Robin.setPosition(x, y, z);
+            Robin.setScale(scale);
+            Robin.updateModelMatrix();
+            scene.addEntity(Robin);
+            titans.add(Robin);
+        }
+    }
+
+
     public double GetFinalScore(){
         return FinalScore;
     }
