@@ -680,6 +680,11 @@ public class Gui {
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
+                    if (number < 0){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The provided number is too small!<br>Numbers smaller than 0 are not accepted!</html>", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
                     if(number2 % 5 != 0){
                         JOptionPane.showMessageDialog(button1GPUFrame, "The number of titans should be a multiple of 5!", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
@@ -687,6 +692,11 @@ public class Gui {
                     }
                     if(number2 > 1000){
                         JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 1000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    if (number2 < 0){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too small!<br>Numbers smaller than 0 are not accepted!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
