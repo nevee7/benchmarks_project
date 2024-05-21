@@ -30,9 +30,26 @@ public class GPUBenchmarky implements IAppLogic {
     private long lastCubeGenerationTime;
 
     private Model cubeModel;
+    private Model BeastBoyModel;
+
+    private Model RavenModel;
+    private Model CyborgModel;
+
 
     private static final List<Entity> cubes = new ArrayList<>();
+
+    private static final List<Entity> titans = new ArrayList<>();
+
     private static int nrOfCubes = 0;
+    private int nrofBeastBoys=0;
+    private int nrofRavens=0;
+
+    private int nrofCybotgs=0;
+
+    private  int nrofCyborgsToGenerate=1;
+    private int nrofBeastBoysToGenerate=1;
+
+    private int nrofRavensToGenerate=1;
 
     private float rotation;
     private float lightAngle;
@@ -41,11 +58,11 @@ public class GPUBenchmarky implements IAppLogic {
     private double FPSAverage;
     private int TotalRuns;
 
-/*    public static void main(String[] args) {
+   public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
         GPUBenchmarky.runMain();
     }
-*/ //commented out for no confussion
+ //commented out for no confussion
     public BenchmarkInfo runMain() {
         System.out.println(nrOfCubesToGenerate);
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -139,10 +156,41 @@ public class GPUBenchmarky implements IAppLogic {
         cubeModel = ModelLoader.loadModel("cube-model", "resources/models/cube/cube.obj", scene.getTextureCache());
         scene.addModel(cubeModel);
 
+        BeastBoyModel = ModelLoader.loadModel("beast-model", "resources/models/Beastboy/untitled.obj", scene.getTextureCache());
+        scene.addModel(BeastBoyModel);
+
+        RavenModel = ModelLoader.loadModel("raven-model", "resources/models/Raven/INJ_iOS_HERO_Rachel_Roth_Raven_Teen_Titans.obj", scene.getTextureCache());
+        scene.addModel(RavenModel);
+
+        CyborgModel = ModelLoader.loadModel("cyborg-model", "resources/models/Cyborg/cyborg.obj", scene.getTextureCache());
+        scene.addModel(CyborgModel);
+
+
+        Entity RavenEntity = new Entity("raven-entity", RavenModel.getId());
+        RavenEntity.setPosition(4, -5, -10);
+        RavenEntity.setScale(4.0f);
+        RavenEntity.updateModelMatrix();
+        scene.addEntity(RavenEntity);
+
+        Entity beastBoyEntity = new Entity("beast-entity", BeastBoyModel.getId());
+        beastBoyEntity.setPosition(-4, 0f, -10);
+        beastBoyEntity.updateModelMatrix();
+        scene.addEntity(beastBoyEntity);
+
+        Entity Cyborg = new Entity("beast-entity", CyborgModel.getId());
+        Cyborg.setPosition(0, 0f, -10);
+        Cyborg.updateModelMatrix();
+        scene.addEntity(Cyborg);
+
+        titans.add(beastBoyEntity);
+        titans.add(RavenEntity);
+        titans.add(Cyborg);
+
         Entity cubeEntity = new Entity("cube-entity", cubeModel.getId());
         cubeEntity.setPosition(0, 0f, -10);
         cubeEntity.updateModelMatrix();
         scene.addEntity(cubeEntity);
+
 
         SceneLights sceneLights = new SceneLights();
         sceneLights.getAmbientLight().setIntensity(0.3f);
@@ -252,9 +300,17 @@ public class GPUBenchmarky implements IAppLogic {
             cube.updateModelMatrix();
         }
 
+        for (Entity titan : titans) {
+            titan.setRotation(0, 5, 0, (float) Math.toRadians(rotation));
+            titan.updateModelMatrix();
+        }
+
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastCubeGenerationTime >= CUBE_GENERATION_INTERVAL) {
             generateCubes(scene);
+            generateBeastBoys(scene);
+            generateRavens(scene);
+            generateCyborgs(scene);
             lastCubeGenerationTime = currentTime;
         }
     }
@@ -297,6 +353,54 @@ public class GPUBenchmarky implements IAppLogic {
         }
     }
 
+    private void generateBeastBoys(Scene scene) {
+        for (int i = 0; i < nrofBeastBoysToGenerate; i++) {
+            nrofBeastBoys++;
+            float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
+            float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
+            float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
+            float scale = (float) Math.random() * 5 - 1;
+            Entity beastBoy = new Entity("beastBoy-entity" + nrofBeastBoys, BeastBoyModel.getId());
+            beastBoy.setPosition(x, y, z);
+            beastBoy.setScale(scale);
+            beastBoy.updateModelMatrix();
+            scene.addEntity(beastBoy);
+            titans.add(beastBoy);
+        }
+    }
+
+    private void generateRavens(Scene scene) {
+        for (int i = 0; i < nrofRavensToGenerate; i++) {
+            nrofRavens++;
+            float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
+            float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
+            float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
+            float scale = (float) Math.random() * 5 - 1+4;
+            Entity Raven = new Entity("Raven-entity" + nrofBeastBoys, RavenModel.getId());
+            Raven.setPosition(x, y, z);
+            Raven.setScale(scale);
+            Raven.updateModelMatrix();
+            scene.addEntity(Raven);
+            titans.add(Raven);
+        }
+    }
+
+
+    private void generateCyborgs(Scene scene) {
+        for (int i = 0; i < nrofCyborgsToGenerate; i++) {
+            nrofCybotgs++;
+            float x = (float) Math.random() * 21 - 11;  // Random between -11 to 10
+            float y = (float) Math.random() * 12 - 6;  // Random between -6 to 5
+            float z = (float) Math.random() * 20 - 30; // Random between -30 to -10
+            float scale = (float) Math.random() * 5 - 1;
+            Entity Cybo = new Entity("Cyborg-entity" + nrofCybotgs, CyborgModel.getId());
+            Cybo.setPosition(x, y, z);
+            Cybo.setScale(scale);
+            Cybo.updateModelMatrix();
+            scene.addEntity(Cybo);
+            titans.add(Cybo);
+        }
+    }
     public double GetFinalScore(){
         return FinalScore;
     }
