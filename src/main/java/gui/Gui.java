@@ -749,7 +749,7 @@ public class Gui {
                         throw new RuntimeException();
                     }
                     if (cubes_number==0 && titans_number==0){
-                        JOptionPane.showMessageDialog(startFrame, "<html>You cannot have 0 cubes and 0 titans :)<br>What are you testing, the skybox?</html>", "error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(startFrame, "<html>You cannot have 0 cubes and 0 titans generated :)<br>What are you testing, the skybox?</html>", "error", JOptionPane.ERROR_MESSAGE);
                         startFrame.setVisible(true);
                         throw new RuntimeException();
                     }
@@ -759,7 +759,7 @@ public class Gui {
                         throw new RuntimeException();
                     }
                     if (runs_number == 0) {
-                        JOptionPane.showMessageDialog(startFrame, "You need to run at least once the testbench!", "error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(startFrame, "<html>You need to run at least once the test bench :)<br>Only the warm-up will not defeat Trigon!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         startFrame.setVisible(true);
                         throw new RuntimeException();
                     }
