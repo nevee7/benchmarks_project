@@ -17,42 +17,19 @@ import static org.lwjgl.opengl.GL11C.*;
 
 public class GPUBenchmarky implements IAppLogic {
 
-    private static final float MOUSE_SENSITIVITY = 0.1f;
-    private static final float MOVEMENT_SPEED = 0.005f;
     private static final long CUBE_GENERATION_INTERVAL = 1000;
 
-    private static final int NUM_CHUNKS = 4;
-    private Entity[][] terrainEntities;
 
     public static int nrOfCubesToGenerate=1;
     private long lastCubeGenerationTime;
 
     private Model cubeModel;
-    private Model BeastBoyModel;
-
-    private Model RavenModel;
-    private Model CyborgModel;
-
-    private Model StarModel;
-
-    private Model RobinModel;
 
     private static final List<Entity> cubes = new ArrayList<>();
 
     private static final List<Entity> titans = new ArrayList<>();
 
-    private static int nrOfCubes = 0;
-    private static int nrofBeastBoys=0;
-    private static int nrofRavens=0;
-    private static int nrofRobins=0;
-    private static int nrofStars=0;
-    private static int nrofCybotgs=0;
-
-    private  static int nrofCyborgsToGenerate=1;
-    private static int nrofBeastBoysToGenerate=1;
-    private static int nrofRavensToGenerate=1;
-    private static int nrofRobinsToGenerate=1;
-    private static int nrofStarFireToGenerate=1;
+    private static int TitansToGenerate=5;
 
 
     private float rotation;
@@ -70,8 +47,8 @@ public class GPUBenchmarky implements IAppLogic {
     private static int total_no_sfires=0;
     private static int total_no_bboys=0;
 
-    private static int totalRuns=0;
-
+    private static int totalRuns=2;
+    Model[] TitansModels=new Model[5];
 
     public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -118,27 +95,14 @@ public class GPUBenchmarky implements IAppLogic {
 
         double normalizedAvg = normalize(avgFPS, allFpsValues);
 
-        double weightAvg = 0.6;
-        double weightMin = 0.3;
-        double weightMax = 0.1;
-        int CubeFactor=getHighestPowerOfTen(nrOfCubesToGenerate)*100;
+        double weightAvg = 0.7;
+        double weightMin = 0.15;
+        double weightMax = 0.15;
 
-        return weightAvg * normalizedAvg + weightMin * minFPS + weightMax * maxFPS+CubeFactor;
+        return weightAvg * normalizedAvg + weightMin * minFPS + weightMax * maxFPS;
     }
 
 
-    private static int getHighestPowerOfTen(int number) {
-        if (number == 0) {
-            return 0; // Special case: 0 doesn't have a power of 10
-        }
-
-        int highestPower = 0;
-        while (number % 10 == 0) {
-            highestPower++;
-            number /= 10;
-        }
-        return highestPower;
-    }
 
     private static double calculateAverage(List<Double> values) {
         double sum = 0;
@@ -161,12 +125,6 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void resetCountersAndEntities() {
         // Reset counters
-        nrOfCubes = 0;
-        nrofBeastBoys = 0;
-        nrofRavens = 0;
-        nrofCybotgs = 0;
-        nrofStars = 0;
-        nrofRobins = 0;
         total_no_cubes = 0;
         total_no_robins = 0;
         total_no_ravens = 0;
@@ -202,46 +160,51 @@ public class GPUBenchmarky implements IAppLogic {
             cubes.add(cubeEntity);
         }
 
-        if(nrofStarFireToGenerate!=0 && nrofRavensToGenerate!=0 && nrofBeastBoysToGenerate!=0 && nrofCyborgsToGenerate!=0 && nrofRobinsToGenerate!=0){
-            BeastBoyModel = ModelLoader.loadModel("beast-model", "resources/models/Beastboy/untitled.obj", scene.getTextureCache());
-            scene.addModel(BeastBoyModel);
+        if(TitansToGenerate!=0){
+            Model beastBoyModel = ModelLoader.loadModel("beast-model", "resources/models/Beastboy/untitled.obj", scene.getTextureCache());
+            scene.addModel(beastBoyModel);
+            TitansModels[0]= beastBoyModel;
 
-            RavenModel = ModelLoader.loadModel("raven-model", "resources/models/Raven/Raven.obj", scene.getTextureCache());
-            scene.addModel(RavenModel);
+            Model ravenModel = ModelLoader.loadModel("raven-model", "resources/models/Raven/Raven.obj", scene.getTextureCache());
+            scene.addModel(ravenModel);
+            TitansModels[1]= ravenModel;
 
-            CyborgModel = ModelLoader.loadModel("cyborg-model", "resources/models/Cyborg/cyborg.obj", scene.getTextureCache());
-            scene.addModel(CyborgModel);
+            Model cyborgModel = ModelLoader.loadModel("cyborg-model", "resources/models/Cyborg/cyborg.obj", scene.getTextureCache());
+            scene.addModel(cyborgModel);
+            TitansModels[2]= cyborgModel;
 
-            StarModel = ModelLoader.loadModel("star-model", "resources/models/Starfire/theteentitansGamecube.obj", scene.getTextureCache());
-            scene.addModel(StarModel);
+            Model starModel = ModelLoader.loadModel("star-model", "resources/models/Starfire/theteentitansGamecube.obj", scene.getTextureCache());
+            scene.addModel(starModel);
+            TitansModels[3]= starModel;
 
-            RobinModel = ModelLoader.loadModel("robi-model", "resources/models/Robin/Robin.obj", scene.getTextureCache());
-            scene.addModel(RobinModel);
+            Model robinModel = ModelLoader.loadModel("robin-model", "resources/models/Robin/Robin.obj", scene.getTextureCache());
+            scene.addModel(robinModel);
+            TitansModels[4]= robinModel;
 
-            Entity RobinEntity = new Entity("robi-entity", RobinModel.getId());
+            Entity RobinEntity = new Entity("robi-entity", robinModel.getId());
             RobinEntity.setPosition(0, -4, -10);
             RobinEntity.setScale(2.2f);
             RobinEntity.updateModelMatrix();
             scene.addEntity(RobinEntity);
 
-            Entity RavenEntity = new Entity("raven-entity", RavenModel.getId());
+            Entity RavenEntity = new Entity("raven-entity", ravenModel.getId());
             RavenEntity.setPosition(8, -4, -10);
             RavenEntity.setScale(3);
             RavenEntity.updateModelMatrix();
             scene.addEntity(RavenEntity);
 
-            Entity StarfireEntity = new Entity("raven-entity", StarModel.getId());
+            Entity StarfireEntity = new Entity("raven-entity", starModel.getId());
             StarfireEntity.setPosition(-8, 0, -10);
             StarfireEntity.setScale(2.4f);
             StarfireEntity.updateModelMatrix();
             scene.addEntity(StarfireEntity);
 
-            Entity beastBoyEntity = new Entity("beast-entity", BeastBoyModel.getId());
+            Entity beastBoyEntity = new Entity("beast-entity", beastBoyModel.getId());
             beastBoyEntity.setPosition(-4, -1, -10);
             beastBoyEntity.updateModelMatrix();
             scene.addEntity(beastBoyEntity);
 
-            Entity Cyborg = new Entity("Cyborg-entity", CyborgModel.getId());
+            Entity Cyborg = new Entity("Cyborg-entity", cyborgModel.getId());
             Cyborg.setPosition(4, 2, -10);
             Cyborg.setScale(1.25f);
             Cyborg.updateModelMatrix();
@@ -264,23 +227,7 @@ public class GPUBenchmarky implements IAppLogic {
         sceneLights.getSpotLights().add(new SpotLight(new PointLight(new Vector3f(1, 1, 1), new Vector3f(0, 0, -1.4f), 0.0f), coneDir, 140.0f));
 
         lastCubeGenerationTime = System.currentTimeMillis();
-        nrOfCubes++;
 
-        String quadModelId = "quad-model";
-        Model quadModel = ModelLoader.loadModel("quad-model", "resources/models/quad/quad.obj", scene.getTextureCache());
-        scene.addModel(quadModel);
-
-        int numRows = NUM_CHUNKS * 2 + 1;
-        terrainEntities = new Entity[numRows][numRows];
-        for (int j = 0; j < numRows; j++) {
-            for (int i = 0; i < numRows; i++) {
-                Entity entity = new Entity("TERRAIN_" + j + "_" + i, quadModelId);
-                // Adjust Y position to be lower than the cubes
-                entity.setPosition((j - NUM_CHUNKS) * 10, -10, (i - NUM_CHUNKS) * 10);
-                terrainEntities[j][i] = entity;
-                scene.addEntity(entity);
-            }
-        }
 
         // Initialize skybox
         SkyBox skyBox = new SkyBox("resources/models/skybox/skybox.obj", scene.getTextureCache());
@@ -294,52 +241,11 @@ public class GPUBenchmarky implements IAppLogic {
 
         lightAngle = -35;
 
-        updateTerrain(scene);
     }
 
 
     @Override
     public void input(Window window, Scene scene, long diffTimeMillis, boolean inputConsumed) {
-       /* if (inputConsumed) {
-            return;
-        }
-        float move = diffTimeMillis * MOVEMENT_SPEED;
-        Camera camera = scene.getCamera();
-
-        if (window.isKeyPressed(GLFW_KEY_W)) {
-            camera.moveForward(move);
-        } else if (window.isKeyPressed(GLFW_KEY_S)) {
-            camera.moveBackwards(move);
-        }
-        if (window.isKeyPressed(GLFW_KEY_A)) {
-            camera.moveLeft(move);
-        } else if (window.isKeyPressed(GLFW_KEY_D)) {
-            camera.moveRight(move);
-        }
-        if (window.isKeyPressed(GLFW_KEY_PAGE_UP)) {
-            camera.moveUp(move);
-        } else if (window.isKeyPressed(GLFW_KEY_PAGE_DOWN)) {
-            camera.moveDown(move);
-        }
-
-        if (window.isKeyPressed(GLFW_KEY_LEFT)) {
-            lightAngle -= 2.5f;
-            if (lightAngle < -90) {
-                lightAngle = -90;
-            }
-        } else if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
-            lightAngle += 2.5f;
-            if (lightAngle > 90) {
-                lightAngle = 90;
-            }
-        }
-
-        MouseInput mouseInput = window.getMouseInput();
-        if (mouseInput.isRightButtonPressed()) {
-            Vector2f displVec = mouseInput.getDisplVec();
-            camera.addRotation((float) Math.toRadians(-displVec.x * MOUSE_SENSITIVITY), (float) Math.toRadians(-displVec.y * MOUSE_SENSITIVITY));
-        }
-*/
         SceneLights sceneLights = scene.getSceneLights();
         DirLight dirLight = sceneLights.getDirLight();
         double angRad = Math.toRadians(lightAngle);
@@ -349,11 +255,10 @@ public class GPUBenchmarky implements IAppLogic {
 
     private void generateEntities(Scene scene) {
         generateCubes(scene);
-        generateBeastBoys(scene);
-        generateRavens(scene);
-        generateCyborgs(scene);
-        generateStarFires(scene);
-        generateRobins(scene);
+        for(int i=0;i<TitansToGenerate;i++)
+        {
+            generateTitan(scene,TitansModels[i%5]);
+        }
     }
 
     @Override
@@ -381,82 +286,34 @@ public class GPUBenchmarky implements IAppLogic {
         }
     }
 
-    public void updateTerrain(Scene scene) {
-        int cellSize = 10;
-        Camera camera = scene.getCamera();
-        Vector3f cameraPos = camera.getPosition();
-        int cellCol = (int) (cameraPos.x / cellSize);
-        int cellRow = (int) (cameraPos.z / cellSize);
-
-        int numRows = NUM_CHUNKS * 2 + 1;
-        int zOffset = -NUM_CHUNKS;
-        float scale = cellSize / 2.0f;
-        for (int j = 0; j < numRows; j++) {
-            int xOffset = -NUM_CHUNKS;
-            for (int i = 0; i < numRows; i++) {
-                Entity entity = terrainEntities[j][i];
-                entity.setScale(scale);
-                entity.setPosition((cellCol + xOffset) * 2.0f, -10, (cellRow + zOffset) * 2.0f); // Y position set to -10
-                entity.getModelMatrix().identity().scale(scale).translate(entity.getPosition());
-                xOffset++;
-            }
-            zOffset++;
-        }
-    }
 
     private void generateCubes(Scene scene) {
         for (int i = 0; i < nrOfCubesToGenerate; i++) {
-            nrOfCubes++;
             total_no_cubes++;
             Entity cubeEntity = createEntity("cube-entity", cubeModel, scene);
             cubes.add(cubeEntity);
         }
     }
 
-    private void generateBeastBoys(Scene scene) {
-        for (int i = 0; i < nrofBeastBoysToGenerate; i++) {
-            nrofBeastBoys++;
-            total_no_bboys++;
-            Entity beastBoy = createEntity("beastBoy-entity", BeastBoyModel, scene);
-            titans.add(beastBoy);
-        }
-    }
 
-    private void generateRavens(Scene scene) {
-        for (int i = 0; i < nrofRavensToGenerate; i++) {
-            nrofRavens++;
-            total_no_ravens++;
-            Entity Raven = createEntity("Raven-entity", RavenModel, scene);
-            titans.add(Raven);
-        }
-    }
-
-    private void generateCyborgs(Scene scene) {
-        for (int i = 0; i < nrofCyborgsToGenerate; i++) {
-            nrofCybotgs++;
-            total_no_cyborgs++;
-            Entity Cybo = createEntity("Cyborg-entity", CyborgModel, scene);
-            titans.add(Cybo);
-        }
-    }
-
-    private void generateStarFires(Scene scene) {
-        for (int i = 0; i < nrofStarFireToGenerate; i++) {
-            nrofStars++;
-            total_no_sfires++;
-            Entity Starfire = createEntity("Star-entity", StarModel, scene);
-            titans.add(Starfire);
-        }
-    }
-
-    private void generateRobins(Scene scene) {
-        for (int i = 0; i < nrofRobinsToGenerate; i++) {
-            nrofRobins++;
+    private void generateTitan(Scene scene,Model model)
+    {
+        Entity Titan=createEntity("Titan", model, scene);
+        titans.add(Titan);
+        if(model.getId().contains("robin")){
             total_no_robins++;
-            Entity Robin = createEntity("Robin-entity", RobinModel, scene);
-            titans.add(Robin);
+        } else if (model.getId().contains("raven")) {
+            total_no_ravens++;
+        } else if (model.getId().contains("star")) {
+            total_no_sfires++;
+        } else if (model.getId().contains("beast")) {
+            total_no_bboys++;
+        }else
+        {
+            total_no_cyborgs++;
         }
     }
+
 
     private Entity createEntity(String baseName, Model model, Scene scene) {
         String entityName = baseName + System.currentTimeMillis();
@@ -488,20 +345,10 @@ public class GPUBenchmarky implements IAppLogic {
     public void setCubesToGenerate(int nrOfCubesToGenerate) {
         GPUBenchmarky.nrOfCubesToGenerate =nrOfCubesToGenerate;
     }
-    public void setRobinsToGenerate(int nrOfRobinsToGenerate) {
-        GPUBenchmarky.nrofRobinsToGenerate=nrOfRobinsToGenerate;
-    }
-    public void setCyborgsToGenerate(int nrOfCyborgsToGenerate) {
-        GPUBenchmarky.nrofCyborgsToGenerate=nrOfCyborgsToGenerate;
-    }
-    public void setRavensToGenerate(int nrOfRavensToGenerate) {
-        GPUBenchmarky.nrofRavensToGenerate=nrOfRavensToGenerate;
-    }
-    public void setBboysToGenerate(int nrOfBboysToGenerate) {
-        GPUBenchmarky.nrofBeastBoysToGenerate=nrOfBboysToGenerate;
-    }
-    public void setSarsToGenerate(int nrOfStarsToGenerate) {
-        GPUBenchmarky.nrofStarFireToGenerate=nrOfStarsToGenerate;
+
+    public void setTitansToGenerate(int TitansToGenerate)
+    {
+        GPUBenchmarky.TitansToGenerate=TitansToGenerate;
     }
     public int TotalGeneratedEntities(){
         return TotalGeneratedEntities;
