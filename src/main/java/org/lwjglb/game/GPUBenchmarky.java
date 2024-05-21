@@ -7,6 +7,8 @@ import org.lwjglb.engine.scene.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
 import benchmark.*;
 import org.lwjglb.engine.scene.lights.DirLight;
 import org.lwjglb.engine.scene.lights.PointLight;
@@ -277,7 +279,14 @@ public class GPUBenchmarky implements IAppLogic {
         generateCubes(scene);
         for(int i=0;i<TitansToGenerate;i++)
         {
+            if(TitansToGenerate-i>=5)
             generateTitan(scene,TitansModels[i%5]);
+            else
+            {
+                Random random = new Random();
+                int randomNumber = random.nextInt(5);
+                generateTitan(scene,TitansModels[randomNumber]);
+            }
         }
     }
 
