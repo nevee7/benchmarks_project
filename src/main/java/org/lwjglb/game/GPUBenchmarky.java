@@ -44,18 +44,16 @@ public class GPUBenchmarky implements IAppLogic {
     private static final List<Entity> titans = new ArrayList<>();
 
     private static int nrOfCubes = 0;
-    private int nrofBeastBoys=0;
-    private int nrofRavens=0;
-    private int nrofRobins=0;
-    private int nrofStars=0;
+    private static int nrofBeastBoys=0;
+    private static int nrofRavens=0;
+    private static int nrofRobins=0;
+    private  static int nrofStars=0;
 
     private int nrofCybotgs=0;
 
     private  static int nrofCyborgsToGenerate=1;
     private static int nrofBeastBoysToGenerate=1;
-
     private static int nrofRavensToGenerate=1;
-
     private static int nrofRobinsToGenerate=1;
     private static int nrofStarFireToGenerate=1;
 
@@ -74,10 +72,9 @@ public class GPUBenchmarky implements IAppLogic {
     private static int total_no_ravens=0;
     private static int total_no_sfires=0;
     private static int total_no_bboys=0;
-    private static int total_no_entities=0;
 
 
-   public static void main(String[] args) {
+    public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
         GPUBenchmarky.runMain();
     }
@@ -93,7 +90,12 @@ public class GPUBenchmarky implements IAppLogic {
         Engine warmup = new Engine("GPU-Benchmark: Warm-Up", new Window.WindowOptions(), GPUBenchmarky, 0);
         warmup.start();
         warmup.stop();
-        //System.out.println("Number of generated cubes in warm-up:  "+ total_no_cubes);
+        System.out.println("Number of generated cubes:  "+ total_no_cubes);
+        System.out.println("Number of generated robins:  "+ total_no_robins);
+        System.out.println("Number of generated ravens:  "+ total_no_ravens);
+        System.out.println("Number of generated stars:  "+ total_no_cyborgs);
+        System.out.println("Number of generated cyborgs:  "+ total_no_sfires);
+        System.out.println("Number of generated bboys:  "+ total_no_bboys);
         total_no_cubes=0;
         total_no_robins=0;
         total_no_ravens=0;
@@ -103,25 +105,40 @@ public class GPUBenchmarky implements IAppLogic {
         cubes.clear();
         titans.clear();
         nrOfCubes = 0;
+        nrofBeastBoys=0;
+        nrofRavens=0;
+        nrofCybotgs=0;
+        nrofStars=0;
+        nrofRobins=0;
 
         for (int i = 0; i < totalRuns; i++) {
             Engine gameEng = new Engine("GPU-Benchmark:" + (i + 1) + "/" + totalRuns, new Window.WindowOptions(), GPUBenchmarky, i + 1);
             gameEng.start();
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
-            //System.out.println("Number of generated cubes:  "+ total_no_cubes);
-            total_no_entities=total_no_bboys+total_no_cyborgs+total_no_ravens+total_no_sfires+total_no_robins;
-            TotalGeneratedEntities=TotalGeneratedEntities+total_no_cubes+total_no_entities;
+            System.out.println("Number of generated cubes:  "+ total_no_cubes);
+            System.out.println("Number of generated robins:  "+ total_no_robins);
+            System.out.println("Number of generated ravens:  "+ total_no_ravens);
+            System.out.println("Number of generated stars:  "+ total_no_cyborgs);
+            System.out.println("Number of generated cyborgs:  "+ total_no_sfires);
+            System.out.println("Number of generated bboys:  "+ total_no_bboys);
+            int total_no_entities = total_no_bboys + total_no_cyborgs + total_no_ravens + total_no_sfires + total_no_robins;
+            TotalGeneratedEntities=TotalGeneratedEntities+total_no_cubes+ total_no_entities;
             total_no_robins=0;
             total_no_ravens=0;
             total_no_cyborgs=0;
             total_no_bboys=0;
             total_no_sfires=0;
-            total_no_entities=0;
+            total_no_entities =0;
             total_no_cubes=0;
             cubes.clear();
             titans.clear();
             nrOfCubes = 0;
+            nrofBeastBoys=0;
+            nrofRavens=0;
+            nrofCybotgs=0;
+            nrofStars=0;
+            nrofRobins=0;
 
             if ((i + 1) % batchSize == 0) {
                 List<Double> fpsBatch = allFpsValues.subList(i + 1 - batchSize, i + 1);
