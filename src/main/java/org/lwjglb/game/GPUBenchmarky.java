@@ -92,12 +92,20 @@ public class GPUBenchmarky implements IAppLogic {
         double avgFPS = calculateAverage(allFpsValues);
         double minFPS = Collections.min(allFpsValues);
         double normalizedAvg = normalize(avgFPS, allFpsValues);
-
+        System.out.println(minFPS);
         double generatedStuff=this.TotalGeneratedEntities();
         double stressLevel=(generatedStuff-total_no_cubes)*0.09+total_no_cubes*0.0001;
         double weightAvg = 0.5;
         double weightMin = 0.3;
         double weightAvgDef=0.2;
+        if(minFPS<20.00)
+            stressLevel=0;
+        if(minFPS<30.00)
+            stressLevel=stressLevel*0.01;
+        if(minFPS<40.00)
+            stressLevel=stressLevel*0.1;
+        if(minFPS<50.00)
+            stressLevel=stressLevel*0.5;
 
         return weightAvg * normalizedAvg + weightMin * minFPS + weightAvgDef * avgFPS+stressLevel;
     }
