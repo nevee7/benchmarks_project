@@ -21,7 +21,7 @@ public class GPUBenchmarky implements IAppLogic {
 
     private static final float MOUSE_SENSITIVITY = 0.1f;
     private static final float MOVEMENT_SPEED = 0.005f;
-    private static final long CUBE_GENERATION_INTERVAL = 1000;
+    private static final long CUBE_GENERATION_INTERVAL = 10000;
 
     private static final int NUM_CHUNKS = 4;
     private Entity[][] terrainEntities;
@@ -104,13 +104,13 @@ public class GPUBenchmarky implements IAppLogic {
             if ((i + 1) % batchSize == 0) {
                 List<Double> fpsBatch = allFpsValues.subList(i + 1 - batchSize, i + 1);
                 FPSAverage= calculateAverage(fpsBatch);
-                //System.out.println("\nAverage FPS after " + (i + 1) + " runs: " + averageFps);
+                System.out.println("\nAverage FPS after " + (i + 1) + " runs: " + FPSAverage);
             }
         }
 
         double finalScore = calculateFinalScore(allFpsValues);
         FinalScore=finalScore;
-        //System.out.println("\nFinal score: " + finalScore);
+        System.out.println("\nFinal score: " + finalScore);
         return new BenchmarkInfo("GPU benchmark", finalScore, nrOfCubesToGenerate);
     }
 
@@ -187,7 +187,7 @@ public class GPUBenchmarky implements IAppLogic {
 
 
         Entity RobinEntity = new Entity("robi-entity", RobinModel.getId());
-        RobinEntity.setPosition(0, 0, -10);
+        RobinEntity.setPosition(0, -4, -10);
         RobinEntity.setScale(2.2f);
         RobinEntity.updateModelMatrix();
         scene.addEntity(RobinEntity);
@@ -195,24 +195,25 @@ public class GPUBenchmarky implements IAppLogic {
 
 
         Entity RavenEntity = new Entity("raven-entity", RavenModel.getId());
-        RavenEntity.setPosition(4, -5, -10);
-        RavenEntity.setScale(2.2f);
+        RavenEntity.setPosition(8, -4, -10);
+        RavenEntity.setScale(3);
         RavenEntity.updateModelMatrix();
         scene.addEntity(RavenEntity);
 
         Entity StarfireEntity = new Entity("raven-entity", StarModel.getId());
-        StarfireEntity.setPosition(-4, -5, -10);
-        StarfireEntity.setScale(2.2f);
+        StarfireEntity.setPosition(-8, 0, -10);
+        StarfireEntity.setScale(2.4f);
         StarfireEntity.updateModelMatrix();
         scene.addEntity(StarfireEntity);
 
         Entity beastBoyEntity = new Entity("beast-entity", BeastBoyModel.getId());
-        beastBoyEntity.setPosition(-4, 0f, -10);
+        beastBoyEntity.setPosition(-4, -1, -10);
         beastBoyEntity.updateModelMatrix();
         scene.addEntity(beastBoyEntity);
 
         Entity Cyborg = new Entity("Cyborg-entity", CyborgModel.getId());
-        Cyborg.setPosition(0, 0f, -10);
+        Cyborg.setPosition(4, 2, -10);
+        Cyborg.setScale(1.25f);
         Cyborg.updateModelMatrix();
         scene.addEntity(Cyborg);
 
