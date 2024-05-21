@@ -582,13 +582,13 @@ public class Gui {
                     double finalScore = GPUBenchmarky.GetFinalScore();
                     double fps_average= GPUBenchmarky.GetFPSAverage();
                     int total_runs= GPUBenchmarky.GetRunsNumber();
-                    int total_gen_cubes=GPUBenchmarky.TotalGeneratedCubes();
+                    //int total_gen_cubes=GPUBenchmarky.TotalGeneratedCubes();
                     if (finalScore > 550) {
-                        showVictoryFrame(finalScore, fps_average,total_runs, total_gen_cubes);
+                        showVictoryFrame(finalScore, fps_average,total_runs, 5);
                     } else if (finalScore > 500) {
-                        showMediumFrame(finalScore, fps_average,total_runs, total_gen_cubes);
+                        showMediumFrame(finalScore, fps_average,total_runs, 5);
                     } else {
-                        showDefeatFrame(finalScore, fps_average,total_runs, total_gen_cubes);
+                        showDefeatFrame(finalScore, fps_average,total_runs, 5);
                     }
 
                     try {
@@ -619,7 +619,7 @@ public class Gui {
                     double finalScore = GPUBenchmarky.GetFinalScore();
                     double fps_average= GPUBenchmarky.GetFPSAverage();
                     int total_runs= GPUBenchmarky.GetRunsNumber();
-                    int total_gen_cubes=GPUBenchmarky.TotalGeneratedCubes();
+                    int total_gen_cubes=5;
                     if (finalScore > 200) {
                         showVictoryFrame(finalScore,fps_average, total_runs, total_gen_cubes);
                     } else if (finalScore > 100) {

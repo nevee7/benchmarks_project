@@ -36,6 +36,7 @@ public class GPUBenchmarky implements IAppLogic {
     private Model CyborgModel;
 
 
+
     private static final List<Entity> cubes = new ArrayList<>();
 
     private static final List<Entity> titans = new ArrayList<>();
@@ -166,6 +167,7 @@ public class GPUBenchmarky implements IAppLogic {
         scene.addModel(CyborgModel);
 
 
+
         Entity RavenEntity = new Entity("raven-entity", RavenModel.getId());
         RavenEntity.setPosition(4, -5, -10);
         RavenEntity.setScale(4.0f);
@@ -181,6 +183,7 @@ public class GPUBenchmarky implements IAppLogic {
         Cyborg.setPosition(0, 0f, -10);
         Cyborg.updateModelMatrix();
         scene.addEntity(Cyborg);
+
 
         titans.add(beastBoyEntity);
         titans.add(RavenEntity);
