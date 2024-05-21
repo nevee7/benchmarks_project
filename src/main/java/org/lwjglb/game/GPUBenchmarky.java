@@ -96,12 +96,6 @@ public class GPUBenchmarky implements IAppLogic {
             allFpsValues.addAll(gameEng.getFpsList());
             gameEng.stop();
 
-            System.out.println("Number of generated cubes:  "+ total_no_cubes);
-            System.out.println("Number of generated robins:  "+ total_no_robins);
-            System.out.println("Number of generated ravens:  "+ total_no_ravens);
-            System.out.println("Number of generated stars:  "+ total_no_cyborgs);
-            System.out.println("Number of generated cyborgs:  "+ total_no_sfires);
-            System.out.println("Number of generated bboys:  "+ total_no_bboys);
             updateTotalGeneratedEntities();
 
             if ((i + 1) % batchSize == 0) {
