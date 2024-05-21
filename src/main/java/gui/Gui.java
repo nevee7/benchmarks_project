@@ -1,6 +1,7 @@
 package gui;
 
 import benchmark.BenchmarkInfo;
+import benchmark.ComputerIdentifier;
 import cpuBenchmarks.ArithmeticOperationBenchmark;
 import cpuBenchmarks.FibonacciBenchmark;
 import cpuBenchmarks.MatrixMultiplicationBenchmark;
@@ -12,8 +13,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.sound.sampled.*;
 import javax.swing.*;
+
+import static firebase.Firebase.getMyData;
 
 class ButtonDimension {
     int x, y;
@@ -69,7 +73,11 @@ public class Gui {
         resultsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                showResultFrame(frameWidth, frameHeight);
+                try {
+                    showResultFrame(frameWidth, frameHeight);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -470,7 +478,7 @@ public class Gui {
 
 
 
-    private void showResultFrame(int width, int height) {
+    private void showResultFrame(int width, int height) throws Exception {
         resultFrame = new JFrame("Results");
         int widthRes = 1041;
         int heightRes = 704;
@@ -478,6 +486,38 @@ public class Gui {
         resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         resultFrame.setLocationRelativeTo(null);
         resultFrame.setVisible(true);
+
+        int offsetX = 20;
+        int offsetY = 70;
+        int labelWidth = 900;
+        ArrayList<String> benchmarks = new ArrayList<>();
+        benchmarks.add("ArithmeticOperationBenchmark");
+        benchmarks.add("FibonacciBenchmark");
+        benchmarks.add("MatrixMultiplicationBenchmark");
+        benchmarks.add("PiDigitComputationBenchmark");
+        benchmarks.add("GPU benchmark");
+        int i = 0;
+        for (String name: benchmarks) {
+            Double benchmarkScore;
+            String rank;
+            if (getMyData(name,new ComputerIdentifier()) == null){
+                benchmarkScore = 0.0;
+                rank = "Not ran";
+            }else {
+                benchmarkScore = getMyData(name,new ComputerIdentifier());
+                rank = String.valueOf((Firebase.getAllData(name).indexOf(getMyData(name,new ComputerIdentifier())) + 1));
+            }
+            String finalScoreText = String.format("%s\t\t Score:%.2f \t\t Rank:%s", name, benchmarkScore, rank);
+            JLabel finalScoreLabel = new JLabel(finalScoreText);
+            finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
+            finalScoreLabel.setForeground(Color.WHITE);
+            finalScoreLabel.setBackground(Color.BLUE);
+            finalScoreLabel.setOpaque(true);
+            finalScoreLabel.setHorizontalAlignment(SwingConstants.LEFT); // Center text horizontally
+            finalScoreLabel.setBounds(offsetX, 30+ offsetY*i, labelWidth, 50); // Adjust bounds for better centering
+            resultFrame.add(finalScoreLabel);
+            i++;
+        }
 
         // Add result details components to this frame
         JLabel resultLabel = new JLabel("Results Details");
@@ -489,7 +529,8 @@ public class Gui {
         resultFrame.add(backgroundLabel);
 
         // Example: Adding a button to close the result frame and show the main frame again
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = createButton("Go to the previous menu");
+        closeButton.setBounds(50, 550, 300, 50); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 resultFrame.dispose();
@@ -498,6 +539,7 @@ public class Gui {
         });
         resultFrame.add(closeButton, BorderLayout.SOUTH);
     }
+
 
     private void showGPUFrame(int width, int height) {
         gpuFrame = new JFrame("GPU Benchmarks");
