@@ -748,8 +748,23 @@ public class Gui {
                         startFrame.setVisible(true);
                         throw new RuntimeException();
                     }
+                    if (cubes_number==0 && titans_number==0){
+                        JOptionPane.showMessageDialog(startFrame, "<html>You cannot have 0 cubes and 0 titans :)<br>What are you testing, the skybox?</html>", "error", JOptionPane.ERROR_MESSAGE);
+                        startFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
                     if (runs_number > 10) {
                         JOptionPane.showMessageDialog(startFrame, "Maximum 10 runs are accepted!", "error", JOptionPane.ERROR_MESSAGE);
+                        startFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    if (runs_number == 0) {
+                        JOptionPane.showMessageDialog(startFrame, "You need to run at least once the testbench!", "error", JOptionPane.ERROR_MESSAGE);
+                        startFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    if (runs_number < 0) {
+                        JOptionPane.showMessageDialog(startFrame, "<html>Numbers smaller than 0 are<br>not accepted in this field!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         startFrame.setVisible(true);
                         throw new RuntimeException();
                     }
