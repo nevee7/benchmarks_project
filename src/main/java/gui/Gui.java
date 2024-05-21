@@ -547,7 +547,6 @@ public class Gui {
         selectFrame.setSize(width, height);
         selectFrame.setLocationRelativeTo(null);
 
-        // Create a JPanel to hold the background image and buttons
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -560,7 +559,7 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Add buttons for GPU details with specific positions and sizes
-        JButton button1 = createButton2("<html>GENERATING 3D MODELS<br>AND FPS COUNTING</html>");
+        JButton button1 = gpu_button("<html>GENERATING 3D MODELS<br>AND FPS COUNTING</html>");
         button1.setBounds(50, 230, 300, 70); // Set position and size
         panel.add(button1);
 
@@ -572,7 +571,7 @@ public class Gui {
         panel.add(instructionsLabel);
 
         // Adding a button to close the GPU frame and show the previous frame again
-        JButton closeButton = createButton2("Go to the previous menu");
+        JButton closeButton = gpu_button("Go to the previous menu");
         closeButton.setBounds(50, 550, 300, 50); // Set position and size
         panel.add(closeButton);
 
@@ -676,10 +675,9 @@ public class Gui {
         runs_text_field.setBounds(850, 415, 100, 40);
         panel.add(runs_text_field);
 
-        // Adding a button for some functionality specific to this frame
-        JButton specificButton = createButton2("<html>Start Benchmark<br>(with input numbers)</html>");
-        specificButton.setBounds(605, 540, 350, 70); // Set position and size
-        specificButton.addActionListener(new ActionListener() {
+        JButton start_input = gpu_button("<html>Start Benchmark<br>(with input numbers)</html>");
+        start_input.setBounds(605, 540, 350, 70); // Set position and size
+        start_input.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String cubes_input = cubes_text_field.getText();
                 String titans_input = titans_text_field.getText();
@@ -720,7 +718,7 @@ public class Gui {
                     GPUBenchmarky.SetTotalRuns(runs_number);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
-                    // Check the final score and show the corresponding frame
+                    //check the final score and show frames based on that
                     double finalScore = GPUBenchmarky.GetFinalScore();
                     double fps_average = GPUBenchmarky.GetFPSAverage();
                     int total_runs = GPUBenchmarky.GetRunsNumber();
@@ -745,12 +743,11 @@ public class Gui {
                 }
             }
         });
-        panel.add(specificButton);
+        panel.add(start_input);
 
-        // Adding a button for some functionality specific to this frame
-        JButton specificButton2 = createButton2("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>");
-        specificButton2.setBounds(50, 410, 350, 90); // Set position and size
-        specificButton2.addActionListener(new ActionListener() {
+        JButton start_default = gpu_button("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>");
+        start_default.setBounds(50, 410, 350, 90); // Set position and size
+        start_default.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startFrame.setVisible(false);
                 GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -759,7 +756,7 @@ public class Gui {
                 GPUBenchmarky.SetTotalRuns(5);
                 BenchmarkInfo data = GPUBenchmarky.runMain();
 
-                // Check the final score and show the corresponding frame
+                //check the final score and show frames based on that
                 double finalScore = GPUBenchmarky.GetFinalScore();
                 double fps_average = GPUBenchmarky.GetFPSAverage();
                 int total_gen_entities = GPUBenchmarky.TotalGeneratedEntities();
@@ -779,31 +776,31 @@ public class Gui {
                 }
             }
         });
-        panel.add(specificButton2);
+        panel.add(start_default);
 
-        // Add a button to close this frame and show the GPU frame again
-        JButton closeButton = createButton2("Go to the previous menu");
+        //close button
+        JButton closeButton = gpu_button("Go to the previous menu");
         closeButton.setBounds(50, 540, 300, 70); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startFrame.dispose();
-                previousFrame.setVisible(true); // Show the GPU frame again
+                previousFrame.setVisible(true);
             }
         });
         panel.add(closeButton);
 
-        startFrame.setContentPane(panel); // Set the panel as the content pane
+        startFrame.setContentPane(panel);
         startFrame.setVisible(true);
 
-        // Add a component listener to handle resizing events
+        //add a component listener to handle resizing events
         startFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                // Reposition components based on new size
+                //reposition components based on new size
                 int frameWidth = startFrame.getWidth();
                 int frameHeight = startFrame.getHeight();
 
-                // Update component positions and sizes based on frame size
+                //update component positions and sizes based on frame size
                 cubes_description.setBounds(frameWidth * 605 / 1041, frameHeight * 200 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
                 cubes_text_field.setBounds(frameWidth * 850 / 1041, frameHeight * 215 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
 
@@ -813,24 +810,24 @@ public class Gui {
                 runs_description.setBounds(frameWidth * 605 / 1041, frameHeight * 400 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
                 runs_text_field.setBounds(frameWidth * 850 / 1041, frameHeight * 415 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
 
-                specificButton.setBounds(frameWidth * 605 / 1041, frameHeight * 540 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
-                specificButton2.setBounds(frameWidth * 50 / 1041, frameHeight * 410 / 704, frameWidth * 350 / 1041, frameHeight * 90 / 704);
+                start_input.setBounds(frameWidth * 605 / 1041, frameHeight * 540 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
+                start_default.setBounds(frameWidth * 50 / 1041, frameHeight * 410 / 704, frameWidth * 350 / 1041, frameHeight * 90 / 704);
                 closeButton.setBounds(frameWidth * 50 / 1041, frameHeight * 540 / 704, frameWidth * 300 / 1041, frameHeight * 70 / 704);
 
-                panel.repaint(); // Repaint the panel to adjust the background image
+                panel.repaint();
             }
         });
     }
 
-    // Helper method to create buttons with specific styling
-    private JButton createButton2(String text) {
+    //helper method for creating buttons used on the gpu gui
+    private JButton gpu_button(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 18));
         return button;
     }
 
 
-    private void gpuVictoryFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame gpuFrame) {
+    private void gpuVictoryFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame previousFrame) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(1041, 704); // Updated size
@@ -840,65 +837,64 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "victoryGPU.jpg");
-                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+                ImageIcon background = new ImageIcon("resources" + File.separator + "gui" + File.separator + "victoryGPU.jpg");
+                g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBackground(Color.RED); // Set background color to red
+        finalScoreLabel.setForeground(Color.WHITE);
+        finalScoreLabel.setBackground(Color.RED);
         finalScoreLabel.setOpaque(true);
-        finalScoreLabel.setBounds(700, 250, 260, 50); // Adjusted position
+        finalScoreLabel.setBounds(700, 250, 260, 50);
         panel.add(finalScoreLabel);
 
         JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
         finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalFPSLabel.setForeground(Color.WHITE); // Set text color to white
-        finalFPSLabel.setBackground(Color.RED); // Set background color to red
+        finalFPSLabel.setForeground(Color.WHITE);
+        finalFPSLabel.setBackground(Color.RED);
         finalFPSLabel.setOpaque(true);
-        finalFPSLabel.setBounds(700, 320, 280, 80); // Adjusted position
+        finalFPSLabel.setBounds(700, 320, 280, 80);
         panel.add(finalFPSLabel);
 
         JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
         finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalCubesLabel.setForeground(Color.WHITE); // Set text color to white
-        finalCubesLabel.setBackground(Color.RED); // Set background color to red
+        finalCubesLabel.setForeground(Color.WHITE);
+        finalCubesLabel.setBackground(Color.RED);
         finalCubesLabel.setOpaque(true);
-        finalCubesLabel.setBounds(700, 405, 190, 80); // Adjusted position
+        finalCubesLabel.setBounds(700, 405, 190, 80);
         panel.add(finalCubesLabel);
 
-        // Add a button to close the frame
-        JButton closeButton = createButton2("Close results");
-        closeButton.setBounds(50, 500, 200, 50); // Set position and size
+        //close button
+        JButton closeButton = gpu_button("Close results");
+        closeButton.setBounds(50, 500, 200, 50);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 victoryFrame.dispose();
-                SelectGPUFrame(gpuFrame, 1041, 704); // Return to the GPU frame
+                SelectGPUFrame(previousFrame, 1041, 704);
             }
         });
         panel.add(closeButton);
 
-        victoryFrame.setContentPane(panel); // Set the panel as the content pane
+        victoryFrame.setContentPane(panel);
         victoryFrame.setVisible(true);
 
-        // Store initial positions and sizes
+        //store initial positions and sizes
         Rectangle initialBoundsFinalScoreLabel = finalScoreLabel.getBounds();
         Rectangle initialBoundsFinalFPSLabel = finalFPSLabel.getBounds();
         Rectangle initialBoundsFinalCubesLabel = finalCubesLabel.getBounds();
         Rectangle initialBoundsCloseButton = closeButton.getBounds();
 
-        // Add component listener to handle resizing events
+        //add component listener to handle resizing events
         victoryFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 int frameWidth = victoryFrame.getWidth();
                 int frameHeight = victoryFrame.getHeight();
 
-                // Update component positions and sizes based on frame size
+                //update component positions and sizes based on frame size
                 finalScoreLabel.setBounds(
                         frameWidth * initialBoundsFinalScoreLabel.x / 1041,
                         frameHeight * initialBoundsFinalScoreLabel.y / 704,
@@ -938,12 +934,11 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "mediumGPU.jpg");
-                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+                ImageIcon background = new ImageIcon("resources" + File.separator + "gui" + File.separator + "mediumGPU.jpg");
+                g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
@@ -963,31 +958,31 @@ public class Gui {
 
         JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
         finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
-        finalCubesLabel.setForeground(Color.WHITE); // Set text color to white
-        finalCubesLabel.setBackground(Color.RED); // Set background color to red
+        finalCubesLabel.setForeground(Color.WHITE);
+        finalCubesLabel.setBackground(Color.RED);
         finalCubesLabel.setOpaque(true);
         finalCubesLabel.setBounds(450, 360, 190, 80);
         panel.add(finalCubesLabel);
 
-        // Add a button to close the frame
-        JButton closeButton = createButton2("Close results");
-        closeButton.setBounds(50, 500, 200, 50); // Set position and size
+        //close button
+        JButton closeButton = gpu_button("Close results");
+        closeButton.setBounds(50, 500, 200, 50);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mediumFrame.dispose();
-                SelectGPUFrame(previousFrame, 1041, 704); // Return to the GPU frame
+                SelectGPUFrame(previousFrame, 1041, 704);
             }
         });
         panel.add(closeButton);
 
-        mediumFrame.setContentPane(panel); // Set the panel as the content pane
+        mediumFrame.setContentPane(panel);
         mediumFrame.setVisible(true);
 
-        // Add component listener to handle resizing events
+        //add component listener to handle resizing events
         mediumFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                // Adjust component positions based on frame size
+                //adjust component positions based on frame size
                 int frameWidth = mediumFrame.getWidth();
                 int frameHeight = mediumFrame.getHeight();
 
@@ -1002,19 +997,18 @@ public class Gui {
     private void gpuDefeatFrame(double finalScore, double fps_average, int total_runs, int gen_cubes, JFrame previousFrame) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        defeatFrame.setSize(1041, 704); // Set size to 1041x704
+        defeatFrame.setSize(1041, 704);
         defeatFrame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeatGPU.jpg");
-                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+                ImageIcon background = new ImageIcon("resources" + File.separator + "gui" + File.separator + "defeatGPU.jpg");
+                g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
         finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
@@ -1040,13 +1034,13 @@ public class Gui {
         finalCubesLabel.setBounds(560, 510, 190, 80);
         panel.add(finalCubesLabel);
 
-        // Add a button to close the frame
-        JButton closeButton = createButton2("Close results");
+        //close button
+        JButton closeButton = gpu_button("Close results");
         closeButton.setBounds(50, 555, 200, 50);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 defeatFrame.dispose();
-                SelectGPUFrame(previousFrame, 1041, 704); // Return to the GPU frame
+                SelectGPUFrame(previousFrame, 1041, 704);
             }
         });
         panel.add(closeButton);
@@ -1054,14 +1048,14 @@ public class Gui {
         defeatFrame.setContentPane(panel);
         defeatFrame.setVisible(true);
 
-        // Add component listener to handle resizing events
+        //add component listener to handle resizing events
         defeatFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 int frameWidth = defeatFrame.getWidth();
                 int frameHeight = defeatFrame.getHeight();
 
-                // Adjust component positions and sizes based on frame size
+                //adjust component positions and sizes based on frame size
                 finalScoreLabel.setBounds(frameWidth * 560 / 1041, frameHeight * 360 / 704, frameWidth * 260 / 1041, frameHeight * 50 / 704);
                 finalFPSLabel.setBounds(frameWidth * 560 / 1041, frameHeight * 420 / 704, frameWidth * 280 / 1041, frameHeight * 80 / 704);
                 finalCubesLabel.setBounds(frameWidth * 560 / 1041, frameHeight * 510 / 704, frameWidth * 190 / 1041, frameHeight * 80 / 704);
