@@ -543,6 +543,12 @@ public class Gui {
         resultFrame.add(closeButton, BorderLayout.SOUTH);
     }
 
+    /*
+    *
+    * GPU PROFESSIONAL TEAM GUI
+    *
+    * */
+
     JFrame before_gpu_frames; //used for returning on the select frame after victory, draw or defeat
 
     private void SelectGPUFrame(JFrame previousFrame, int width, int height) {
@@ -555,42 +561,42 @@ public class Gui {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Load and draw the background image
                 ImageIcon background = new ImageIcon("resources" + File.separator + "gui" + File.separator + "gpuSelect.jpg");
                 g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
-        // Add buttons for GPU details with specific positions and sizes
-        JButton button1 = gpu_button("<html>GENERATING 3D MODELS<br>AND FPS COUNTING</html>");
-        button1.setBounds(50, 230, 300, 70); // Set position and size
-        panel.add(button1);
+        //generating 3D button
+        JButton gen3d_button = gpu_button("<html>GENERATING 3D MODELS<br>AND FPS COUNTING</html>");
+        gen3d_button.setBounds(50, 230, 300, 70);
+        panel.add(gen3d_button);
 
-        // Add a JLabel for instructions
+        //description for the gpu benchmark and ranking
         JLabel instructionsLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating entities<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>");
         instructionsLabel.setBounds(55, 330, 500, 160);
-        instructionsLabel.setForeground(Color.WHITE); // Set text color to white
-        instructionsLabel.setFont(new Font("Arial", Font.BOLD, 19)); // Set font
+        instructionsLabel.setForeground(Color.WHITE);
+        instructionsLabel.setFont(new Font("Arial", Font.BOLD, 19));
         panel.add(instructionsLabel);
 
-        // Adding a button to close the GPU frame and show the previous frame again
+        //close button
         JButton closeButton = gpu_button("Go to the previous menu");
-        closeButton.setBounds(50, 550, 300, 50); // Set position and size
+        closeButton.setBounds(50, 550, 300, 50);
         panel.add(closeButton);
 
-        selectFrame.setContentPane(panel); // Set the panel as the content pane
+        selectFrame.setContentPane(panel);
         selectFrame.setVisible(true);
 
-        // Add action listener for the close button
+        //action listener for the close button
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                selectFrame.dispose();
-                previousFrame.setVisible(true); // Show the previous frame
+                selectFrame.dispose(); //close the current frame
+                previousFrame.setVisible(true); //open previous frame "Stressing Titans"
             }
         });
 
-        button1.addActionListener(new ActionListener() {
+        //action listener for the gen3d button
+        gen3d_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectFrame.dispose(); //close the current frame
                 StartGPUBenchmarkFrame(selectFrame); //open "You entered Trigon's hell" frame
@@ -606,7 +612,7 @@ public class Gui {
                 int frameHeight = selectFrame.getHeight();
 
                 //set the buttons' positions relative to the frame size
-                button1.setBounds(frameWidth * 50 / width, frameHeight * 230 / height, frameWidth * 300 / width, frameHeight * 70 / height);
+                gen3d_button.setBounds(frameWidth * 50 / width, frameHeight * 230 / height, frameWidth * 300 / width, frameHeight * 70 / height);
                 instructionsLabel.setBounds(frameWidth * 55 / width, frameHeight * 330 / height, frameWidth * 500 / width, frameHeight * 160 / height);
                 closeButton.setBounds(frameWidth * 50 / width, frameHeight * 550 / height, frameWidth * 300 / width, frameHeight * 50 / height);
             }
@@ -1068,6 +1074,11 @@ public class Gui {
         });
     }
 
+    /*
+    *
+    * END OF PROFESSIONAL GPU TEAM GUI
+    *
+    * */
 
     private void showVictoryCPUFrame(double finalScore, String path) {
         JFrame victoryFrame = new JFrame("Victory");
