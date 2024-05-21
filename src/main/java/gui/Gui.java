@@ -531,7 +531,7 @@ public class Gui {
         panel.add(button1);
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating cubes<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>\"");
+        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating entities<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>\"");
         numberLabel.setBounds(55, 330, 500, 160);
         numberLabel.setForeground(Color.WHITE); // Set text color to white
 
@@ -576,39 +576,91 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Enter the number of<br>cubes/second to generate:</html>\"");
-        numberLabel.setBounds(55, 400, 300, 40);
-        numberLabel.setForeground(Color.WHITE); // Set text color to white
+        JLabel numberLabel = new JLabel("<html>Enter the number<br>of cubes/second<br>to generate:</html>\"");
+        numberLabel.setBounds(605, 200, 200, 70);
+        numberLabel.setForeground(Color.WHITE); // Set text color to red
+        numberLabel.setBackground(Color.RED); // Set background color to white
+        numberLabel.setOpaque(true); // Make the
         panel.add(numberLabel);
 
         Font font = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
         numberLabel.setFont(font); // Set the font of the JLabel
 
         JTextField numberField = new JTextField();
-        numberField.setBounds(350, 400, 100, 40);
+        numberField.setBounds(850, 215, 100, 40);
         panel.add(numberField);
 
+        // Add a JLabel and JTextField for the number input
+        JLabel numberLabel2 = new JLabel("<html>Enter the number<br>of titans/second<br>to generate:</html>\"");
+        numberLabel2.setBounds(605, 300, 200, 70);
+        numberLabel2.setForeground(Color.WHITE); // Set text color to red
+        numberLabel2.setBackground(Color.RED); // Set background color to white
+        numberLabel2.setOpaque(true); // Make the
+        panel.add(numberLabel2);
+
+        Font font2 = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
+        numberLabel2.setFont(font2); // Set the font of the JLabel
+
+        JTextField numberField2 = new JTextField();
+        numberField2.setBounds(850, 315, 100, 40);
+        panel.add(numberField2);
+
+        // Add a JLabel and JTextField for the number input
+        JLabel numberLabel3 = new JLabel("<html>Enter the number<br>of runs for<br>the benchmark:</html>\"");
+        numberLabel3.setBounds(605, 400, 200, 70);
+        numberLabel3.setForeground(Color.WHITE); // Set text color to red
+        numberLabel3.setBackground(Color.RED); // Set background color to white
+        numberLabel3.setOpaque(true); // Make the
+        panel.add(numberLabel3);
+
+        Font font3 = new Font("Arial", Font.BOLD, 18); // Adjust the font size as needed
+        numberLabel3.setFont(font2); // Set the font of the JLabel
+
+        JTextField numberField3 = new JTextField();
+        numberField3.setBounds(850, 415, 100, 40);
+        panel.add(numberField3);
+
         // Adding a button for some functionality specific to this frame
-        JButton specificButton = createButton("<html>Start Benchmark<br>(with input number)</html>\"");
-        specificButton.setBounds(50, 460, 250, 55); // Set position and size
+        JButton specificButton = createButton("<html>Start Benchmark<br>(with input numbers)</html>\"");
+        specificButton.setBounds(605, 540, 350, 70); // Set position and size
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String input = numberField.getText();
+                String input2 = numberField2.getText();
+                String input3 = numberField3.getText();
                 try{
                     button1GPUFrame.setVisible(false);
                     int number = Integer.parseInt(input);
+                    int number2 = Integer.parseInt(input2);
+                    int number3 = Integer.parseInt(input3);
                     if (number > 1000000){
-                        JOptionPane.showMessageDialog(button1GPUFrame, "The provided number is too large!", "error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The provided number is too large!<br>Maximum 1.000.000 cubes/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    if(number2 % 5 != 0){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "The number of titans should be a multiple of 5!", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    if(number2 > 1000){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 1000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    if(number3 > 10){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "Maximum 10 runs are accepted!", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
                     GPUBenchmarky.setCubesToGenerate(number);
-                    GPUBenchmarky.setRobinsToGenerate(0);
-                    GPUBenchmarky.setBboysToGenerate(0);
-                    GPUBenchmarky.setCyborgsToGenerate(0);
-                    GPUBenchmarky.setSarsToGenerate(0);
-                    GPUBenchmarky.setRavensToGenerate(0);
+                    GPUBenchmarky.setRobinsToGenerate(number2/5);
+                    GPUBenchmarky.setBboysToGenerate(number2/5);
+                    GPUBenchmarky.setCyborgsToGenerate(number2/5);
+                    GPUBenchmarky.setSarsToGenerate(number2/5);
+                    GPUBenchmarky.setRavensToGenerate(number2/5);
+                    GPUBenchmarky.SetTotalRuns(number3);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
@@ -631,7 +683,7 @@ public class Gui {
                     }
 
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(button1GPUFrame, "Please enter a valid number.", "error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(button1GPUFrame, "All fields must be completed with valid numbers!", "error", JOptionPane.ERROR_MESSAGE);
                     button1GPUFrame.setVisible(true);
                 }
             }
@@ -639,8 +691,8 @@ public class Gui {
         panel.add(specificButton);
 
         // Adding a button for some functionality specific to this frame
-        JButton specificButton2 = createButton("<html>Start Default Benchmark<br>(10000 cubes / sec generated)</html>\"");
-        specificButton2.setBounds(50, 540, 350, 70); // Set position and size
+        JButton specificButton2 = createButton("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>\"");
+        specificButton2.setBounds(50, 410, 350, 90); // Set position and size
         specificButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                     button1GPUFrame.setVisible(false);
@@ -651,13 +703,14 @@ public class Gui {
                     GPUBenchmarky.setCyborgsToGenerate(5);
                     GPUBenchmarky.setSarsToGenerate(5);
                     GPUBenchmarky.setRavensToGenerate(5);
+                    GPUBenchmarky.SetTotalRuns(5);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
                     double finalScore = GPUBenchmarky.GetFinalScore();
                     double fps_average= GPUBenchmarky.GetFPSAverage();
-                    int total_runs= GPUBenchmarky.GetRunsNumber();
                     int total_gen_entities=GPUBenchmarky.TotalGeneratedEntities();
+                    int total_runs=GPUBenchmarky.GetRunsNumber();
                     if (finalScore > 550) {
                         showVictoryFrame(finalScore,fps_average, total_runs, total_gen_entities);
                     } else if (finalScore > 500) {
@@ -677,7 +730,7 @@ public class Gui {
 
         // Add a button to close this frame and show the GPU frame again
         JButton closeButton = createButton("Go to the previous menu");
-        closeButton.setBounds(600, 540, 300, 70); // Set position and size
+        closeButton.setBounds(50, 540, 300, 70); // Set position and size
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button1GPUFrame.dispose();

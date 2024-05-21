@@ -1,6 +1,5 @@
 package org.lwjglb.game;
 
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjglb.engine.*;
 import org.lwjglb.engine.graph.*;
@@ -14,7 +13,6 @@ import org.lwjglb.engine.scene.lights.PointLight;
 import org.lwjglb.engine.scene.lights.SceneLights;
 import org.lwjglb.engine.scene.lights.SpotLight;
 
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.*;
 
 public class GPUBenchmarky implements IAppLogic {
@@ -72,6 +70,8 @@ public class GPUBenchmarky implements IAppLogic {
     private static int total_no_sfires=0;
     private static int total_no_bboys=0;
 
+    private static int totalRuns=0;
+
 
     public static void main(String[] args) {
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
@@ -81,7 +81,6 @@ public class GPUBenchmarky implements IAppLogic {
     public BenchmarkInfo runMain() {
         System.out.println(nrOfCubesToGenerate);
         GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
-        int totalRuns = 1;
         TotalRuns=totalRuns;
         int batchSize = 1;
         List<Double> allFpsValues = new ArrayList<>();
@@ -197,8 +196,17 @@ public class GPUBenchmarky implements IAppLogic {
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
 
-        cubeModel = ModelLoader.loadModel("cube-model", "resources/models/cube/cube.obj", scene.getTextureCache());
-        scene.addModel(cubeModel);
+        if(nrOfCubesToGenerate != 0){
+            cubeModel = ModelLoader.loadModel("cube-model", "resources/models/cube/cube.obj", scene.getTextureCache());
+            scene.addModel(cubeModel);
+
+            Entity cubeEntity = new Entity("cube-entity", cubeModel.getId());
+            cubeEntity.setPosition(0, 0f, -10);
+            cubeEntity.updateModelMatrix();
+            scene.addEntity(cubeEntity);
+
+            cubes.add(cubeEntity);
+        }
 
         if(nrofStarFireToGenerate!=0 && nrofRavensToGenerate!=0 && nrofBeastBoysToGenerate!=0 && nrofCyborgsToGenerate!=0 && nrofRobinsToGenerate!=0){
             BeastBoyModel = ModelLoader.loadModel("beast-model", "resources/models/Beastboy/untitled.obj", scene.getTextureCache());
@@ -252,12 +260,6 @@ public class GPUBenchmarky implements IAppLogic {
             titans.add(RobinEntity);
         }
 
-        Entity cubeEntity = new Entity("cube-entity", cubeModel.getId());
-        cubeEntity.setPosition(0, 0f, -10);
-        cubeEntity.updateModelMatrix();
-        scene.addEntity(cubeEntity);
-
-
         SceneLights sceneLights = new SceneLights();
         sceneLights.getAmbientLight().setIntensity(0.3f);
         scene.setSceneLights(sceneLights);
@@ -269,7 +271,6 @@ public class GPUBenchmarky implements IAppLogic {
 
         lastCubeGenerationTime = System.currentTimeMillis();
         nrOfCubes++;
-        cubes.add(cubeEntity);
 
         String quadModelId = "quad-model";
         Model quadModel = ModelLoader.loadModel("quad-model", "resources/models/quad/quad.obj", scene.getTextureCache());
@@ -508,8 +509,10 @@ public class GPUBenchmarky implements IAppLogic {
     public void setSarsToGenerate(int nrOfStarsToGenerate) {
         GPUBenchmarky.nrofStarFireToGenerate=nrOfStarsToGenerate;
     }
-
     public int TotalGeneratedEntities(){
         return TotalGeneratedEntities;
+    }
+    public void SetTotalRuns(int totalRuns){
+        GPUBenchmarky.totalRuns=totalRuns;
     }
 }
