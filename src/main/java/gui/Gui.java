@@ -52,39 +52,38 @@ public class Gui {
         int frameHeight = 704;
         frame.setSize(frameWidth, frameHeight);
 
-        before_gpu_frames=frame; //do not delete or comment this
-                                 //we are using this on gpu to get back on the main menu
+        before_gpu_frames = frame; // Do not delete or comment this; we are using this on GPU to get back to the main menu
 
         JLabel backgroundLabel = createLabel("resources" + File.separator + "gui" + File.separator + "image3.png", frameWidth, frameHeight);
 
         int offset = 230;
-        int yButtons = 585;
-        int xButtons = 60;
+        int yButtons = 565;
+        int xButtons = 65;
         ButtonDimension buttonDimension = new ButtonDimension(110, 50);
 
-        JButton cpuButton = createButton("CPU");
+        JButton cpuButton = gpu_button("CPU");
         cpuButton.setBounds(xButtons, yButtons, buttonDimension.getX(), buttonDimension.getY());
         cpuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                showCPUFrame(frameWidth, frameHeight);
+                showCPUFrame(frameWidth, frameHeight); // Pass the frame object as the first argument
             }
         });
 
-        JButton resultsButton = createButton("Results");
+        JButton resultsButton = gpu_button("Results");
         resultsButton.setBounds(xButtons + offset, yButtons, buttonDimension.getX(), buttonDimension.getY());
         resultsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
                 try {
-                    showResultFrame(frameWidth, frameHeight);
+                    showResultFrame(frameWidth, frameHeight); // Pass the frame object as the first argument
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
 
-        JButton gpuButton = createButton("GPU");
+        JButton gpuButton = gpu_button("GPU");
         gpuButton.setBounds(xButtons + offset * 2, yButtons, buttonDimension.getX(), buttonDimension.getY());
         gpuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -103,7 +102,23 @@ public class Gui {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
+
+        // Add component listener to handle resizing events
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int newFrameWidth = frame.getWidth();
+                int newFrameHeight = frame.getHeight();
+
+                // Adjust button positions based on frame size
+                cpuButton.setBounds(newFrameWidth * xButtons / frameWidth, newFrameHeight * yButtons / frameHeight, newFrameWidth * buttonDimension.getX() / frameWidth, newFrameHeight * buttonDimension.getY() / frameHeight);
+                resultsButton.setBounds(newFrameWidth * (xButtons + offset) / frameWidth, newFrameHeight * yButtons / frameHeight, newFrameWidth * buttonDimension.getX() / frameWidth, newFrameHeight * buttonDimension.getY() / frameHeight);
+                gpuButton.setBounds(newFrameWidth * (xButtons + offset * 2) / frameWidth, newFrameHeight * yButtons / frameHeight, newFrameWidth * buttonDimension.getX() / frameWidth, newFrameHeight * buttonDimension.getY() / frameHeight);
+                backgroundLabel.setSize(newFrameWidth, newFrameHeight);
+            }
+        });
     }
+
 
     private void showCPUFrame(int width, int height) {
         cpuFrame = new JFrame("CPU Benchmarks");
@@ -545,7 +560,7 @@ public class Gui {
 
     /*
     *
-    * GPU PROFESSIONAL TEAM GUI
+    * GPU PROFESSIONAL TEAM GUI IMPLEMENTATION
     *
     * */
 
@@ -1076,7 +1091,7 @@ public class Gui {
 
     /*
     *
-    * END OF PROFESSIONAL GPU TEAM GUI
+    * END OF GPU PROFESSIONAL TEAM GUI IMPLEMENTATION
     *
     * */
 
