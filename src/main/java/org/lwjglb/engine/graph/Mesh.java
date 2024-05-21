@@ -2,7 +2,10 @@ package org.lwjglb.engine.graph;
 
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.*;
-
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.nio.*;
 import java.util.*;
 
@@ -25,60 +28,65 @@ public class Mesh {
             // Positions VBO
             int vboId = glGenBuffers();
             vboIdList.add(vboId);
-            FloatBuffer positionsBuffer = stack.callocFloat(positions.length);
-            positionsBuffer.put(0, positions);
+            FloatBuffer positionsBuffer = MemoryUtil.memAllocFloat(positions.length);
+            positionsBuffer.put(positions).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, positionsBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+            MemoryUtil.memFree(positionsBuffer); // Free the buffer after use
 
             // Normals VBO
             vboId = glGenBuffers();
             vboIdList.add(vboId);
-            FloatBuffer normalsBuffer = stack.callocFloat(normals.length);
-            normalsBuffer.put(0, normals);
+            FloatBuffer normalsBuffer = MemoryUtil.memAllocFloat(normals.length);
+            normalsBuffer.put(normals).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, normalsBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(1);
             glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+            MemoryUtil.memFree(normalsBuffer);
 
             // Tangents VBO
             vboId = glGenBuffers();
             vboIdList.add(vboId);
-            FloatBuffer tangentsBuffer = stack.callocFloat(tangents.length);
-            tangentsBuffer.put(0, tangents);
+            FloatBuffer tangentsBuffer = MemoryUtil.memAllocFloat(tangents.length);
+            tangentsBuffer.put(tangents).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, tangentsBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(2);
             glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
+            MemoryUtil.memFree(tangentsBuffer);
 
             // Bitangents VBO
             vboId = glGenBuffers();
             vboIdList.add(vboId);
-            FloatBuffer bitangentsBuffer = stack.callocFloat(bitangents.length);
-            bitangentsBuffer.put(0, bitangents);
+            FloatBuffer bitangentsBuffer = MemoryUtil.memAllocFloat(bitangents.length);
+            bitangentsBuffer.put(bitangents).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, bitangentsBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(3);
             glVertexAttribPointer(3, 3, GL_FLOAT, false, 0, 0);
+            MemoryUtil.memFree(bitangentsBuffer);
 
             // Texture coordinates VBO
             vboId = glGenBuffers();
             vboIdList.add(vboId);
-            FloatBuffer textCoordsBuffer = stack.callocFloat(textCoords.length);
-            textCoordsBuffer.put(0, textCoords);
+            FloatBuffer textCoordsBuffer = MemoryUtil.memAllocFloat(textCoords.length);
+            textCoordsBuffer.put(textCoords).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, textCoordsBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(4);
             glVertexAttribPointer(4, 2, GL_FLOAT, false, 0, 0);
-
+            MemoryUtil.memFree(textCoordsBuffer);
             // Index VBO
             vboId = glGenBuffers();
             vboIdList.add(vboId);
-            IntBuffer indicesBuffer = stack.callocInt(indices.length);
-            indicesBuffer.put(0, indices);
+            IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
+            indicesBuffer.put(indices).flip();
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
+            MemoryUtil.memFree(indicesBuffer);  // Free the buffer after use
 
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);

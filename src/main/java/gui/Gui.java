@@ -6,7 +6,7 @@ import cpuBenchmarks.FibonacciBenchmark;
 import cpuBenchmarks.MatrixMultiplicationBenchmark;
 import cpuBenchmarks.PiDigitComputationBenchmark;
 import firebase.Firebase;
-import org.lwjglb.game.Main;
+import org.lwjglb.game.GPUBenchmarky;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -531,7 +531,7 @@ public class Gui {
         panel.add(button1);
 
         // Add a JLabel and JTextField for the number input
-        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating cubes<br><br>RANKING:<br>Victory -> Final Score larger than 200<br>Draw -> Final Score between 200 and 100<br>Defeat -> Final Score lower than 100 </html>\"");
+        JLabel numberLabel = new JLabel("<html>Test your GPU and see if you can defeat Trigon in the battle of generating cubes<br><br>RANKING:<br>Victory -> Final Score larger than 550<br>Draw -> Final Score between 550 and 500<br>Defeat -> Final Score lower than 500 </html>\"");
         numberLabel.setBounds(55, 330, 500, 160);
         numberLabel.setForeground(Color.WHITE); // Set text color to white
 
@@ -597,18 +597,26 @@ public class Gui {
                 try{
                     button1GPUFrame.setVisible(false);
                     int number = Integer.parseInt(input);
-                    Main main = new Main();
-                    main.setCubesToGenerate(number);
-                    BenchmarkInfo data = main.runMain();
+                    if (number > 1000000){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "The provided number is too large!", "error", JOptionPane.ERROR_MESSAGE);
+                        button1GPUFrame.setVisible(true);
+                        throw new RuntimeException();
+                    }
+                    GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+                    GPUBenchmarky.setCubesToGenerate(number);
+                    BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
-                    double finalScore = main.GetFinalScore();
-                    if (finalScore > 200) {
-                        showVictoryFrame(finalScore);
-                    } else if (finalScore > 100) {
-                        showMediumFrame(finalScore);
+                    double finalScore = GPUBenchmarky.GetFinalScore();
+                    double fps_average= GPUBenchmarky.GetFPSAverage();
+                    int total_runs= GPUBenchmarky.GetRunsNumber();
+                    //int total_gen_cubes=GPUBenchmarky.TotalGeneratedCubes();
+                    if (finalScore > 550) {
+                        showVictoryFrame(finalScore, fps_average,total_runs, 5);
+                    } else if (finalScore > 500) {
+                        showMediumFrame(finalScore, fps_average,total_runs, 5);
                     } else {
-                        showDefeatFrame(finalScore);
+                        showDefeatFrame(finalScore, fps_average,total_runs, 5);
                     }
 
                     try {
@@ -631,18 +639,26 @@ public class Gui {
         specificButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                     button1GPUFrame.setVisible(false);
-                    Main main = new Main();
-                    main.setCubesToGenerate(10000);
-                    BenchmarkInfo data = main.runMain();
+                    GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
+                    GPUBenchmarky.setCubesToGenerate(5000);
+                    GPUBenchmarky.setRobinsToGenerate(5000);
+                    GPUBenchmarky.setBboysToGenerate(5000);
+                    GPUBenchmarky.setCyborgsToGenerate(5000);
+                    GPUBenchmarky.setSarsToGenerate(5000);
+                    GPUBenchmarky.setRavensToGenerate(5000);
+                    BenchmarkInfo data = GPUBenchmarky.runMain();
 
                     // Check the final score and show the corresponding frame
-                    double finalScore = main.GetFinalScore();
-                    if (finalScore > 200) {
-                        showVictoryFrame(finalScore);
-                    } else if (finalScore > 100) {
-                        showMediumFrame(finalScore);
+                    double finalScore = GPUBenchmarky.GetFinalScore();
+                    double fps_average= GPUBenchmarky.GetFPSAverage();
+                    int total_runs= GPUBenchmarky.GetRunsNumber();
+                    int total_gen_entities=GPUBenchmarky.TotalGeneratedEntities();
+                    if (finalScore > 550) {
+                        showVictoryFrame(finalScore,fps_average, total_runs, total_gen_entities);
+                    } else if (finalScore > 500) {
+                        showMediumFrame(finalScore,fps_average,total_runs, total_gen_entities);
                     } else {
-                        showDefeatFrame(finalScore);
+                        showDefeatFrame(finalScore,fps_average,total_runs, total_gen_entities);
                     }
 
                     try {
@@ -669,7 +685,7 @@ public class Gui {
         button1GPUFrame.setVisible(true);
     }
 
-    private void showVictoryFrame(double finalScore) {
+    private void showVictoryFrame(double finalScore, double fps_average, int total_runs, int gen_cubes) {
         JFrame victoryFrame = new JFrame("Victory");
         victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         victoryFrame.setSize(800, 600); // Set size as needed
@@ -686,11 +702,29 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
-        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(550, 200, 300, 50);
+        JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
+        finalScoreLabel.setBackground(Color.RED); // Set background color to white
+        finalScoreLabel.setOpaque(true); // Make the
+        finalScoreLabel.setBounds(500, 200, 260, 50);
         panel.add(finalScoreLabel);
+
+        JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
+        finalFPSLabel.setBackground(Color.RED); // Set background color to white
+        finalFPSLabel.setOpaque(true); // Make the
+        finalFPSLabel.setBounds(500, 260, 280, 80);
+        panel.add(finalFPSLabel);
+
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
+        finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
+        finalCubesLabel.setBackground(Color.RED); // Set background color to white
+        finalCubesLabel.setOpaque(true); // Make the
+        finalCubesLabel.setBounds(500, 350, 190, 80);
+        panel.add(finalCubesLabel);
 
         // Add a button to close the frame
         JButton closeButton = createButton("Close results");
@@ -707,8 +741,8 @@ public class Gui {
         victoryFrame.setVisible(true);
     }
 
-    private void showMediumFrame(double finalScore) {
-        JFrame mediumFrame = new JFrame("Medium Score");
+    private void showMediumFrame(double finalScore, double fps_average, int total_runs, int gen_cubes) {
+        JFrame mediumFrame = new JFrame("Draw");
         mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mediumFrame.setSize(800, 600); // Set size as needed
         mediumFrame.setLocationRelativeTo(null);
@@ -724,11 +758,29 @@ public class Gui {
         };
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
-        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
-        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(300, 150, 300, 50);
+        JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
+        finalScoreLabel.setBackground(Color.RED); // Set background color to white
+        finalScoreLabel.setOpaque(true); // Make the JLabel opaque to display the background color
+        finalScoreLabel.setBounds(300, 170, 260, 50);
         panel.add(finalScoreLabel);
+
+        JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
+        finalFPSLabel.setBackground(Color.RED); // Set background color to white
+        finalFPSLabel.setOpaque(true); // Make the JLabel opaque to display the background color
+        finalFPSLabel.setBounds(300, 230, 280, 80);
+        panel.add(finalFPSLabel);
+
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
+        finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
+        finalCubesLabel.setBackground(Color.RED); // Set background color to white
+        finalCubesLabel.setOpaque(true); // Make the
+        finalCubesLabel.setBounds(300, 320, 190, 80);
+        panel.add(finalCubesLabel);
 
 
         // Add a button to close the frame
@@ -746,7 +798,7 @@ public class Gui {
         mediumFrame.setVisible(true);
     }
 
-    private void showDefeatFrame(double finalScore) {
+    private void showDefeatFrame(double finalScore, double fps_average, int total_runs, int gen_cubes) {
         JFrame defeatFrame = new JFrame("Defeat");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         defeatFrame.setSize(800, 600); // Set size as needed
@@ -764,11 +816,29 @@ public class Gui {
         panel.setLayout(null); // Use null layout to set absolute positions for buttons
 
 
-        JLabel finalScoreLabel = new JLabel(String.format(" %.2f", finalScore));
-        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
-        finalScoreLabel.setBounds(400, 450, 300, 50);
+        JLabel finalScoreLabel = new JLabel(String.format("~ %.2f f.s. ~", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to red
+        finalScoreLabel.setBackground(Color.RED); // Set background color to white
+        finalScoreLabel.setOpaque(true); // Make the
+        finalScoreLabel.setBounds(450, 260, 260, 50);
         panel.add(finalScoreLabel);
+
+        JLabel finalFPSLabel = new JLabel(String.format("<html>%.0f FPS Average<br>after %d runs</html>", fps_average, total_runs));
+        finalFPSLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalFPSLabel.setForeground(Color.WHITE); // Set text color to red
+        finalFPSLabel.setBackground(Color.RED); // Set background color to white
+        finalFPSLabel.setOpaque(true); // Make the
+        finalFPSLabel.setBounds(450, 320, 280, 80);
+        panel.add(finalFPSLabel);
+
+        JLabel finalCubesLabel = new JLabel(String.format("<html>%d<br>entities gen.</html>", gen_cubes));
+        finalCubesLabel.setFont(new Font("Arial", Font.BOLD, 27));
+        finalCubesLabel.setForeground(Color.WHITE); // Set text color to red
+        finalCubesLabel.setBackground(Color.RED); // Set background color to white
+        finalCubesLabel.setOpaque(true); // Make the
+        finalCubesLabel.setBounds(450, 410, 190, 80);
+        panel.add(finalCubesLabel);
 
 
         // Add a button to close the frame
