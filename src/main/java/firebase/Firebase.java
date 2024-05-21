@@ -19,7 +19,17 @@ public class Firebase {
         initializeFirebase();
         writeBenchmarkResult(new BenchmarkInfo("CPU",100,1),new ComputerIdentifier());
         //System.out.println(getMyData("CPU",new ComputerIdentifier()));
-        //System.out.println(getAllData("CPU").indexOf(156.3));
+        ArrayList<String> benchmarks = new ArrayList<>();
+        benchmarks.add("ArithmeticOperationBenchmark");
+        benchmarks.add("FibonacciBenchmark");
+        benchmarks.add("MatrixMultiplicationBenchmark");
+        benchmarks.add("PiDigitComputationBenchmark");
+        benchmarks.add("GPU benchmark");
+        for (String name: benchmarks) {
+
+            System.out.println(Firebase.getMyData(name,new ComputerIdentifier()));
+            System.out.println(Firebase.getAllData(name).indexOf(getMyData(name,new ComputerIdentifier())));
+        }
     }
 
     public static void initializeFirebase() throws IOException {
@@ -74,7 +84,10 @@ public class Firebase {
         } catch (Exception e) {
             return null;
         }
-        return (Double) data.get("Score");
+        if (data != null)
+            return (Double) data.get("Score");
+
+        return null;
     }
 
     public static List<Double> getAllData(String benchmarkName) {
