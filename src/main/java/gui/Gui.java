@@ -179,8 +179,8 @@ public class Gui {
     private void showButton1Frame() {
         JFrame button1Frame = new JFrame("Fibonacci Sequence");
         button1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button1Frame.setSize(1041, 704); // Set size as needed
-        button1Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+        button1Frame.setSize(1041, 704);
+        button1Frame.setLocationRelativeTo(cpuFrame);
 
         JPanel panel = new JPanel() {
             @Override
@@ -190,14 +190,15 @@ public class Gui {
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JButton specificButton = createButton("START");
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button1Frame.setVisible(false);
-                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                showWaitingFrame();
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         FibonacciBenchmark fibonacciBenchmark = new FibonacciBenchmark();
                         BenchmarkInfo data = fibonacciBenchmark.startBenchmark();
@@ -209,7 +210,13 @@ public class Gui {
                         waitingFrame.setVisible(false);
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
-                                showScoreCPU(data.getScore());
+                                if (data.getScore() >= 90.0) {
+                                    showVictoryCPUFrame(data.getScore(), "victory1.jpg");
+                                } else if (data.getScore() >= 50.0) {
+                                    showMediumCPUFrame(data.getScore(), "medium1.jpg");
+                                } else {
+                                    showDefeatCPUFrame(data.getScore(), "defeat1.jpg");
+                                }
                             }
                         });
                     }
@@ -235,8 +242,8 @@ public class Gui {
     private void showButton2Frame() {
         JFrame button2Frame = new JFrame("Arithmetic Operations");
         button2Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button2Frame.setSize(1041, 704); // Set size as needed
-        button2Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+        button2Frame.setSize(1041, 704);
+        button2Frame.setLocationRelativeTo(cpuFrame);
 
         JPanel panel = new JPanel() {
             @Override
@@ -246,15 +253,15 @@ public class Gui {
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JButton specificButton = createButton("START");
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 button2Frame.setVisible(false);
-                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                showWaitingFrame();
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         ArithmeticOperationBenchmark arithmeticOperationBenchmark = new ArithmeticOperationBenchmark();
                         BenchmarkInfo data = arithmeticOperationBenchmark.startBenchmark();
@@ -266,7 +273,13 @@ public class Gui {
                         waitingFrame.setVisible(false);
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
-                                showScoreCPU(data.getScore());
+                                if (data.getScore() >= 90.0) {
+                                    showVictoryCPUFrame(data.getScore(), "victory2.jpg");
+                                } else if (data.getScore() >= 50.0) {
+                                    showMediumCPUFrame(data.getScore(), "medium2.jpg");
+                                } else {
+                                    showDefeatCPUFrame(data.getScore(), "defeat2.jpg");
+                                }
                             }
                         });
                     }
@@ -292,8 +305,8 @@ public class Gui {
     private void showButton3Frame() {
         JFrame button3Frame = new JFrame("PI Digit Computation");
         button3Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button3Frame.setSize(1041, 704); // Set size as needed
-        button3Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+        button3Frame.setSize(1041, 704);
+        button3Frame.setLocationRelativeTo(cpuFrame);
 
         JPanel panel = new JPanel() {
             @Override
@@ -303,14 +316,15 @@ public class Gui {
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JButton specificButton = createButton("START");
         specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button3Frame.setVisible(false);
-                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                showWaitingFrame();
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         PiDigitComputationBenchmark piDigitComputationBenchmark = new PiDigitComputationBenchmark();
                         BenchmarkInfo data = piDigitComputationBenchmark.startBenchmark();
@@ -322,7 +336,13 @@ public class Gui {
                         waitingFrame.setVisible(false);
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
-                                showScoreCPU(data.getScore());
+                                if (data.getScore() >= 90.0) {
+                                    showVictoryCPUFrame(data.getScore(), "victory3.jpg");
+                                } else if (data.getScore() >= 50.0) {
+                                    showMediumCPUFrame(data.getScore(), "medium3.jpg");
+                                } else {
+                                    showDefeatCPUFrame(data.getScore(),"defeat3.jpg");
+                                }
                             }
                         });
                     }
@@ -348,25 +368,26 @@ public class Gui {
     private void showButton4Frame() {
         JFrame button4Frame = new JFrame("Matrix Multiplication");
         button4Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        button4Frame.setSize(1041, 704); // Set size as needed
-        button4Frame.setLocationRelativeTo(cpuFrame); // Position relative to CPU frame
+        button4Frame.setSize(1041, 704);
+        button4Frame.setLocationRelativeTo(cpuFrame);
 
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "matrixCPU.jpg");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "num.jpg");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
-        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+        panel.setLayout(null);
 
         JButton specificButton = createButton("START");
-        specificButton.setBounds(25, 45, 250, 55);
+        specificButton.setBounds(50, 440, 250, 55);
         specificButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button4Frame.setVisible(false);
-                showWaitingFrame(); SwingUtilities.invokeLater(new Runnable() {
+                showWaitingFrame();
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         MatrixMultiplicationBenchmark matrixMultiplicationBenchmark = new MatrixMultiplicationBenchmark();
                         BenchmarkInfo data = matrixMultiplicationBenchmark.startBenchmark();
@@ -378,7 +399,13 @@ public class Gui {
                         waitingFrame.setVisible(false);
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
-                                showScoreCPU(data.getScore());
+                                if (data.getScore() >= 90.0) {
+                                    showVictoryCPUFrame(data.getScore(), "victory4.jpg");
+                                } else if (data.getScore() >= 50.0) {
+                                    showMediumCPUFrame(data.getScore(), "medium4.jpg");
+                                } else {
+                                    showDefeatCPUFrame(data.getScore(), "defeat4.jpg");
+                                }
                             }
                         });
                     }
@@ -388,7 +415,7 @@ public class Gui {
         panel.add(specificButton);
 
         JButton closeButton = createButton("Close");
-        closeButton.setBounds(800, 40, 200, 55);
+        closeButton.setBounds(50, 550, 200, 55);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 button4Frame.dispose();
@@ -400,6 +427,7 @@ public class Gui {
         button4Frame.setContentPane(panel);
         button4Frame.setVisible(true);
     }
+
     private void showScoreCPU(double score) {
         JFrame defeatFrame = new JFrame("Score");
         defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -411,7 +439,7 @@ public class Gui {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load and draw the background image
-                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "cpuscore.png");
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + "scoreCPU.png");
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -827,6 +855,124 @@ public class Gui {
         defeatFrame.setContentPane(panel); // Set the panel as the content pane
         defeatFrame.setVisible(true);
     }
+
+    private void showVictoryCPUFrame(double finalScore, String path) {
+        JFrame victoryFrame = new JFrame("Victory");
+        victoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        victoryFrame.setSize(800, 600); // Set size as needed
+        victoryFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + path);
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(550, 300, 300, 50);
+        panel.add(finalScoreLabel);
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close results");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                victoryFrame.dispose();
+                cpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        victoryFrame.setContentPane(panel); // Set the panel as the content pane
+        victoryFrame.setVisible(true);
+    }
+
+    private void showMediumCPUFrame(double finalScore, String path) {
+        JFrame mediumFrame = new JFrame("Medium Score");
+        mediumFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mediumFrame.setSize(800, 600); // Set size as needed
+        mediumFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + path);
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+        JLabel finalScoreLabel = new JLabel(String.format("%.2f", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(300, 150, 300, 50);
+        panel.add(finalScoreLabel);
+
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close results");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mediumFrame.dispose();
+                cpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        mediumFrame.setContentPane(panel); // Set the panel as the content pane
+        mediumFrame.setVisible(true);
+    }
+
+    private void showDefeatCPUFrame(double finalScore, String path) {
+        JFrame defeatFrame = new JFrame("Defeat");
+        defeatFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        defeatFrame.setSize(800, 600); // Set size as needed
+        defeatFrame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load and draw the background image
+                ImageIcon image = new ImageIcon("resources" + File.separator + "gui" + File.separator + path);
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        panel.setLayout(null); // Use null layout to set absolute positions for buttons
+
+
+        JLabel finalScoreLabel = new JLabel(String.format(" %.2f", finalScore));
+        finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        finalScoreLabel.setForeground(Color.WHITE); // Set text color to white
+        finalScoreLabel.setBounds(400, 450, 300, 50);
+        panel.add(finalScoreLabel);
+
+
+        // Add a button to close the frame
+        JButton closeButton = createButton("Close results");
+        closeButton.setBounds(50, 500, 300, 50); // Set position and size
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                defeatFrame.dispose();
+                cpuFrame.setVisible(true);
+            }
+        });
+        panel.add(closeButton);
+
+        defeatFrame.setContentPane(panel); // Set the panel as the content pane
+        defeatFrame.setVisible(true);
+    }
+
     private void showWaitingFrame() {
         waitingFrame = new JFrame("Running Benchmark");
         waitingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
