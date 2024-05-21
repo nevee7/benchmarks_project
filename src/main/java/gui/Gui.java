@@ -685,13 +685,8 @@ public class Gui {
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
-                    if(number2 % 5 != 0){
-                        JOptionPane.showMessageDialog(button1GPUFrame, "The number of titans should be a multiple of 5!", "error", JOptionPane.ERROR_MESSAGE);
-                        button1GPUFrame.setVisible(true);
-                        throw new RuntimeException();
-                    }
-                    if(number2 > 100000){
-                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 100.000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
+                    if(number2 > 10000){
+                        JOptionPane.showMessageDialog(button1GPUFrame, "<html>The number of titans is too large!<br>Maximum 1000 titans/second can be generated!</html>", "error", JOptionPane.ERROR_MESSAGE);
                         button1GPUFrame.setVisible(true);
                         throw new RuntimeException();
                     }
@@ -707,11 +702,8 @@ public class Gui {
                     }
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
                     GPUBenchmarky.setCubesToGenerate(number);
-                    GPUBenchmarky.setRobinsToGenerate(number2/5);
-                    GPUBenchmarky.setBboysToGenerate(number2/5);
-                    GPUBenchmarky.setCyborgsToGenerate(number2/5);
-                    GPUBenchmarky.setSarsToGenerate(number2/5);
-                    GPUBenchmarky.setRavensToGenerate(number2/5);
+                    GPUBenchmarky.setTitansToGenerate(number2);
+
                     GPUBenchmarky.SetTotalRuns(number3);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
@@ -750,11 +742,7 @@ public class Gui {
                     button1GPUFrame.setVisible(false);
                     GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
                     GPUBenchmarky.setCubesToGenerate(5);
-                    GPUBenchmarky.setRobinsToGenerate(5);
-                    GPUBenchmarky.setBboysToGenerate(5);
-                    GPUBenchmarky.setCyborgsToGenerate(5);
-                    GPUBenchmarky.setSarsToGenerate(5);
-                    GPUBenchmarky.setRavensToGenerate(5);
+                    GPUBenchmarky.setTitansToGenerate(5);
                     GPUBenchmarky.SetTotalRuns(5);
                     BenchmarkInfo data = GPUBenchmarky.runMain();
 
