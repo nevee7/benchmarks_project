@@ -909,7 +909,7 @@ public class Gui {
         gpu_runned=1;
         clip.stop();
         try {
-            playAudio("resources" + File.separator + "gui" + File.separator + "tada.wav", true, 0);
+            playAudio("resources" + File.separator + "gui" + File.separator + "tada.wav", true, 3);
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -1018,7 +1018,7 @@ public class Gui {
         gpu_runned=1;
         clip.stop();
         try {
-            playAudio("resources" + File.separator + "gui" + File.separator + "cricket.wav", true, 1000);
+            playAudio("resources" + File.separator + "gui" + File.separator + "cricket.wav", true, 2);
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -1100,7 +1100,7 @@ public class Gui {
         gpu_runned=1;
         clip.stop();
         try {
-            playAudio("resources" + File.separator + "gui" + File.separator + "fail.wav", true, 1000);
+            playAudio("resources" + File.separator + "gui" + File.separator + "fail.wav", true, 3);
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
