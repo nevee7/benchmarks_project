@@ -14,6 +14,10 @@ public class ComputerIdentifier {
         this.UUID = SystemSpecs.computerUUID;
     }
 
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
+    }
+
     public String getOs() {
         return os;
     }

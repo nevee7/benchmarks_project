@@ -17,6 +17,18 @@ import java.util.*;
 public class Firebase {
     public static void main(String[] args) throws Exception {
         initializeFirebase();
+        List<String> benchmarks = new ArrayList<>();
+        benchmarks.add("ArithmeticOperationBenchmark");
+        benchmarks.add("FibonacciBenchmark");
+        benchmarks.add("MatrixMultiplicationBenchmark");
+        benchmarks.add("PiDigitComputationBenchmark");
+        for(String b : benchmarks){
+            //System.out.print(b + " ");
+            //System.out.println(getAllData(b).indexOf(getMyData(b,new ComputerIdentifier())));
+            System.out.println(getAllData(b));
+        }
+
+
         //writeBenchmarkResult(new BenchmarkInfo("CPU",100,1),new ComputerIdentifier());`
         /*List<String> benchmarks = new ArrayList<>();
         benchmarks.add("ArithmeticOperationBenchmark");
