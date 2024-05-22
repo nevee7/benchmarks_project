@@ -48,7 +48,6 @@ public class Gui {
     public Gui() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Firebase.initializeFirebase();
         playAudio("resources" + File.separator + "gui" + File.separator + "melodie1.wav", true, 1000);
-
         frame = new JFrame("SRESSING TITANS");
         int frameWidth = 1041;
         int frameHeight = 704;
@@ -127,7 +126,6 @@ public class Gui {
         cpuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cpuFrame.setSize(width, height);
         cpuFrame.setLocationRelativeTo(null);
-
         // Create a JPanel to hold the background image and buttons
         JPanel panel = new JPanel() {
             @Override
@@ -644,7 +642,7 @@ public class Gui {
                 int frameHeight = selectFrame.getHeight();
 
                 //set the buttons' positions relative to the frame size
-                gen3d_button.setBounds(frameWidth * 50 / width, frameHeight * 230 / height, frameWidth * 300 / width, frameHeight * 70 / height);
+                gen3d_button.setBounds(frameWidth * 50 / width, frameHeight * 210 / height, frameWidth * 300 / width, frameHeight * 70 / height);
                 instructionsLabel.setBounds(frameWidth * 55 / width, frameHeight * 330 / height, frameWidth * 500 / width, frameHeight * 160 / height);
                 closeButton.setBounds(frameWidth * 50 / width, frameHeight * 550 / height, frameWidth * 300 / width, frameHeight * 50 / height);
             }
@@ -814,7 +812,7 @@ public class Gui {
         panel.add(start_input);
 
         JButton start_default = gpu_button("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>");
-        start_default.setBounds(50, 410, 350, 90); // Set position and size
+        start_default.setBounds(150, 410, 100, 70); // Set position and size
         start_default.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startFrame.setVisible(false);
@@ -881,18 +879,18 @@ public class Gui {
                 int frameHeight = startFrame.getHeight();
 
                 //update component positions and sizes based on frame size
-                cubes_description.setBounds(frameWidth * 605 / 1041, frameHeight * 200 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
-                cubes_text_field.setBounds(frameWidth * 850 / 1041, frameHeight * 215 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
+                cubes_description.setBounds(frameWidth * 665 / 1041, frameHeight * 200 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
+                cubes_text_field.setBounds(frameWidth * 870 / 1041, frameHeight * 215 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
 
-                titans_description.setBounds(frameWidth * 605 / 1041, frameHeight * 300 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
-                titans_text_field.setBounds(frameWidth * 850 / 1041, frameHeight * 315 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
+                titans_description.setBounds(frameWidth * 665 / 1041, frameHeight * 300 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
+                titans_text_field.setBounds(frameWidth * 870 / 1041, frameHeight * 315 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
 
-                runs_description.setBounds(frameWidth * 605 / 1041, frameHeight * 400 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
-                runs_text_field.setBounds(frameWidth * 850 / 1041, frameHeight * 415 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
+                runs_description.setBounds(frameWidth * 665 / 1041, frameHeight * 400 / 704, frameWidth * 200 / 1041, frameHeight * 70 / 704);
+                runs_text_field.setBounds(frameWidth * 870 / 1041, frameHeight * 415 / 704, frameWidth * 100 / 1041, frameHeight * 40 / 704);
 
-                start_input.setBounds(frameWidth * 605 / 1041, frameHeight * 540 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
-                start_default.setBounds(frameWidth * 50 / 1041, frameHeight * 410 / 704, frameWidth * 350 / 1041, frameHeight * 90 / 704);
-                closeButton.setBounds(frameWidth * 50 / 1041, frameHeight * 540 / 704, frameWidth * 300 / 1041, frameHeight * 70 / 704);
+                start_input.setBounds(frameWidth * 645 / 1041, frameHeight * 540 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
+                start_default.setBounds(frameWidth * 645 / 1041, frameHeight * 60 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
+                closeButton.setBounds(frameWidth * 50 / 1041, frameHeight * 540 / 704, frameWidth * 350 / 1041, frameHeight * 70 / 704);
 
                 panel.repaint();
             }
