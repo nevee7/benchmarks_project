@@ -811,7 +811,7 @@ public class Gui {
         });
         panel.add(start_input);
 
-        JButton start_default = gpu_button("<html>Start Default Benchmark<br>(5 entities/second <br>generated and 5 runs)</html>");
+        JButton start_default = gpu_button("<html>Start Default Benchmark<br>(20 entities/second <br>generated and 5 runs)</html>");
         start_default.setBounds(150, 410, 100, 70); // Set position and size
         start_default.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -829,8 +829,8 @@ public class Gui {
                 }
 
                 GPUBenchmarky GPUBenchmarky = new GPUBenchmarky();
-                GPUBenchmarky.setCubesToGenerate(5);
-                GPUBenchmarky.setTitansToGenerate(5);
+                GPUBenchmarky.setCubesToGenerate(20);
+                GPUBenchmarky.setTitansToGenerate(20);
                 GPUBenchmarky.SetTotalRuns(5);
                 BenchmarkInfo data = GPUBenchmarky.runMain();
 
