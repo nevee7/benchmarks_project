@@ -9,13 +9,16 @@ import cpuBenchmarks.PiDigitComputationBenchmark;
 import firebase.Firebase;
 import org.lwjglb.game.GPUBenchmarky;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.sound.sampled.*;
-import javax.swing.*;
 
 import static firebase.Firebase.getMyData;
 
@@ -497,7 +500,7 @@ public class Gui {
 
 
     private void showResultFrame(int width, int height) throws Exception {
-        resultFrame = new JFrame("Results");
+        resultFrame = new JFrame("Loading Results");
         int widthRes = 1041;
         int heightRes = 704;
         resultFrame.setSize(width, height);
@@ -507,7 +510,7 @@ public class Gui {
 
         int offsetX = 20;
         int offsetY = 70;
-        int labelWidth = 900;
+        int labelWidth = 720;
         ArrayList<String> benchmarks = new ArrayList<>();
         benchmarks.add("ArithmeticOperationBenchmark");
         benchmarks.add("FibonacciBenchmark");
@@ -529,14 +532,14 @@ public class Gui {
             JLabel finalScoreLabel = new JLabel(finalScoreText);
             finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 27));
             finalScoreLabel.setForeground(Color.WHITE);
-            finalScoreLabel.setBackground(Color.BLUE);
+            finalScoreLabel.setBackground(new Color(72,115,219,235));
             finalScoreLabel.setOpaque(true);
             finalScoreLabel.setHorizontalAlignment(SwingConstants.LEFT); // Center text horizontally
-            finalScoreLabel.setBounds(offsetX, 30+ offsetY*i, labelWidth, 50); // Adjust bounds for better centering
+            finalScoreLabel.setBounds(offsetX, 130+ offsetY*i, labelWidth, 50); // Adjust bounds for better centering
             resultFrame.add(finalScoreLabel);
             i++;
         }
-
+        resultFrame.setTitle("Results");
         // Add result details components to this frame
         JLabel resultLabel = new JLabel("Results Details");
         resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
